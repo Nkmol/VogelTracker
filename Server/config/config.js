@@ -15,4 +15,6 @@ config.db.options = {
 // -- Promises --
 config.promise = global.Promise;
 
+config.models = 'modules/**/model.js' // Used to automaticall load the models
+
 module.exports = config;

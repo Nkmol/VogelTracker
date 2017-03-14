@@ -1,7 +1,8 @@
 let mongoose = require('mongoose'),
     chalk = require('chalk'),
     config = require('./config'),
-    express = require('express');
+    express = require('express'),
+    glob = require('glob');
 
 module.exports.start = () => {
     // Connect mongoose
@@ -14,6 +15,22 @@ module.exports.start = () => {
             console.log(err);
         }
     );
+
+    // Load models
+    glob(config.models, {relative: true}, (err, files) => {
+        if(err) {
+            console.error(chalk.red("Something went wrong when loading models: " + config.models));
+            console.log(err);
+        } else {
+            files.forEach(x => {
+                let relPath = '../' + x;
+                require(relPath);
+
+                console.log(chalk.green('   Loaded ' + x));
+            });
+            console.log(chalk.green('Loaded all models!'));
+        }
+    });
 
     // Setup listening
     let app = express();
