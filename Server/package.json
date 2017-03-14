@@ -4,7 +4,8 @@
   "description": "NodeJs Vogel Tracker service",
   "main": "server.js",
   "scripts": {
-    "test": "mocha modules/**/tests/*.js"
+    "test": "mocha modules/**/tests/*.js",
+    "seed": "node modules/seed.js"
   },
   "author": "",
   "license": "ISC",
