@@ -15,16 +15,7 @@ let birdSchema = new Schema({
     required: 'A birdname is required',
     unique: true
   },
-  avg_size: {
-    type: Number,
-    default: ''
-  },
-  food: {
-      type: [String]
-  },
-  where: {
-      type: [String]
-  }
+  latin_name: String
 });
 
 mongoose.model('Bird', birdSchema);

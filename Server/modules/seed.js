@@ -40,6 +40,7 @@ function createPostDeployement() {
 
     let bird = new Bird;
     bird.name = "test bird";
+    bird.latin_name = "birdia";
     bird.save();
 
     console.log(chalk.green('Completed PostDeployement seeds!'));
