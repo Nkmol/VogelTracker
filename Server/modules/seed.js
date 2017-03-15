@@ -37,6 +37,19 @@ glob(config.models, {relative: true}, (err, files) => {
 
 function createPostDeployement() {
     let Bird = mongoose.model('Bird');
+    let User = mongoose.model('User');
+    let Role = mongoose.model('Role');
+
+    // let role  = new Role;
+    // role.role = 'admin';
+    // role.save();
+
+    let user = new User;
+    user.username = "user";
+    user.password = "test123";
+    user.email = "jwitwit@avans.nl";
+    user.user_role = '58c912770bafbc13ec0da5f9';
+    user.save();
 
     let bird = new Bird;
     bird.name = "test bird";

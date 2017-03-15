@@ -8,15 +8,15 @@ let mongoose = require('mongoose'),
 
 
 let userSchema = new Schema ({
-    id: { 
-        type: Number,
-        required: true
-    },
     username: {
         type: String,
         required: true
     }, 
     password: {
+        type: String,
+        required: true
+    },
+    email: {
         type: String,
         required: true
     },
