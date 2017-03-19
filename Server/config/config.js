@@ -16,5 +16,6 @@ config.db.options = {
 config.promise = global.Promise;
 
 config.models = 'modules/**/model.js' // Used to automaticall load the models
+config.seeds = 'modules/**/seed.js' // Used to automaticall load the seeds
 
 module.exports = config;

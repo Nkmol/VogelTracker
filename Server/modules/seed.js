@@ -3,12 +3,20 @@
 let mongoose = require('mongoose'),
     config = require('../config/config'),
     chalk = require('chalk')
-    glob = require('glob');
+    util = require('./utilities');
+
+// Intro Message
+console.log();
+console.log(chalk.green("   [Loading seed script]   "));
+console.log(chalk.green("---------------------------"));
 
 // Connect mongoose
 mongoose.Promise = config.promise;
 mongoose.connect(config.db.uri, config.db.options).then(
-    () => { console.log(chalk.green('Connected with MongoDB!'))},
+    () => { 
+        console.log(chalk.green('Connected with MongoDB!'));  
+        loadModels();
+    },
     err => {
         console.error(chalk.red('Could not connect to MongoDB!'));
         console.error(chalk.red(config.db.uri));
@@ -16,26 +24,19 @@ mongoose.connect(config.db.uri, config.db.options).then(
     }
 );
 
-// Load models
-glob(config.models, {relative: true}, (err, files) => {
-    if(err) {
-        console.error(chalk.red("Something went wrong when loading models: " + config.models));
-        console.log(err);
-    } else {
-        files.forEach(x => {
-            let relPath = '../' + x;
-            require(relPath);
-
-            console.log(chalk.green('   Loaded ' + x));
-        });
-        console.log(chalk.green('Loaded all models!'));
-
-        createPostDeployement();
-        mongoose.connection.close();
-    }
-});
+function loadModels() {
+    // Load models
+    return util.requireAll(config.models)
+        .then(() => createPostDeployement())
+        .catch(() => mongoose.connection.close()) // Finally close connection
+        .then(() => mongoose.connection.close()) // Finally close connection
+}
 
 function createPostDeployement() {
+    // Load seeds
+    return util.requireAll(config.seeds)
+        .then(() => console.log(chalk.green('Completed PostDeployement seeds!')))
+
     let Bird = mongoose.model('Bird');
     let User = mongoose.model('User');
     let Role = mongoose.model('Role');
@@ -50,11 +51,4 @@ function createPostDeployement() {
     user.email = "jwitwit@avans.nl";
     user.user_role = '58c912770bafbc13ec0da5f9';
     user.save();
-
-    let bird = new Bird;
-    bird.name = "test bird";
-    bird.latin_name = "birdia";
-    bird.save();
-
-    console.log(chalk.green('Completed PostDeployement seeds!'));
 }
