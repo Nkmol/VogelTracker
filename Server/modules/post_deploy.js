@@ -3,7 +3,7 @@
 let mongoose = require('./models/mongoose'),
     config = require('../config/config'),
     chalk = require('chalk')
-    util = require('./utilities');
+util = require('./utilities');
 
 // Intro Message
 console.log();
@@ -15,7 +15,7 @@ mongoose.connect().then(() => loadModels());
 
 function loadModels() {
     // Load models
-    console.log(chalk.green('Loading models...'));  
+    console.log(chalk.green('Loading models...'));
     return util.requireAll(config.models)
         .then(() => createPostDeployement())
         .catch(() => mongoose.disconnect()) // Finally close connection
@@ -24,22 +24,14 @@ function loadModels() {
 
 function createPostDeployement() {
     // Load seeds
-    console.log(chalk.green('Loading seeds...'));  
-    return util.requireAll(config.seeds)
+    console.log(chalk.green('Loading seeds...'));
+
+    // Make seeds chainable so we can establish dependencies with files
+    let loadSeed = model => util.requirePromise(`./modules/${model}/seed`);
+    return loadSeed('roles')
+        .then(() => loadSeed('users'))
+        .then(() => loadSeed('birds'))
+        .then(() => loadSeed('reports'))
         .then(() => console.log(chalk.green('Completed PostDeployement seeds!')))
-
-    let Bird = mongoose.model('Bird');
-    let User = mongoose.model('User');
-    let Role = mongoose.model('Role');
-
-    // let role  = new Role;
-    // role.role = 'admin';
-    // role.save();
-
-    let user = new User;
-    user.username = "user";
-    user.password = "test123";
-    user.email = "jwitwit@avans.nl";
-    user.user_role = '58c912770bafbc13ec0da5f9';
-    user.save();
+        .catch(err => console.error(chalk.red(`Something went wrong loading the seeds: ${err}`)))
 }

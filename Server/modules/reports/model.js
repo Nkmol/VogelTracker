@@ -11,7 +11,7 @@ let reportSchema = new Schema ({
         type: Schema.Types.ObjectId, ref: 'User'
     },
     bird_id: {
-        type: Number,
+        type: Schema.Types.ObjectId, ref: 'Bird',
         required: true
     },
     submitter: String,
@@ -19,12 +19,12 @@ let reportSchema = new Schema ({
         type: String,
         required: true
     },
-    image: String,
+    image: [String],
     lat: {
         type: Number,
         required: true
     },
-    lng: {
+    long: {
         type: Number,
         required: true
     }, 
@@ -33,3 +33,5 @@ let reportSchema = new Schema ({
         required: true
     }    
 });
+
+mongoose.model('Report', reportSchema);
