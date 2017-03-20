@@ -1,4 +1,4 @@
-//RUN: npm run-script seed
+//RUN: npm run seed
 
 let mongoose = require('mongoose'),
     config = require('../config/config'),
@@ -26,6 +26,7 @@ mongoose.connect(config.db.uri, config.db.options).then(
 
 function loadModels() {
     // Load models
+    console.log(chalk.green('Loading models...'));  
     return util.requireAll(config.models)
         .then(() => createPostDeployement())
         .catch(() => mongoose.connection.close()) // Finally close connection
@@ -34,6 +35,7 @@ function loadModels() {
 
 function createPostDeployement() {
     // Load seeds
+    console.log(chalk.green('Loading seeds...'));  
     return util.requireAll(config.seeds)
         .then(() => console.log(chalk.green('Completed PostDeployement seeds!')))
 

@@ -1,8 +1,8 @@
 let birdController = require('./controller');
 
-birdController.remove({}) // removeAll
-    .then(() =>
-        birdController.create({
+// Export the promise so we can catch it with the require()
+module.exports = birdController.remove({}) 
+    .then(() => birdController.create({
             name: 'test bird',
             latin_name: 'birdia'
         })
