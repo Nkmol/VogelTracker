@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha modules/**/tests/*.js",
-    "seed": "node modules/seed.js"
+    "seed": "node modules/post_deploy.js",
+    "seed-debug": "node --nolazy --debug-brk=5858 modules/post_deploy.js"
   },
   "author": "",
   "license": "ISC",
