@@ -1,19 +1,11 @@
-let mongoose = require('mongoose'),
+let mongoose = require('../modules/models/mongoose'),
     chalk = require('chalk'),
     config = require('./config'),
     express = require('express');
 
 module.exports.start = () => {
     // Connect mongoose
-    mongoose.Promise = config.promise;
-    mongoose.connect(config.db.uri, config.db.options).then(
-        () => { console.log(chalk.green('Connected with MongoDB!'))},
-        err => {
-            console.error(chalk.red('Could not connect to MongoDB!'));
-            console.error(chalk.red(config.db.uri));
-            console.log(err);
-        }
-    );
+    mongoose.connect();
 
     // Setup listening
     let app = express();
