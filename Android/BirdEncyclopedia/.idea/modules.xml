@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BirdEncylopedia.iml" filepath="$PROJECT_DIR$/BirdEncylopedia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BirdEncyclopedia.iml" filepath="$PROJECT_DIR$/BirdEncyclopedia.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
