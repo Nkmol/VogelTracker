@@ -1,17 +1,5 @@
 var config = {};
 
-config.port = 3000;
-config.host = 'localhost';
-
-// -- DB -- 
-config.db = {};
-config.db.user = 'user';
-config.db.password = 'user';
-config.db.uri = `mongodb://${config.db.user}:${config.db.password}@ds145369.mlab.com:45369/birdsdb`;
-config.db.options = {
-    
-};
-
 // -- Promises --
 config.promise = global.Promise;
 
@@ -19,4 +7,13 @@ config.promise = global.Promise;
 config.models = 'modules/**/model.js' // Used to automaticall load the models
 config.seeds = 'modules/**/seed.js' // Used to automaticall load the seeds
 
-module.exports = config;
+module.exports = ((() => {
+    switch(process.env.NODE_ENV) {
+        case 'development':
+            return Object.assign(require('./config.dev.js'), config);
+        case 'production':
+            return Object.assign(require('./config.prod.js'), config);
+        default:
+            throw Error(`Enviroment ${process.env.NODE_ENV} not supported`);
+    }
+})());
