@@ -1,5 +1,3 @@
-//mongoimport -h ds145369.mlab.com:45369 -d birdsdb -c birds -u user -p user --file bird_data.json --jsonArray 
-
 [
   {
    "name": "Aalscholver",
