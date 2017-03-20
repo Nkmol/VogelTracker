@@ -14,13 +14,20 @@ class BaseController {
         this._Model = val;
     }
 
-    create(body) {
+    get Model() {
+        return this._Model;
+    }
+
+    create(body, debug = false) {
         let model = new this._Model(body);
         
         return model.save()
-            .then(() => {
-                console.log(chalk.blue(`Saved a ${this.modelName}`))}
-                )
+            .then(() => { 
+                console.log(chalk.blue(`Saved a ${this.modelName}`)) 
+                if(debug) console.log(chalk.blue(model));
+                
+                return model;
+            })
             .catch(err => {
                 console.error(chalk.red(`Something went wrong saving a ${this.modelName}`));
                 console.error(err); 
@@ -34,6 +41,14 @@ class BaseController {
                 console.error(chalk.red(`Something went wrong removing ${this.modelName}(s)`));
                 console.error(err); 
             });
+    }
+
+    find(doc) {
+        return this._Model.find(doc);
+    }
+
+    findOne(doc) {
+        return this._Model.findOne(doc);
     }
 }
 
