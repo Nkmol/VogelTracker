@@ -42,7 +42,7 @@ module.exports.start = () => {
             // set the port of our application
             // process.env.PORT lets the port be set by Heroku
             let port = process.env.PORT || config.port;
-            app.listen(port, config.host, () => {
+            app.listen(port, () => {
                 console.log(chalk.green(`App is listening on port ${config.port}`))
             })
         });
