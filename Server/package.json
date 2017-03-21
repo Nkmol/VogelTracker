@@ -2,10 +2,10 @@
   "name": "vogel-tracker-server",
   "version": "1.0.0",
   "description": "NodeJs Vogel Tracker service",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node server.js",
-    "debug": "cross-env NODE_ENV=development node --debug-brk=5858 server.js",
+    "start": "cross-env NODE_ENV=development node index.js",
+    "debug": "cross-env NODE_ENV=development node --debug-brk=5858 index.js",
     "test": "cross-env NODE_ENV=development mocha modules/**/tests/*.js",
     "seed": "cross-env NODE_ENV=development node modules/post_deploy.js",
     "seed-debug": "cross-env NODE_ENV=development node --nolazy --debug-brk=5858 modules/post_deploy.js",
