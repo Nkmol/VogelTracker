@@ -7,6 +7,13 @@ config.promise = global.Promise;
 config.models = 'modules/**/model.js' // Used to automaticall load the models
 config.seeds = 'modules/**/seed.js' // Used to automaticall load the seeds
 
+// -- password-jwt
+config.jwt = {};
+config.jwt.options = {
+    secretOrKey: "VogelTrackerSecret",
+    jwtFromRequest: require('passport-jwt').ExtractJwt.fromAuthHeader()
+}
+
 module.exports = ((() => {
     switch(process.env.NODE_ENV) {
         case 'development':
