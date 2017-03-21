@@ -5,10 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node server.js",
+    "debug": "cross-env NODE_ENV=development node --debug-brk=5858 server.js",
     "test": "cross-env NODE_ENV=development mocha modules/**/tests/*.js",
     "seed": "cross-env NODE_ENV=development node modules/post_deploy.js",
     "seed-debug": "cross-env NODE_ENV=development node --nolazy --debug-brk=5858 modules/post_deploy.js",
-    "seed-prod": "cross-env NODE_ENV=production node modules/post_deploy.js"
+    "seed-prod": "cross-env NODE_ENV=production node modules/post_deploy.js",
+    "nodemon": "nodemon --exec npm start"
   },
   "author": "",
   "license": "ISC",
