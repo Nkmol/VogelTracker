@@ -11,5 +11,4 @@ public class AccountGeneral {
      */
     public static final String ACCOUNT_TYPE = "com.example.jamamwitwit.birdencylopedia";
 
-
 }

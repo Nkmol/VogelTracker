@@ -104,6 +104,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
         if(accounts.length >= 1){
             Intent newIntent = new Intent(getBaseContext(), OverviewActivity.class);
+            newIntent.putExtra("account", accounts[0]);
             startActivity(newIntent);
         }
 
@@ -130,12 +131,10 @@ public class LoginActivity extends AccountAuthenticatorActivity {
      * Returns the message to be displayed at the top of the login dialog box.
      */
     private CharSequence getMessage() {
-        getString(R.string.label);
         if (TextUtils.isEmpty(user.username)) {
             // If no username, then we ask the user to log in using an
             // appropriate service.
-            final CharSequence msg = getText(R.string.login_no_username);
-            return msg;
+            return getText(R.string.login_no_username);
         }
         if (TextUtils.isEmpty(user.password)) {
             // We have an account but no password
@@ -145,8 +144,12 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     }
 
 
+    /**
+     * Makes the request to server to obtain an token and store the account through the account manager
+     *
+     * @param v
+     */
     public void login (View v) {
-
         // Show a dialog that indicates that the authentication process is happening
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.Theme_AppCompat_DayNight_Dialog);
