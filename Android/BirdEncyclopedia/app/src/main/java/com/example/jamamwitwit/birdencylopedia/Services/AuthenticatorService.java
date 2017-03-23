@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.example.jamamwitwit.birdencylopedia.Authenticator;
+import com.example.jamamwitwit.birdencylopedia.Authentication.Authenticator;
 
 /**
  * Created by jamamwitwit on 22/03/2017.

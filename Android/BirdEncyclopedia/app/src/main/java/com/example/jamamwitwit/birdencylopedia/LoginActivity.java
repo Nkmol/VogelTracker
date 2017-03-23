@@ -3,12 +3,16 @@ package com.example.jamamwitwit.birdencylopedia;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -32,15 +36,36 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AccountAuthenticatorActivity {
 
+    /** The binded object **/
     public User user;
 
-
-    public final static String ARG_ACCOUNT_TYPE = "ACCOUNT_TYPE";
-    public final static String ARG_AUTH_TYPE = "AUTH_TYPE";
-    public final static String ARG_ACCOUNT_NAME = "ACCOUNT_NAME";
-    public final static String ARG_IS_ADDING_NEW_ACCOUNT = "IS_ADDING_ACCOUNT";
-
+    /** The Intent flag to confirm credentials. */
+    public static final String PARAM_CONFIRM_CREDENTIALS = "confirmCredentials";
+    /** The Intent extra to store password. */
+    public static final String PARAM_PASSWORD = "password";
+    /** The Intent extra to store username. */
+    public static final String PARAM_USERNAME = "username";
+    /** The Intent extra to store the tokentype. */
+    public static final String PARAM_AUTHTOKEN_TYPE = "authtokenType";
+    /** The tag used to log to adb console. */
     private final String TAG = this.getClass().getSimpleName();
+    /** Keep track of the progress dialog so we can dismiss it */
+    private ProgressDialog mProgressDialog = null;
+
+
+    /**
+     * If set we are just checking that the user knows their credentials; this
+     * doesn't cause the user's password or authToken to be changed on the
+     * device.
+     */
+    private Boolean mConfirmCredentials = false;
+
+    /** for posting authentication attempts back to UI thread */
+    private final Handler mHandler = new Handler();
+
+    /** Was the original caller asking for an entirely new account? */
+    protected boolean mRequestNewAccount = false;
+
 
     private AccountManager mAccountManager;
     private String mAuthTokenType;
@@ -61,10 +86,51 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
         mAccountManager = AccountManager.get(getBaseContext());
 
-        mAuthTokenType = getIntent().getStringExtra(ARG_AUTH_TYPE);
+        final Intent intent = getIntent();
+        user.username = intent.getStringExtra(PARAM_USERNAME);
+
+        mAuthTokenType = getIntent().getStringExtra(PARAM_AUTHTOKEN_TYPE);
         if (mAuthTokenType == null)
             mAuthTokenType = AccountGeneral.ACCOUNT_TYPE;
 
+        mRequestNewAccount = user.username == null;
+        mConfirmCredentials = intent.getBooleanExtra(PARAM_CONFIRM_CREDENTIALS, false);
+
+    }
+
+    /**
+     * Handles onClick event on the Submit button. Sends username/password to
+     * the server for authentication. The button is configured to call
+     * handleLogin() in the layout XML.
+     *
+     * @param view The Submit button for which this method is invoked
+     */
+    public void handleLogin(View view) {
+        if (TextUtils.isEmpty(user.username) || TextUtils.isEmpty(user.password)) {
+            Toast.makeText(getBaseContext(), getMessage(), Toast.LENGTH_SHORT).show();
+        } else {
+            // Show a progress dialog, and kick off a background task to perform
+            // the user login attempt.
+            login(view);
+        }
+    }
+
+    /**
+     * Returns the message to be displayed at the top of the login dialog box.
+     */
+    private CharSequence getMessage() {
+        getString(R.string.label);
+        if (TextUtils.isEmpty(user.username)) {
+            // If no username, then we ask the user to log in using an
+            // appropriate service.
+            final CharSequence msg = getText(R.string.login_no_username);
+            return msg;
+        }
+        if (TextUtils.isEmpty(user.password)) {
+            // We have an account but no password
+            return getText(R.string.login_no_password);
+        }
+        return null;
     }
 
 
@@ -82,7 +148,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
                 .baseUrl("https://vogeltracker.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         final HerokuService service = retrofit.create(HerokuService.class);
         Call<LoginResponse> auth = service.login(user);
@@ -132,5 +197,4 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         });
 
     }
-
 }
