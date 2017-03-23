@@ -22,7 +22,7 @@ import retrofit2.http.POST;
 
 
 public interface HerokuService {
-      
+
       @POST("/login")
       Call<LoginResponse> login(@Body User user);
 
