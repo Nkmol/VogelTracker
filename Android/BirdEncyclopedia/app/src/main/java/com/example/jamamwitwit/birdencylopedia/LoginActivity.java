@@ -45,6 +45,10 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     public static final String PARAM_PASSWORD = "password";
     /** The Intent extra to store username. */
     public static final String PARAM_USERNAME = "username";
+    /** The Intent extra to store account type. */
+    public static final String PARAM_ACCOUNT_TYPE = "account_type";
+    /** The Intent extra to store account type. */
+    public static final String PARAM_IS_ADDING_ACCOUNT = "is_adding_account";
     /** The Intent extra to store the tokentype. */
     public static final String PARAM_AUTHTOKEN_TYPE = "authtokenType";
     /** The tag used to log to adb console. */
@@ -95,6 +99,13 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
         mRequestNewAccount = user.username == null;
         mConfirmCredentials = intent.getBooleanExtra(PARAM_CONFIRM_CREDENTIALS, false);
+
+        Account[] accounts = mAccountManager.getAccountsByType(mAuthTokenType);
+
+        if(accounts.length >= 1){
+            Intent newIntent = new Intent(getBaseContext(), OverviewActivity.class);
+            startActivity(newIntent);
+        }
 
     }
 
