@@ -197,6 +197,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
                     }
 
                     Intent intent = new Intent(getBaseContext(), OverviewActivity.class);
+                    intent.putExtra("account", account);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getBaseContext(), "Unauthorized", Toast.LENGTH_SHORT).show();
