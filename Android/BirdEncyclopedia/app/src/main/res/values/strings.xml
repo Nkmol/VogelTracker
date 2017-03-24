@@ -3,4 +3,7 @@
     <string name="label">BirdEncyclopedia</string>
     <string name="login_no_username">Voer a.u.b. een geldige username</string>
     <string name="login_no_password">Voer a.u.b. een geldig wachtwoord</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

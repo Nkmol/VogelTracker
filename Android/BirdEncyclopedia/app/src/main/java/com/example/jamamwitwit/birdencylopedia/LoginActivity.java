@@ -143,6 +143,14 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         return null;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //
+
+        if(resultCode == RESULT_OK){
+
+        }
+    }
 
     /**
      * Makes the request to server to obtain an token and store the account through the account manager
