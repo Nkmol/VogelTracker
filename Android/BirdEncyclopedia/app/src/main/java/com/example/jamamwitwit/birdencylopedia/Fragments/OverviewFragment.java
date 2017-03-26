@@ -12,23 +12,17 @@ import android.view.ViewGroup;
 
 import com.example.jamamwitwit.birdencylopedia.Adapters.BirdAdapter;
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
-import com.example.jamamwitwit.birdencylopedia.LoginActivity;
 import com.example.jamamwitwit.birdencylopedia.R;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
+import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
+import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 
 
 /**
@@ -40,9 +34,7 @@ public class OverviewFragment extends Fragment {
     public List<Bird> Birds;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private HashMap<String, Integer> mapIndex;
-    //RecyclerView mRecyclerView;
-    FastScrollRecyclerView mRecyclerView;
+    IndexFastScrollRecyclerView mRecyclerView;
     View view;
 
     @Nullable
@@ -58,14 +50,13 @@ public class OverviewFragment extends Fragment {
     }
 
     public void init(List<Bird> birds){
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mRecyclerView = (FastScrollRecyclerView) view.findViewById(R.id.bird_recycler_view);
+        mRecyclerView = (IndexFastScrollRecyclerView) view.findViewById(R.id.bird_recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new BirdAdapter(birds, getActivity().getBaseContext());
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
     private void getBirds(String authtoken) {
@@ -76,14 +67,7 @@ public class OverviewFragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        // Retrofit in order to handle our requests to the server
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://vogeltracker.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final HerokuService service = retrofit.create(HerokuService.class);
-
+        final HerokuService service = ServiceGenerator.createService(HerokuService.class);
 
         Call<List<Bird>> req = service.fetchBirds("JWT " + authtoken);
         req.enqueue(new Callback<List<Bird>>() {

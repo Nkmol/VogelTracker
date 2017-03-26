@@ -22,6 +22,7 @@ import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
 import com.example.jamamwitwit.birdencylopedia.Entities.LoginResponse;
 import com.example.jamamwitwit.birdencylopedia.Entities.User;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
+import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
 import com.example.jamamwitwit.birdencylopedia.databinding.ActivityLoginBinding;
 
 import org.json.JSONObject;
@@ -100,14 +101,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         mRequestNewAccount = user.username == null;
         mConfirmCredentials = intent.getBooleanExtra(PARAM_CONFIRM_CREDENTIALS, false);
 
-        Account[] accounts = mAccountManager.getAccountsByType(mAuthTokenType);
-
-        if(accounts.length >= 1){
-            Intent newIntent = new Intent(getBaseContext(), OverviewActivity.class);
-            newIntent.putExtra("account", accounts[0]);
-            startActivity(newIntent);
-        }
-
     }
 
     /**
@@ -143,15 +136,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         return null;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //
-
-        if(resultCode == RESULT_OK){
-
-        }
-    }
-
     /**
      * Makes the request to server to obtain an token and store the account through the account manager
      *
@@ -165,13 +149,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        // Retrofit in order to handle our requests to the server
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://vogeltracker.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final HerokuService service = retrofit.create(HerokuService.class);
+        final HerokuService service = ServiceGenerator.createService(HerokuService.class);
         Call<LoginResponse> auth = service.login(user);
         auth.enqueue(new Callback<LoginResponse>() {
             @Override

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,17 +27,42 @@ import java.util.Locale;
  * Created by jamamwitwit on 23/03/2017.
  */
 
-public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter {
+public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> implements /*FastScrollRecyclerView.SectionedAdapter*/ SectionIndexer {
 
 
     private List<Bird> mDataset;
     private Context mContext;
+    private ArrayList<Integer> mSectionPositions;
 
-    @NonNull
     @Override
-    public String getSectionName(int position) {
-        return mDataset.get(position).name.substring(0, 1).toUpperCase(Locale.ENGLISH);
+    public Object[] getSections() {
+        List<String> sections = new ArrayList<>(26);
+        mSectionPositions = new ArrayList<>(26);
+        for (int i = 0, size = mDataset.size(); i < size; i++) {
+            String section = String.valueOf(mDataset.get(i).name.charAt(0)).toUpperCase();
+            if (!sections.contains(section)) {
+                sections.add(section);
+                mSectionPositions.add(i);
+            }
+        }
+        return sections.toArray(new String[0]);
     }
+
+    @Override
+    public int getPositionForSection(int sectionIndex) {
+        return mSectionPositions.get(sectionIndex);
+    }
+
+    @Override
+    public int getSectionForPosition(int position) {
+        return 0;
+    }
+
+//    @NonNull
+//    @Override
+//    public String getSectionName(int position) {
+//        return mDataset.get(position).name.substring(0, 1).toUpperCase(Locale.ENGLISH);
+//    }
 
 
     // Provide a reference to the views for each data item
@@ -56,7 +83,7 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> im
         }
     }
 
-    public BirdAdapter(List<Bird> birdDataSet, Context context ){
+    public BirdAdapter(List<Bird> birdDataSet, Context context){
         mContext = context;
         mDataset = birdDataSet;
     }

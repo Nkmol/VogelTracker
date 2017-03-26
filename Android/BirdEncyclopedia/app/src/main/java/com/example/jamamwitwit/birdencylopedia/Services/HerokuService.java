@@ -33,7 +33,4 @@ public interface HerokuService {
       @GET("/birds")
       Call<List<Bird>> fetchBirds(@Header("authorization") String token);
 
-      @GET("/birds")
-      Call<List<Bird>> fetchBirdies(@Header("authorization") String token);
-
 }
