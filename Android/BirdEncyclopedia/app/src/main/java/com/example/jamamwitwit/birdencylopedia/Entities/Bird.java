@@ -11,5 +11,6 @@ public class Bird {
     public String status;
     public String information;
     public String latin_name;
+    public String img;
 
 }

@@ -1,26 +1,42 @@
 package com.example.jamamwitwit.birdencylopedia.Adapters;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
 import com.example.jamamwitwit.birdencylopedia.R;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by jamamwitwit on 23/03/2017.
  */
 
-public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder>  {
+public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter {
+
 
     private List<Bird> mDataset;
+    private Context mContext;
+
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        return mDataset.get(position).name.substring(0, 1).toUpperCase(Locale.ENGLISH);
+    }
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -29,16 +45,19 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder>  {
         // each data item is just a string in this case
 
         TextView bird_name;
+        ImageView bird_image;
         CardView cv;
 
         public ViewHolder(View v) {
             super(v);
             cv = (CardView) v.findViewById(R.id.cv);
             bird_name = (TextView)v.findViewById(R.id.bird_name);
+            bird_image = (ImageView)v.findViewById(R.id.person_photo);
         }
     }
 
-    public BirdAdapter(List<Bird> birdDataSet){
+    public BirdAdapter(List<Bird> birdDataSet, Context context ){
+        mContext = context;
         mDataset = birdDataSet;
     }
 
@@ -54,6 +73,8 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(BirdAdapter.ViewHolder holder, int position) {
         holder.bird_name.setText(mDataset.get(position).name);
+
+        Picasso.with(mContext).load(mDataset.get(position).img).into(holder.bird_image);
     }
 
     @Override
