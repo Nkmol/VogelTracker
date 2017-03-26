@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">"BirdEncylopedia "</string>
+    <string name="label">BirdEncyclopedia</string>
+    <string name="login_no_username">Voer a.u.b. een geldige username</string>
+    <string name="login_no_password">Voer a.u.b. een geldig wachtwoord</string>
 </resources>
