@@ -8,8 +8,9 @@ class Mongoose {
     }
 
     connect() {
+        mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
         return mongoose.connect(config.db.uri, config.db.options)
-            .then(() => console.log(chalk.green('Connected with MongoDB!')))
+            .then(() => console.log(chalk.green(`Connected with MongoDB! [${mongoose.connection.readyState}]`)))
             .catch(err => { 
                 console.error(chalk.red('Could not connect to MongoDB!'));
                 console.error(chalk.red(config.db.uri));
@@ -18,7 +19,8 @@ class Mongoose {
     }
 
     disconnect() {
-        return mongoose.connection.close();
+        return mongoose.connection.close()
+            .then(() => console.log(chalk.green(`MongoDB got disconneted  [${mongoose.connection.readyState}]`)));
     }
 
     model(modelName) {

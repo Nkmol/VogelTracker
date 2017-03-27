@@ -25,9 +25,6 @@ import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
 import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
 import com.example.jamamwitwit.birdencylopedia.databinding.ActivityLoginBinding;
 
-import org.json.JSONObject;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,6 +91,14 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         mRequestNewAccount = user.username == null;
         mConfirmCredentials = intent.getBooleanExtra(PARAM_CONFIRM_CREDENTIALS, false);
 
+        Account[] accounts = mAccountManager.getAccountsByType(mAuthTokenType);
+
+        if(accounts.length >= 1){
+            Intent newIntent = new Intent(getBaseContext(), OverviewActivity.class);
+            newIntent.putExtra("account", accounts[0]);
+            startActivity(newIntent);
+        }
+
     }
 
     /**
@@ -142,7 +147,9 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
+
         final HerokuService service = ServiceGenerator.createService(HerokuService.class);
+
         Call<LoginResponse> auth = service.login(user);
         auth.enqueue(new Callback<LoginResponse>() {
             @Override

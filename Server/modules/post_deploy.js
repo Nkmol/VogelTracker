@@ -27,7 +27,7 @@ function createPostDeployement() {
     console.log(chalk.green('Loading seeds...'));
 
     // Make seeds chainable so we can establish dependencies with files
-    let loadSeed = model => util.requirePromise(`./modules/${model}/seed`);
+    let loadSeed = model => util.requireAll(`./modules/${model}/**/seed.js`);
     return loadSeed('roles')
         .then(() => loadSeed('users'))
         .then(() => loadSeed('birds'))

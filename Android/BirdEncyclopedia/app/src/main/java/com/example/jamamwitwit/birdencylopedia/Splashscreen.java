@@ -4,6 +4,7 @@ package com.example.jamamwitwit.birdencylopedia;
  * Created by jamamwitwit on 20/03/2017.
  */
 
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -16,9 +17,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+
 import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
 
 public class Splashscreen extends Activity {
+
 
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -56,6 +59,7 @@ public class Splashscreen extends Activity {
                         sleep(100);
                         waited += 100;
                     }
+
 
                     Account[] accounts = AccountManager
                             .get(getBaseContext())
