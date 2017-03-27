@@ -1,5 +1,8 @@
 package com.example.jamamwitwit.birdencylopedia.Adapters;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -12,6 +15,8 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
+import com.example.jamamwitwit.birdencylopedia.Fragments.DetailFragment;
+import com.example.jamamwitwit.birdencylopedia.OverviewActivity;
 import com.example.jamamwitwit.birdencylopedia.R;
 import com.squareup.picasso.Picasso;
 
@@ -32,6 +37,7 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> im
     private List<Bird> mDataset;
     private Context mContext;
     private ArrayList<Integer> mSectionPositions;
+    private Activity mParent;
 
     @Override
     public Object[] getSections() {
@@ -71,9 +77,10 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> im
         }
     }
 
-    public BirdAdapter(List<Bird> birdDataSet, Context context){
-        mContext = context;
+    public BirdAdapter(List<Bird> birdDataSet, Activity act){
+        mContext = act.getBaseContext(); //context;
         mDataset = birdDataSet;
+        mParent = act;
     }
 
     @Override
@@ -86,14 +93,23 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> im
     }
 
     @Override
-    public void onBindViewHolder(BirdAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(BirdAdapter.ViewHolder holder, final int position) {
         holder.bird_name.setText(mDataset.get(position).name);
-
         Picasso.with(mContext).load(mDataset.get(position).img).into(holder.bird_image);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Mooiere oplossing dan dit
+                ((OverviewActivity)mParent).loadDetail(mDataset.get(position));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
+
+
 }

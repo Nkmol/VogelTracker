@@ -1,7 +1,9 @@
 package com.example.jamamwitwit.birdencylopedia.Fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,13 +13,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 
 import com.example.jamamwitwit.birdencylopedia.Adapters.BirdAdapter;
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
+import com.example.jamamwitwit.birdencylopedia.OverviewActivity;
 import com.example.jamamwitwit.birdencylopedia.R;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
 import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
+import com.example.jamamwitwit.birdencylopedia.databinding.ActivityLoginBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +45,10 @@ public class OverviewFragment extends Fragment {
     public EditText search;
     View view;
 
+    onDataCallListener mOnDataCallListener;
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +58,15 @@ public class OverviewFragment extends Fragment {
         String token = data.getString("authToken");
         getBirds(token);
         addTextListener();
+
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        if(context instanceof onDataCallListener)
+            mOnDataCallListener=(onDataCallListener)context;
     }
 
     public void init(List<Bird> birds){
@@ -58,12 +75,20 @@ public class OverviewFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setIndexBarColor("#FFA000");
 
-        mAdapter = new BirdAdapter(birds, getActivity().getBaseContext());
+        mAdapter = new BirdAdapter(birds, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
     private void getBirds(String authtoken) {
+
+        List<Bird> parent_data = ((OverviewActivity)this.getActivity()).getBirds();
+
+        if(parent_data != null && parent_data.size() > 0){
+            Birds = parent_data;
+            init(Birds);
+            return;
+        }
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                 R.style.Theme_AppCompat_DayNight_Dialog);
@@ -79,6 +104,8 @@ public class OverviewFragment extends Fragment {
             public void onResponse(Call<List<Bird>> call, Response<List<Bird>> response) {
                 progressDialog.dismiss();
                 Birds = response.body();
+
+                mOnDataCallListener.onDataReceived(response.body());
                 init(Birds);
             }
             @Override
@@ -113,16 +140,15 @@ public class OverviewFragment extends Fragment {
                 }
 
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                mAdapter = new BirdAdapter(filteredList, getActivity().getBaseContext());
+                mAdapter = new BirdAdapter(filteredList, getActivity());
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();  // data set changed
             }
         });
     }
-    
 
-    public interface OnItemSelectedListener
-    {
-        public void onItemSelected(String item);
+
+    public interface onDataCallListener {
+        public void onDataReceived(List<Bird> birds);
     }
 }

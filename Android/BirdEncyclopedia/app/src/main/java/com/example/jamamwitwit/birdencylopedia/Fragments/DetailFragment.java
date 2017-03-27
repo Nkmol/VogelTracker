@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
 import com.example.jamamwitwit.birdencylopedia.R;
 
 /**
@@ -19,13 +20,15 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+
+        return view;
     }
 
-    public static DetailFragment newInstance(String name) {
+    public static DetailFragment newInstance(Bird bird) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putString("KEY_NAME", name);
+        args.putSerializable("selectedBird", bird);
         fragment.setArguments(args);
         return fragment;
     }

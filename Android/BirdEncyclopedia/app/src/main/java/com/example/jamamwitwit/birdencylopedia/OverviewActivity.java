@@ -11,12 +11,18 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
+import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
 import com.example.jamamwitwit.birdencylopedia.Fragments.DetailFragment;
 import com.example.jamamwitwit.birdencylopedia.Fragments.OverviewFragment;
 
-public class OverviewActivity extends AppCompatActivity implements OverviewFragment.OnItemSelectedListener{
+import java.util.ArrayList;
+import java.util.List;
+
+public class OverviewActivity extends AppCompatActivity implements OverviewFragment.onDataCallListener {
     
     public AccountManager am;
+    private List<Bird> mBirds = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +62,20 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
 
     }
 
-    @Override
-    public void onItemSelected(String item) {
-        DetailFragment fragment = DetailFragment.newInstance(item);
+    public void loadDetail(Bird bird){
+        DetailFragment fragment = DetailFragment.newInstance(bird);
 
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+    }
+
+    public List<Bird> getBirds(){
+        return mBirds;
+    }
+
+    @Override
+    public void onDataReceived(List<Bird> birds) {
+        this.mBirds = birds;
     }
 }
