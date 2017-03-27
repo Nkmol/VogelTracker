@@ -12,7 +12,12 @@ config.jwt = {};
 config.jwt.options = {
     secretOrKey: "VogelTrackerSecret",
     jwtFromRequest: require('passport-jwt').ExtractJwt.fromAuthHeader()
-}
+};
+
+// -- BCrypt --
+config.bcrypt = {};
+config.bcrypt.saltRounds = 10;
+config.bcrypt.secret = config.jwt.options.secretOrKey;
 
 module.exports = ((() => {
     switch(process.env.NODE_ENV) {

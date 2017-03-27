@@ -50,6 +50,14 @@ class BaseController {
     findOne(doc) {
         return this._Model.findOne(doc);
     }
+
+    populate(doc, propPath) {
+        return this._Model.populate(doc, propPath);
+    }
+
+    exists(doc) {
+        return this.findOne(doc).then(result =>result != null);
+    }
 }
 
 module.exports = BaseController;
