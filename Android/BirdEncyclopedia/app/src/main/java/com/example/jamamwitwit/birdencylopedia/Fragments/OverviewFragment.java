@@ -4,19 +4,26 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.jamamwitwit.birdencylopedia.Adapters.BirdAdapter;
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
 import com.example.jamamwitwit.birdencylopedia.R;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
 import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
-import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
@@ -35,24 +42,29 @@ public class OverviewFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     IndexFastScrollRecyclerView mRecyclerView;
+    public EditText search;
     View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_overview, container, false);
-
+        view = inflater.inflate(R.layout.fragment_overview, container, false);
+        search = (EditText) view.findViewById(R.id.search);
         Bundle data = this.getArguments();
         String token = data.getString("authToken");
         getBirds(token);
-
+        addTextListener();
         return view;
     }
+
+
 
     public void init(List<Bird> birds){
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView = (IndexFastScrollRecyclerView) view.findViewById(R.id.bird_recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
+//        mRecyclerView.setIndexbarMargin(200);
+        mRecyclerView.setIndexBarColor("#FFA000");
 
         mAdapter = new BirdAdapter(birds, getActivity().getBaseContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -84,6 +96,37 @@ public class OverviewFragment extends Fragment {
             }
         });
 
+    }
+
+    public void addTextListener(){
+
+        search.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence query, int start, int before, int count) {
+
+                query = query.toString().toLowerCase();
+
+                final List<Bird> filteredList = new ArrayList<>();
+
+                for (int i = 0; i < Birds.size(); i++) {
+
+                    final String text = Birds.get(i).name.toLowerCase();
+                    if (text.contains(query)) {
+
+                        filteredList.add(Birds.get(i));
+                    }
+                }
+
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                mAdapter = new BirdAdapter(filteredList, getActivity().getBaseContext());
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();  // data set changed
+            }
+        });
     }
 
     

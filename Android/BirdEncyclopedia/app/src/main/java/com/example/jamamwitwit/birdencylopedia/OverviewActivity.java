@@ -9,9 +9,16 @@ import android.accounts.OperationCanceledException;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
@@ -20,7 +27,7 @@ import com.example.jamamwitwit.birdencylopedia.Fragments.OverviewFragment;
 
 import java.io.IOException;
 
-public class OverviewActivity extends FragmentActivity implements OverviewFragment.OnItemSelectedListener{
+public class OverviewActivity extends AppCompatActivity implements OverviewFragment.OnItemSelectedListener{
 
     private Account mAccount;
     public AccountManager am;
@@ -58,9 +65,12 @@ public class OverviewActivity extends FragmentActivity implements OverviewFragme
                     .add(R.id.fragment_container, overView).commit();
         }
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle("Zoeklijst");
+        myToolbar.setBackgroundColor(Color.parseColor("#FFA000"));
+        setSupportActionBar(myToolbar);
 
     }
-
 
     @Override
     public void onItemSelected(String item) {

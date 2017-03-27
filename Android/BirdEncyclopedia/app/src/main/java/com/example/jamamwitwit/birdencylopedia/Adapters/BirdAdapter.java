@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
 import com.example.jamamwitwit.birdencylopedia.R;
-import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;

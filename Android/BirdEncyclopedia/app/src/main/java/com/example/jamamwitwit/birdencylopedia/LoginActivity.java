@@ -65,9 +65,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
      */
     private Boolean mConfirmCredentials = false;
 
-    /** for posting authentication attempts back to UI thread */
-    private final Handler mHandler = new Handler();
-
     /** Was the original caller asking for an entirely new account? */
     protected boolean mRequestNewAccount = false;
 
