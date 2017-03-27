@@ -28,10 +28,8 @@ import com.example.jamamwitwit.birdencylopedia.Fragments.OverviewFragment;
 import java.io.IOException;
 
 public class OverviewActivity extends AppCompatActivity implements OverviewFragment.OnItemSelectedListener{
-
-    private Account mAccount;
+    
     public AccountManager am;
-    private String mAuthToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +37,10 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
         setContentView(R.layout.activity_overview);
 
         final Intent intent = getIntent();
-        mAccount = (Account) intent.getExtras().get("account");
+        Account mAccount = (Account) intent.getExtras().get("account");
 
         am = AccountManager.get(getBaseContext());
-        Bundle authTokenBundle = null;
-        mAuthToken = am.peekAuthToken(mAccount, AccountGeneral.ACCOUNT_TYPE);
+        String mAuthToken = am.peekAuthToken(mAccount, AccountGeneral.ACCOUNT_TYPE);
 
 
         if (findViewById(R.id.fragment_container) != null) {

@@ -56,19 +56,8 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> im
     public int getSectionForPosition(int position) {
         return 0;
     }
-
-//    @NonNull
-//    @Override
-//    public String getSectionName(int position) {
-//        return mDataset.get(position).name.substring(0, 1).toUpperCase(Locale.ENGLISH);
-//    }
-
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+    
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
 
         TextView bird_name;
         ImageView bird_image;

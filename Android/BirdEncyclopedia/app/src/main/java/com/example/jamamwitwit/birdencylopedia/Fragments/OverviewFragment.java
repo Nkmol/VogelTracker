@@ -4,15 +4,11 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -40,7 +36,6 @@ public class OverviewFragment extends Fragment {
 
     public List<Bird> Birds;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     IndexFastScrollRecyclerView mRecyclerView;
     public EditText search;
     View view;
@@ -57,13 +52,10 @@ public class OverviewFragment extends Fragment {
         return view;
     }
 
-
-
     public void init(List<Bird> birds){
-        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView = (IndexFastScrollRecyclerView) view.findViewById(R.id.bird_recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mRecyclerView.setIndexbarMargin(200);
         mRecyclerView.setIndexBarColor("#FFA000");
 
         mAdapter = new BirdAdapter(birds, getActivity().getBaseContext());
@@ -89,7 +81,6 @@ public class OverviewFragment extends Fragment {
                 Birds = response.body();
                 init(Birds);
             }
-
             @Override
             public void onFailure(Call<List<Bird>> call, Throwable t) {
 
@@ -128,7 +119,6 @@ public class OverviewFragment extends Fragment {
             }
         });
     }
-
     
 
     public interface OnItemSelectedListener

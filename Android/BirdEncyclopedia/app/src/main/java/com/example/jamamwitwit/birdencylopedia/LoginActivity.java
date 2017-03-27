@@ -42,8 +42,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
     /** The Intent flag to confirm credentials. */
     public static final String PARAM_CONFIRM_CREDENTIALS = "confirmCredentials";
-    /** The Intent extra to store password. */
-    public static final String PARAM_PASSWORD = "password";
     /** The Intent extra to store username. */
     public static final String PARAM_USERNAME = "username";
     /** The Intent extra to store account type. */
@@ -54,8 +52,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     public static final String PARAM_AUTHTOKEN_TYPE = "authtokenType";
     /** The tag used to log to adb console. */
     private final String TAG = this.getClass().getSimpleName();
-    /** Keep track of the progress dialog so we can dismiss it */
-    private ProgressDialog mProgressDialog = null;
 
 
     /**
