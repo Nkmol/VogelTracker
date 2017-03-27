@@ -8,7 +8,7 @@ exports.requireAll = (globPath, debug = true) => {
         .then(files => {
             // use .map() so we can iterate through the files and make a Promise of every file request.
             // use Promise.all to make a chain of promises of all file requests
-            return Promise.all(files.map(exports.requirePromise));
+            return Promise.all(files.map(x => exports.requirePromise(x)));
         })
         .catch(err => console.error(chalk.red(`Something went wrong when loading file(s): ${err}`)))
 }
@@ -18,7 +18,7 @@ exports.requirePromise = (file, debug = true) => {
     return new Promise((resolve, reject) => {
         try {
                 let promise = rootRequire(`./${file}`);
-                                
+                
                 if(debug)
                     console.log(chalk.green(`   Loaded file: ${file}`));
 

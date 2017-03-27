@@ -1,4 +1,4 @@
-let birdController = require('./controller'),
+let birdController = require('../controller'),
     chalk = require('chalk');
 
 // Export the promise so we can catch it with the require()
