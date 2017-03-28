@@ -22,11 +22,9 @@ import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
 import com.example.jamamwitwit.birdencylopedia.Entities.LoginResponse;
 import com.example.jamamwitwit.birdencylopedia.Entities.User;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
+import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
 import com.example.jamamwitwit.birdencylopedia.databinding.ActivityLoginBinding;
 
-import org.json.JSONObject;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,8 +39,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
     /** The Intent flag to confirm credentials. */
     public static final String PARAM_CONFIRM_CREDENTIALS = "confirmCredentials";
-    /** The Intent extra to store password. */
-    public static final String PARAM_PASSWORD = "password";
     /** The Intent extra to store username. */
     public static final String PARAM_USERNAME = "username";
     /** The Intent extra to store account type. */
@@ -53,8 +49,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     public static final String PARAM_AUTHTOKEN_TYPE = "authtokenType";
     /** The tag used to log to adb console. */
     private final String TAG = this.getClass().getSimpleName();
-    /** Keep track of the progress dialog so we can dismiss it */
-    private ProgressDialog mProgressDialog = null;
 
 
     /**
@@ -63,9 +57,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
      * device.
      */
     private Boolean mConfirmCredentials = false;
-
-    /** for posting authentication attempts back to UI thread */
-    private final Handler mHandler = new Handler();
 
     /** Was the original caller asking for an entirely new account? */
     protected boolean mRequestNewAccount = false;
@@ -143,7 +134,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         return null;
     }
 
-
     /**
      * Makes the request to server to obtain an token and store the account through the account manager
      *
@@ -157,13 +147,9 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        // Retrofit in order to handle our requests to the server
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://vogeltracker.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        final HerokuService service = retrofit.create(HerokuService.class);
+        final HerokuService service = ServiceGenerator.createService(HerokuService.class);
+
         Call<LoginResponse> auth = service.login(user);
         auth.enqueue(new Callback<LoginResponse>() {
             @Override

@@ -12,10 +12,19 @@ import com.example.jamamwitwit.birdencylopedia.Authentication.Authenticator;
  */
 
 public class AuthenticatorService extends Service {
+
+    // Instance field that stores the authenticator object
+    private Authenticator mAuthenticator;
+
+    @Override
+    public void onCreate() {
+        // Create a new authenticator object
+        mAuthenticator = new Authenticator(this);
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Authenticator auth = new Authenticator(this);
-        return auth.getIBinder();
+        return mAuthenticator.getIBinder();
     }
 }
