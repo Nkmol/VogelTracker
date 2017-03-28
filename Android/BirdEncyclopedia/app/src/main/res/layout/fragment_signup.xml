@@ -63,7 +63,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Ben je al een lid? Login"
+            android:text="Ben je al een lid?"
             android:gravity="center"
             android:textSize="16dip"/>
 
