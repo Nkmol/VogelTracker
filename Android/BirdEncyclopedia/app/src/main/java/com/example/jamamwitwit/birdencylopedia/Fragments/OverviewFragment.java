@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -54,6 +55,7 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_overview, container, false);
         search = (EditText) view.findViewById(R.id.search);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Zoeklijst");
         Bundle data = this.getArguments();
         String token = data.getString("authToken");
         getBirds(token);
@@ -94,6 +96,7 @@ public class OverviewFragment extends Fragment {
                 R.style.Theme_AppCompat_DayNight_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         final HerokuService service = ServiceGenerator.createService(HerokuService.class);
