@@ -6,8 +6,10 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var babel = require('gulp-babel');
 
 var paths = {
+  js: ['./js/**/*.js'],
   sass: ['./scss/**/*.scss']
 };
 
@@ -26,9 +28,19 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
+gulp.task('babel', function(done) {
+  gulp.src('./js/*.js')
+    .pipe(babel({presets: ['es2015']}))
+    .pipe(gulp.dest('./www/js/'))
+    .on('end', done);
+});
+
 gulp.task('watch', ['sass'], function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.js, ['babel']);
 });
+
+gulp.task('serve:before', ['sass', 'babel', 'watch']);
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()
