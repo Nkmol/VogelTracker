@@ -56,7 +56,7 @@ class BaseController {
     }
 
     exists(doc) {
-        return this.findOne(doc).then(result =>result != null);
+        return this.findOne(doc).then(result => result != null);
     }
 }
 
