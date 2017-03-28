@@ -58,6 +58,18 @@ class BaseController {
     exists(doc) {
         return this.findOne(doc).then(result => result != null);
     }
+
+    errorResponse(err, res, status = 400, when = true) {
+        return new Promise((resolve, reject) => {
+            console.log(when);
+            if(when) {
+                res.status(status).json({message: err});
+                reject(err);
+            } 
+            else
+                resolve(err);
+        })
+    }
 }
 
 module.exports = BaseController;

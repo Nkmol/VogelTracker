@@ -19,20 +19,14 @@ class UserController extends BaseController {
         // check email exists
         return this.exists({email: req.body.email})
         .then(exists => {
-            if(exists) {
-                let msg = "An account has already been registrated to this mailadress.";
-                res.status(409).json({message: msg}); 
-                reject(msg); // Break
-            }
+            let msg = "An account has already been registrated to this mailadress.";
+            return this.errorResponse(msg, res, 409, exists)
         })
         // Check username exists
         .then(() => this.exists({username: req.body.username}))
         .then(exists => {
-            if(exists) {
-                let msg = "This username is already in use.";
-                res.status(409).json({message: msg}); 
-                reject(msg); // Break
-            }
+            let msg = "This username is already in use.";
+            return this.errorResponse(msg, res, 409, exists)
         })
         // Async hasing
         .then(() => bcrypt.hash(req.body.password))
@@ -44,7 +38,7 @@ class UserController extends BaseController {
                 .then(doc => res.json({message: "ok"}));
         })
         // Supress "UnhandledPromiseRejectionWarning" of Node
-        .catch(err => {});
+        .catch(() => {})
     }
 
     login(req, res, next) {
@@ -53,12 +47,9 @@ class UserController extends BaseController {
 
         return this.Model.findOne({username: req.body.username})
             .then(doc => {
-                if(!doc) {
-                    res.status(401).json({message: "Password and/or username did not match"});
-                    reject();
-                }
-
-                return doc;
+                let msg = "Password and/or username did not match";
+                return this.errorResponse(msg, res, 401, !doc)
+                    .then(() => doc); // return 'doc' to next chain
             })
             .then(doc => {
                 return bcrypt.compare(req.body.password, doc.password)
@@ -69,13 +60,12 @@ class UserController extends BaseController {
                             var token = require('jsonwebtoken').sign(payload, config.jwt.options.secretOrKey);
                             return res.json({message: "ok", token: token});
                         }
-                        else {
-                            res.status(401).json({message: "Password and/or username did not match"});
-                            reject();
-                        }
+                        else 
+                            return this.errorResponse("Password and/or username did not match", res, 401)
                     })
             })
-            .catch(() => {});
+            // Supress "UnhandledPromiseRejectionWarning" of Node
+            .catch(() => {})
     }
 
     // JWT validation
