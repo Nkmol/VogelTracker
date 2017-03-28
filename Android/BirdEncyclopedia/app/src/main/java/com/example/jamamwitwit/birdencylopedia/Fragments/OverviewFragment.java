@@ -14,7 +14,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 
 import com.example.jamamwitwit.birdencylopedia.Adapters.BirdAdapter;
@@ -23,7 +22,6 @@ import com.example.jamamwitwit.birdencylopedia.OverviewActivity;
 import com.example.jamamwitwit.birdencylopedia.R;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
 import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
-import com.example.jamamwitwit.birdencylopedia.databinding.ActivityLoginBinding;
 
 import java.util.ArrayList;
 import java.util.List;
