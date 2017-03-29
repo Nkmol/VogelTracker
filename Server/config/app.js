@@ -30,6 +30,7 @@ module.exports.start = () => {
             app.use(jwtpassport.initialize())  
 
             app.post("/login", loginController.login.bind(loginController));
+            app.post("/register", loginController.registrate.bind(loginController));
 
             // Authenticate on all routes
             app.all('*', jwtpassport.authenticate());
