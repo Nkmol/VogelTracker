@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.example.jamamwitwit.birdencylopedia.Entities.User;
+import com.example.jamamwitwit.birdencylopedia.Fragments.LoginFragment;
 import com.example.jamamwitwit.birdencylopedia.LoginActivity;
 
 /**
@@ -35,9 +36,9 @@ public class Authenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
         final Intent intent = new Intent(mContext, LoginActivity.class);
-        intent.putExtra(LoginActivity.PARAM_ACCOUNT_TYPE, accountType);
-        intent.putExtra(LoginActivity.PARAM_AUTHTOKEN_TYPE, authTokenType);
-        intent.putExtra(LoginActivity.PARAM_IS_ADDING_ACCOUNT, true);
+        intent.putExtra(LoginFragment.PARAM_ACCOUNT_TYPE, accountType);
+        intent.putExtra(LoginFragment.PARAM_AUTHTOKEN_TYPE, authTokenType);
+        intent.putExtra(LoginFragment.PARAM_IS_ADDING_ACCOUNT, true);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(AccountManager.KEY_INTENT, intent);
@@ -79,8 +80,8 @@ public class Authenticator extends AbstractAccountAuthenticator {
         // an intent to display our AuthenticatorActivity.
         final Intent intent = new Intent(mContext, LoginActivity.class);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
-        intent.putExtra(LoginActivity.PARAM_ACCOUNT_TYPE, account.type);
-        intent.putExtra(LoginActivity.PARAM_AUTHTOKEN_TYPE, authTokenType);
+        intent.putExtra(LoginFragment.PARAM_ACCOUNT_TYPE, account.type);
+        intent.putExtra(LoginFragment.PARAM_AUTHTOKEN_TYPE, authTokenType);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(AccountManager.KEY_INTENT, intent);
         return bundle;

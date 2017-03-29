@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,7 +14,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 
 import com.example.jamamwitwit.birdencylopedia.Adapters.BirdAdapter;
@@ -22,7 +22,6 @@ import com.example.jamamwitwit.birdencylopedia.OverviewActivity;
 import com.example.jamamwitwit.birdencylopedia.R;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
 import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
-import com.example.jamamwitwit.birdencylopedia.databinding.ActivityLoginBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +53,7 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_overview, container, false);
         search = (EditText) view.findViewById(R.id.search);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Zoeklijst");
         Bundle data = this.getArguments();
         String token = data.getString("authToken");
         getBirds(token);
@@ -94,6 +94,7 @@ public class OverviewFragment extends Fragment {
                 R.style.Theme_AppCompat_DayNight_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
         final HerokuService service = ServiceGenerator.createService(HerokuService.class);
