@@ -3,32 +3,24 @@ package com.example.jamamwitwit.birdencylopedia.Fragments;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
-import com.example.jamamwitwit.birdencylopedia.Entities.LoginResponse;
+import com.example.jamamwitwit.birdencylopedia.Entities.DataResponse;
 import com.example.jamamwitwit.birdencylopedia.Entities.User;
-import com.example.jamamwitwit.birdencylopedia.LoginActivity;
 import com.example.jamamwitwit.birdencylopedia.OverviewActivity;
 import com.example.jamamwitwit.birdencylopedia.R;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
 import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
-import com.example.jamamwitwit.birdencylopedia.databinding.FragmentDetailBinding;
 import com.example.jamamwitwit.birdencylopedia.databinding.FragmentLoginBinding;
 
 
@@ -159,10 +151,10 @@ public class LoginFragment extends android.app.Fragment {
 
         final HerokuService service = ServiceGenerator.createService(HerokuService.class);
 
-        Call<LoginResponse> auth = service.login(user);
-        auth.enqueue(new Callback<LoginResponse>() {
+        Call<DataResponse> auth = service.login(user);
+        auth.enqueue(new Callback<DataResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
 
                 progressDialog.dismiss();
 
@@ -200,7 +192,7 @@ public class LoginFragment extends android.app.Fragment {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<DataResponse> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Could not manage to connect", Toast.LENGTH_SHORT).show();
             }
