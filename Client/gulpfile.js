@@ -6,7 +6,9 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
-var debug = debug = require('gulp-debug');
+var debug = require('gulp-debug');
+var ngAnnotate = require('gulp-ng-annotate');
+var stringify = require('stringify');
 
 var browserify  = require('browserify');
 var babelify    = require('babelify');
@@ -39,12 +41,14 @@ gulp.task('sass', function(done) {
 gulp.task('script', function(done) {
   	return browserify({entries: './app/src/index.js', debug: true})
       .transform("babelify", {presets: ["es2015"]})
+      .transform(stringify(['.html']))
       .bundle()
       .pipe(source('index.js'))
       .pipe(buffer())
-      // .pipe(sourcemaps.init())
-      // .pipe(uglify())
-      // .pipe(sourcemaps.write('./maps'))
+      .pipe(ngAnnotate())
+      .pipe(sourcemaps.init())
+      .pipe(uglify())
+      .pipe(sourcemaps.write('./maps/'))
       .pipe(gulp.dest('./app/dist/'))
       .pipe(livereload());
 });

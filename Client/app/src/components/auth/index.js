@@ -6,6 +6,7 @@ const auth = angular
     ])
     .component('login', LoginComponent)
     .config($stateProvider => {
+        'ngInject';
         $stateProvider
             .state('auth', {
                 url: '/auth',
