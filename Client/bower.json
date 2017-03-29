@@ -15,13 +15,13 @@
     "Nkmol <Sandermol95@hotmail.com>"
   ],
   "description": "An ionic vogeltracker app",
-  "main": "www/index.html",
+  "main": "app/index.html",
   "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "www/lib",
+    "app/lib",
     "test",
     "tests"
   ],

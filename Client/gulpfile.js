@@ -6,6 +6,7 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var debug = debug = require('gulp-debug');
 
 var browserify  = require('browserify');
 var babelify    = require('babelify');
@@ -16,35 +17,35 @@ var sourcemaps  = require('gulp-sourcemaps');
 var livereload  = require('gulp-livereload');
 
 var paths = {
-  js: ['./js/**/*.js'],
-  sass: ['./scss/**/*.scss']
+  js: ['./app/src/**/*.js'],
+  sass: ['./app/src/**/*.scss']
 };
 
 gulp.task('default', ['sass']);
 
 gulp.task('sass', function(done) {
-  gulp.src('./scss/*.scss')
+  gulp.src('./app/src/scss/*.scss')
     .pipe(sass())
     .on('error', sass.logError)
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest('./app/dist/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest('./app/dist/css/'))
     .on('end', done);
 });
 
 gulp.task('script', function(done) {
-  	return browserify({entries: './js/app.js', debug: true})
+  	return browserify({entries: './app/src/index.js', debug: true})
       .transform("babelify", {presets: ["es2015"]})
       .bundle()
-      .pipe(source('app.js'))
+      .pipe(source('index.js'))
       .pipe(buffer())
       // .pipe(sourcemaps.init())
       // .pipe(uglify())
       // .pipe(sourcemaps.write('./maps'))
-      .pipe(gulp.dest('./www/js'))
+      .pipe(gulp.dest('./app/dist/'))
       .pipe(livereload());
 });
 
