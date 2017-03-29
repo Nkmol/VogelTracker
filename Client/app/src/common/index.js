@@ -1,5 +1,5 @@
 // import angular from 'angular';
-import Header from './header/header.module';
+import Header from './header';
 
 const common = angular
     .module('app.common', [

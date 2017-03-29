@@ -1,7 +1,7 @@
 // App
 import AppComponent from './app.components.js';
-import Components from './components/components.module.js';
-import Common from './common/common.module.js';
+import Components from './components';
+import Common from './common';
 
 const app = angular
     .module('app', [
