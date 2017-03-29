@@ -33,7 +33,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
+                android:text="@={user.username}"
                 android:hint="Gebruikersnaam" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={user.email}"
+                android:inputType="textEmailAddress"
+                android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -45,6 +60,7 @@
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={user.password}"
                 android:inputType="textPassword"
                 android:hint="Wachtwoord"/>
         </android.support.design.widget.TextInputLayout>
@@ -57,6 +73,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:onClick="register"
             android:text="Creëer Account"/>
 
         <TextView android:id="@+id/link_login"
@@ -64,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="Ben je al een lid?"
+            android:onClick="loadLogin"
             android:gravity="center"
             android:textSize="16dip"/>
 
