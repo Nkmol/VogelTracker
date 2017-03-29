@@ -6,7 +6,14 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
-var babel = require('gulp-babel');
+
+var browserify  = require('browserify');
+var babelify    = require('babelify');
+var source      = require('vinyl-source-stream');
+var buffer      = require('vinyl-buffer');
+var uglify      = require('gulp-uglify');
+var sourcemaps  = require('gulp-sourcemaps');
+var livereload  = require('gulp-livereload');
 
 var paths = {
   js: ['./js/**/*.js'],
@@ -28,19 +35,25 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('babel', function(done) {
-  gulp.src('./js/*.js')
-    .pipe(babel({presets: ['es2015']}))
-    .pipe(gulp.dest('./www/js/'))
-    .on('end', done);
+gulp.task('script', function(done) {
+  	return browserify({entries: './js/app.js', debug: true})
+      .transform("babelify", {presets: ["es2015"]})
+      .bundle()
+      .pipe(source('app.js'))
+      .pipe(buffer())
+      // .pipe(sourcemaps.init())
+      // .pipe(uglify())
+      // .pipe(sourcemaps.write('./maps'))
+      .pipe(gulp.dest('./www/js'))
+      .pipe(livereload());
 });
 
-gulp.task('watch', ['sass'], function() {
+gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.js, ['babel']);
+  gulp.watch(paths.js, ['script']);
 });
 
-gulp.task('serve:before', ['sass', 'babel', 'watch']);
+gulp.task('serve:before', ['sass', 'script', 'watch']);
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()
