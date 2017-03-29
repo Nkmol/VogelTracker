@@ -1,11 +1,11 @@
 const AppComponent = {
     template: `
-    <header></header>
-    <nav></nav>
-    <div>
-        <div ui-view></div>
-    </div>
-    <footer></footer>
+    <ion-header-bar>
+        <header></header>
+    </ion-header-bar>
+    <ion-content padding="true">
+        <login username="test"></login>
+    </ion-content>
   `
 };
 
