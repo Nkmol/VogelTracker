@@ -46,8 +46,6 @@ public class OverviewFragment extends Fragment {
 
     onDataCallListener mOnDataCallListener;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +76,9 @@ public class OverviewFragment extends Fragment {
         mAdapter = new BirdAdapter(birds, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
+        mRecyclerView.setVisibility(View.VISIBLE);
+        view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+
     }
 
     private void getBirds(String authtoken) {
@@ -90,12 +91,6 @@ public class OverviewFragment extends Fragment {
             return;
         }
 
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
-                R.style.Theme_AppCompat_DayNight_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
 
         final HerokuService service = ServiceGenerator.createService(HerokuService.class);
 
@@ -103,7 +98,7 @@ public class OverviewFragment extends Fragment {
         req.enqueue(new Callback<List<Bird>>() {
             @Override
             public void onResponse(Call<List<Bird>> call, Response<List<Bird>> response) {
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
                 Birds = response.body();
 
                 mOnDataCallListener.onDataReceived(response.body());
