@@ -1,4 +1,5 @@
 {
   "name": "Vogel Tracker",
+  "documentRoot": "app",
   "app_id": ""
 }
