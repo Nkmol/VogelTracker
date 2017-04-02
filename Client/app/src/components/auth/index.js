@@ -12,11 +12,8 @@ const auth = angular
             .state('login', {
                 parent: 'app',
                 url: '/login',
-                // component: 'login',
-                // views: {
-                //     'menuContent': 'login'
-                // }
-                template: `test!`
+                template: LoginComponent.template,
+                controller: LoginComponent.controller
             })
     })
     .name;

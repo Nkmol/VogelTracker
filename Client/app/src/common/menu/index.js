@@ -11,8 +11,8 @@ const menu = angular
     .state('app', {
         url: '/',
         abstract: true,
-        // component: 'menu'
-        template: '<h1 ui-view>test<h1>'
+        template: MenuComponent.template,
+        controller: MenuComponent.controller
     })
 
     // if none of the above states are matched, use this as the fallback
