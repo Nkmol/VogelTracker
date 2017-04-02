@@ -4,7 +4,7 @@ const AppComponent = {
         <header></header>
     </ion-header-bar>
     <ion-content padding="true">
-        <login></login>
+        <camera></camera>
     </ion-content>
   `
 };
