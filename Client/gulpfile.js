@@ -23,18 +23,23 @@ var paths = {
   sass: ['./app/src/**/*.scss']
 };
 
+var pathsDist = {
+  js: './www/js/',
+  css: './www/css/'
+}
+
 gulp.task('default', ['sass']);
 
 gulp.task('sass', function(done) {
-  gulp.src('./app/src/scss/*.scss')
+  gulp.src('./app/src/scss/*.scss') // TODO add dynamically to all files in app ('./app/src/**/*.scss')
     .pipe(sass())
     .on('error', sass.logError)
-    .pipe(gulp.dest('./app/dist/css/'))
+    .pipe(gulp.dest(pathsDist.css))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./app/dist/css/'))
+    .pipe(gulp.dest(pathsDist.css))
     .on('end', done);
 });
 
@@ -49,7 +54,7 @@ gulp.task('script', function(done) {
       .pipe(sourcemaps.init())
       .pipe(uglify())
       .pipe(sourcemaps.write('./maps/'))
-      .pipe(gulp.dest('./app/dist/'))
+      .pipe(gulp.dest(pathsDist.js))
       .pipe(livereload());
 });
 
