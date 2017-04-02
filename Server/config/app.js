@@ -17,6 +17,15 @@ module.exports.start = () => {
             // Setup listening
             let app = express();
 
+            // Add headers
+            app.use((req, res, next) => {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+                res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+                next();
+            })
+
             // Setup express middleware
             let bodyParser = require('body-parser') 
             app.use(bodyParser.json());       // to support JSON-encoded bodies
@@ -30,6 +39,7 @@ module.exports.start = () => {
             app.use(jwtpassport.initialize())  
 
             app.post("/login", loginController.login.bind(loginController));
+            app.post("/register", loginController.registrate.bind(loginController));
 
             // Authenticate on all routes
             app.all('*', jwtpassport.authenticate());

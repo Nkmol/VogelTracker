@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<data>
+    <variable name="bird" type="com.example.jamamwitwit.birdencylopedia.Entities.Bird"/>
+</data>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
+    android:paddingTop="56dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView android:src="@drawable/logo"
+                android:id="@+id/bird_img"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_marginBottom="24dp"
+                android:layout_gravity="center_horizontal" />
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:text="Naam"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+            </android.support.design.widget.AppBarLayout>
+
+            <TextView android:id="@+id/bird_detail_name"
+                android:text="@={bird.name}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:text="Alternatieve namen"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+            </android.support.design.widget.AppBarLayout>
+
+            <TextView android:id="@+id/bird_detail_alt_names"
+                android:text="@={bird.latin_name}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:text="Status"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+            </android.support.design.widget.AppBarLayout>
+
+            <TextView android:id="@+id/bird_detail_status"
+                android:text="@={bird.status}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:text="Omschrijving"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+            </android.support.design.widget.AppBarLayout>
+
+            <TextView android:id="@+id/bird_detail_info"
+                android:text="@={bird.information}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+</layout>

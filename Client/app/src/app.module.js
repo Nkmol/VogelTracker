@@ -28,6 +28,19 @@ const app = angular
         });
     }) 
     .component('app', AppComponent)
+    .component('test', {
+        template: '<h1>My Contacts</h1>',
+        controller: function() {
+            console.log(this);
+        }
+    })
+    .config(($stateProvider, $urlRouterProvider) => {
+        console.log($stateProvider.state);
+        $stateProvider.state('contacts', {
+            url: "/contacts",
+            component: 'test'
+        })
+    })
     .name;
 
 export default app;
