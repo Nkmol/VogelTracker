@@ -2,7 +2,8 @@ let mongoose = require('../modules/models/mongoose'),
     chalk = require('chalk'),
     config = require('./config'),
     express = require('express'),
-    util = require('../modules/utilities');
+    util = require('../modules/utilities'),
+    path = require('path');
 
 module.exports.start = () => {
     // Connect mongoose
@@ -37,6 +38,8 @@ module.exports.start = () => {
                 jwtpassport = new (require('../modules/models/password-jwt'))(loginController.validate.bind(loginController));
 
             app.use(jwtpassport.initialize())  
+
+            app.use(express.static('doc')); // Set doc map as default folder to look for index
 
             app.post("/login", loginController.login.bind(loginController));
             app.post("/register", loginController.registrate.bind(loginController));

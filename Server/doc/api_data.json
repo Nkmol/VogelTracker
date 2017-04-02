@@ -1,0 +1,256 @@
+[
+  {
+    "type": "get",
+    "url": "/birds/",
+    "title": "Request Bird Collecton",
+    "name": "GetBirds",
+    "group": "Bird",
+    "version": "0.0.0",
+    "filename": "modules/birds/router.js",
+    "groupTitle": "Bird",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The JWT-token header: &quot;JWT {{ TOKEN }}&quot;.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "401/Unauthorized",
+            "description": "<p>You have not provided your Token credentials as header request</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "-",
+            "description": "<p>array of Birds</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.name",
+            "description": "<p>name of the Bird.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.latinname",
+            "description": "<p>latin_name of the Bird.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.information",
+            "description": "<p>some information about the bird</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.trend_and_amount",
+            "description": "<p>trends and history about the bird.</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/register/",
+    "title": "Create a User",
+    "name": "Register",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/x-www-form-urlencoded</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username login</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>password login</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>emailadress for you account</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "400/BadRequest",
+            "description": "<p>Please provide 'username', 'password' and 'email'</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "409/Conflict",
+            "description": "<p>An account has already been registrated to this mailadress.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "JSON",
+            "optional": false,
+            "field": "-",
+            "description": "<p>JSON wrapper</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "text",
+            "optional": false,
+            "field": "-.message",
+            "description": "<p>&quot;ok&quot;</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "modules/users/router.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/login/",
+    "title": "Request JWT Token",
+    "name": "Validation",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/x-www-form-urlencoded</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username login</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>password login</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "400/BadRequest",
+            "description": "<p>Please provide 'username' and 'password'</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "401/Unauthorized",
+            "description": "<p>Password and/or username did not match</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "JSON",
+            "optional": false,
+            "field": "-",
+            "description": "<p>JSON wrapper</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "text",
+            "optional": false,
+            "field": "-.message",
+            "description": "<p>&quot;ok&quot;</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "text",
+            "optional": false,
+            "field": "-.token",
+            "description": "<p>JWT token</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "modules/users/router.js",
+    "groupTitle": "User"
+  }
+]

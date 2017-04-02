@@ -1,0 +1,9 @@
+{
+  "name": "example",
+  "version": "0.1.0",
+  "description": "apiDoc basic example",
+  "title": "Custom apiDoc browser title",
+  "url" : "https://vogeltracker.herokuapp.com"
+}
+
+// apidoc -i modules/ -o doc/
