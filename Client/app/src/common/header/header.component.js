@@ -1,7 +1,7 @@
 import TemplateUrl from './header.html'
 
 const HeaderComponent = {
-    template: TemplateUrl
+    template: TemplateUrl 
 };
 
 export default HeaderComponent;

@@ -7,10 +7,16 @@ const auth = angular
     .component('login', LoginComponent)
     .config($stateProvider => {
         'ngInject';
+
         $stateProvider
-            .state('auth', {
-                url: '/auth',
-                component: 'login'
+            .state('login', {
+                parent: 'app',
+                url: '/login',
+                // component: 'login',
+                // views: {
+                //     'menuContent': 'login'
+                // }
+                template: `test!`
             })
     })
     .name;
