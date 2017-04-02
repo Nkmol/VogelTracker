@@ -1,0 +1,26 @@
+<ion-view view-title="Creëer melding" ng-controller="ReportController">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Gespotte Vogel</div>
+      <div class="item item-body">
+        <div id="pictureFrame" class="center">
+           <img ng-src="{{reportPhoto}}" style="max-width: 100%">
+        </div>  
+      </div>
+
+      <div class="item item-divider">Relevante informatie</div>
+      <div class="item item-body">
+        <label class="item item-input">
+            <textarea cols="40" rows="5" placeholder="Omschrijving"></textarea>
+            </label>
+
+            <label class="item item-input">
+            <input type="text" value="{{getDatetime | date:'dd-MM-yyyy'}}">
+        </label>
+      </div>
+        <div class="item item-body">
+            <button class="button button-block button-calm" ng-click="sendReport()">Inzenden</button>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>
