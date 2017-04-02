@@ -12,9 +12,9 @@ class HomeController {
         $ionicPlatform.ready(function(){
             self.options = {
             quality: 100,
-            destinationType: Camera.DestinationType.FILE_URI,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            encodingType: Camera.EncodingType.JPEG,
+            destinationType: DestinationType.FILE_URI,
+            sourceType: PictureSourceType.CAMERA,
+            encodingType: EncodingType.JPEG,
             cameraDirection: 1,
             saveToPhotoAlbum: true
             }; 

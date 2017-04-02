@@ -1,0 +1,17 @@
+ <ion-view view-title="Home">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Stap 1: Maak de foto</div>
+      <div class="item item-body">
+        <div id="pictureFrame" class="center">
+           <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+        </div>  
+        <button class="button button-block button-calm" ng-click="takePicture()">Neem een foto</button>
+      </div>
+    <div class="item item-divider">Stap 2: Schrijf de melding</div>
+      <div class="item item-body">
+         <button class="button button-block button-calm" ui-sref="create">Maak een melding</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view> 
