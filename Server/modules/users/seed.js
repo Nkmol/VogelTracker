@@ -5,7 +5,7 @@ let userController = require('./controller'),
 module.exports = userController.remove({})
     .then(() => roleController.findOne({role: 'admin'}))
     .then(res => userController.create({
-            username: 'nkmol',
+            username: 'test',
             password: 'test',
             email: "s.mol@avans.nl",
             user_role: res._id
