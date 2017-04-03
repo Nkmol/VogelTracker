@@ -5,7 +5,7 @@ const LoginComponent = {
     bindings: {
 
     },
-    controller,
+    controller: controller,
     template: TemplateUrl
 }
 

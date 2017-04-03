@@ -45,7 +45,7 @@ module.exports.start = () => {
             app.post("/register", loginController.registrate.bind(loginController));
 
             // Authenticate on all routes
-            app.all('*', jwtpassport.authenticate());
+            app.all('*', jwtpassport.authenticate);
 
             app.use('/birds', require('../modules/birds/router'));
             app.use('/users', require('../modules/users/router'));
