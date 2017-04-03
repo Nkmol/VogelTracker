@@ -2,6 +2,7 @@
   "name": "example",
   "version": "0.1.0",
   "description": "apiDoc basic example",
+  "__comment": "apidoc -i modules/ -o doc/",
   "title": "Custom apiDoc browser title",
   "url": "https://vogeltracker.herokuapp.com",
   "sampleUrl": false,
@@ -9,7 +10,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2017-04-02T16:05:18.968Z",
+    "time": "2017-04-02T19:57:18.875Z",
     "url": "http://apidocjs.com",
     "version": "0.17.5"
   }

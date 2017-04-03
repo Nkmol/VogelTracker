@@ -1,6 +1,102 @@
 define({ "api": [
   {
     "type": "get",
+    "url": "/birds/:id",
+    "title": "Request Bird",
+    "name": "GetBird",
+    "group": "Bird",
+    "parameter": {
+      "fields": {
+        "body": [
+          {
+            "group": "body",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "id",
+            "description": "<p>bird ID <code>match(/^[0-9a-fA-F]{24}$/)</code></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "400/BadRequest",
+            "description": "<p>Please provide a valid '_id'</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "401/Unauthorized",
+            "description": "<p>You have not provided your Token credentials as header request</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "modules/birds/router.js",
+    "groupTitle": "Bird",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The JWT-token header: &quot;JWT {{ TOKEN }}&quot;.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "-",
+            "description": "<p>array of Birds</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.name",
+            "description": "<p>name of the Bird.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.latinname",
+            "description": "<p>latin_name of the Bird.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.information",
+            "description": "<p>some information about the bird</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "-.trend_and_amount",
+            "description": "<p>trends and history about the bird.</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
     "url": "/birds/",
     "title": "Request Bird Collecton",
     "name": "GetBirds",

@@ -22,6 +22,22 @@ router.route('/')
      * @apiuse JwtHeader
      * @apiUse BirdModel
      */
-    .get(controller.get.bind(controller));
+    .get(controller.get.bind(controller))
+
+/**
+     * @api {get} /birds/:id Request Bird
+     * @apiName GetBird
+     * @apiGroup Bird
+     *
+     *
+     * @apiParam (body) {ObjectId} id bird ID `match(/^[0-9a-fA-F]{24}$/)`
+     * 
+     * @apiError {text} 400/BadRequest Please provide a valid '_id'
+     * 
+     * @apiuse JwtHeader
+     * @apiUse BirdModel
+     */
+router.route('/:_id')
+        .get(controller.get.bind(controller));
 
 module.exports = router;

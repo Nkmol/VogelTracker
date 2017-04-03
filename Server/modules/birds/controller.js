@@ -9,11 +9,6 @@ class BirdController extends BaseController {
         super();
         this.Model = Bird;
     }
-    
-    get(req, res, next) {
-        return this.Model.find().exec()
-            .then(doc => res.json(doc));
-    }
 };
 
 module.exports = new BirdController();

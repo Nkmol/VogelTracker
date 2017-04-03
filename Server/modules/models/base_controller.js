@@ -59,6 +59,9 @@ class BaseController {
         return this.findOne(doc).then(result => result != null);
     }
 
+    /* Start HTTP control methods */
+
+    // HTTP promise reject respond, so all chains are canceled
     errorResponse(err, res, status = 400, when = true) {
         return new Promise((resolve, reject) => {
             console.log(when);
@@ -69,6 +72,18 @@ class BaseController {
             else
                 resolve(err);
         })
+    }
+
+    get(req, res, next) {
+        let data = objIsEmpty(req.params) ? {} : req.params;
+
+        if(!objIsEmpty(data || data._id) && !data._id.match(/^[0-9a-fA-F]{24}$/))
+            return this.errorResponse(`Please provide a valid '_id'`, res);
+        else 
+            return this.find(data)
+                .then(doc => doc.length <= 0 ? res.status(404)
+                    .json({message: `Could not find entity with ${JSON.stringify(req.params)}`}) : res.json(doc)
+                );
     }
 }
 
