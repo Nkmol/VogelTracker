@@ -49,6 +49,7 @@ module.exports.start = () => {
 
             app.use('/birds', require('../modules/birds/router'));
             app.use('/users', require('../modules/users/router'));
+            app.use('/reports', require('../modules/reports/router'));
 
             app.get('*', (req, res) => res.send('Sorry, this is an invalid URL.'));
 

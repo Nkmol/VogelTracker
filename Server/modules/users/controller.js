@@ -13,6 +13,7 @@ class UserController extends BaseController {
     }
 
     registrate(req, res, next) {
+
         if(!(req.body.username && req.body.password && req.body.email))
             return res.status(400).json({message: "Please provide 'username', 'password' and 'email'"});
 
