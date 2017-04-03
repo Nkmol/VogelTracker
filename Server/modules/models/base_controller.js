@@ -65,7 +65,6 @@ class BaseController {
     // HTTP promise reject respond, so all chains are canceled
     errorResponse(err, res, status = 400, when = true) {
         return new Promise((resolve, reject) => {
-            console.log(when);
             if(when) {
                 res.status(status).json({message: err});
                 reject(err);
@@ -75,20 +74,40 @@ class BaseController {
         })
     }
 
+    _isValidId(input) {
+        if(!objIsEmpty(input || input._id) && !input._id.match(/^[0-9a-fA-F]{24}$/))
+            return this.errorResponse(`Please provide a valid '_id'`, res); 
+        else
+            return true
+    }
+
     get(req, res, next) {
         let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
 
-        if(!objIsEmpty(paramsQuery || paramsQuery._id) && !paramsQuery._id.match(/^[0-9a-fA-F]{24}$/))
-            return this.errorResponse(`Please provide a valid '_id'`, res);
-        else {
-            let urlQuery = qs.parse(req.query);
-            let query = Object.assign({}, urlQuery, paramsQuery);
-            
-            return this.find(query)
-                .then(doc => doc.length <= 0 ? res.status(404)
-                    .json({message: `Could not find entity with ${JSON.stringify(req.params)}`}) : res.json(doc)
-                );
-            }
+        let isValidId = this._isValidId(paramsQuery)
+        if(!isValidId) return isValidId;
+
+        let urlQuery = qs.parse(req.query);
+        let query = Object.assign({}, urlQuery, paramsQuery);
+
+        return this.find(query)
+            .then(doc => doc.length <= 0 ? 
+                this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) : res.json(doc)
+            );
+    }
+
+    delete(req, res, next) {
+        let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
+
+        let isValidId = this._isValidId(paramsQuery)
+        if(!isValidId) return isValidId;
+
+        return this.findOne(paramsQuery)
+            .then(doc => doc == null ? 
+                this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) : doc
+            )
+            .then(doc => doc.remove())
+            .then(() => res.json({message: "ok"}))
     }
 }
 

@@ -38,6 +38,7 @@ router.route('/')
      * @apiUse BirdModel
      */
 router.route('/:_id')
-        .get(controller.get.bind(controller));
+        .get(controller.get.bind(controller))
+        .delete(controller.delete.bind(controller))
 
 module.exports = router;
