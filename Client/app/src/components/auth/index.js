@@ -11,18 +11,13 @@ const auth = angular
         'ngInject';
         console.log(LoginComponent.controller)
         $stateProvider
-            .state('app.login', {
+            .state('login', {
                 url: '/login',
                 template: `
                     <ion-view>
-                        <ion-nav-buttons side="left">
-                            <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
-                        </ion-nav-buttons>
-
                         <ion-content class="padding">
                             <login />
                         </ion-content>
-
                     </ion-view>
                 `
             })

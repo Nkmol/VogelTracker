@@ -1,9 +1,10 @@
 class AuthController {
-    constructor(AuthService, $ionicPopup, $localStorage) {
+    constructor(AuthService, $ionicPopup, $localStorage, $state) {
         'ngInject';
         this.AuthService = AuthService;
         this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
+        this.$state = $state;
     }
 
     $onInit() {
@@ -19,15 +20,17 @@ class AuthController {
 
     login() {
         return this.AuthService.login(this.user)
+            .then(res => {
+                if(res.status == 200) {
+                    this.$localStorage.token = res.data.token;
+                    this.$state.go('app.home');
+                }
+            })
             .catch(res => {
-                this.$ionicPopup.alert({
+                 this.$ionicPopup.alert({
                     title: 'Something went wrong when logging in',
                     template: res.data.message
                 });
-            })
-            .then(res => {
-                if(res.status == 200)
-                    this.$localStorage.token = res.data.token;
             })
     }
 }

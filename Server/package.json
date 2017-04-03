@@ -37,6 +37,7 @@
     "node": "7.5.0"
   },
   "devDependencies": {
+    "cross-env": "^3.2.4",
     "grunt-apidoc": "^0.11.0"
   }
 }

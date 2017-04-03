@@ -12,7 +12,7 @@ const menu = angular
           template: MenuComponent.template,
           controller: MenuComponent.controller
       })
-
+      
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 })
