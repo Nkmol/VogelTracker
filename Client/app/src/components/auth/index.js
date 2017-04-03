@@ -1,4 +1,5 @@
 import LoginComponent from './login.component';
+import RegisterComponent from './register.component';
 import AuthService from './auth.service'
 
 const auth = angular
@@ -6,6 +7,7 @@ const auth = angular
 
     ])
     .component('login', LoginComponent)
+    .component('register', RegisterComponent)
     .service('AuthService', AuthService)
     .config($stateProvider => {
         'ngInject';
@@ -17,6 +19,16 @@ const auth = angular
                     <ion-view>
                         <ion-content class="padding">
                             <login />
+                        </ion-content>
+                    </ion-view>
+                `
+            })
+            .state('register', {
+                url: '/register',
+                template: `
+                    <ion-view>
+                        <ion-content class="padding">
+                            <register />
                         </ion-content>
                     </ion-view>
                 `

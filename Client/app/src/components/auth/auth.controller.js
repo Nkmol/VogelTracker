@@ -9,8 +9,9 @@ class AuthController {
 
     $onInit() {
         this.user = {
-            username: 'test',
-            password: ''
+            username: '',
+            password: '',
+            email: ''
         }
     }
 
@@ -29,6 +30,25 @@ class AuthController {
             .catch(res => {
                  this.$ionicPopup.alert({
                     title: 'Something went wrong when logging in',
+                    template: res.data.message
+                });
+            })
+    }
+
+    register() {
+        return this.AuthService.register(this.user)
+            .then(res => {
+                console.log(res);
+                if(res.status == 200) {
+                    this.$ionicPopup.alert({
+                        title: 'Your account has been successfully registered'
+                    })
+                    .then(() => this.$state.go('login'));
+                }
+            })
+            .catch(res => {
+                 this.$ionicPopup.alert({
+                    title: 'Something went wrong when registering in',
                     template: res.data.message
                 });
             })
