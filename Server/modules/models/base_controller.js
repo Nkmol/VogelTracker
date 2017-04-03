@@ -1,5 +1,6 @@
 let mongoose = require('mongoose'),
     chalk = require('chalk');
+    qs = new (require('mongo-querystring'));
 
 class BaseController {
     constructor() {
@@ -75,15 +76,19 @@ class BaseController {
     }
 
     get(req, res, next) {
-        let data = objIsEmpty(req.params) ? {} : req.params;
+        let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
 
-        if(!objIsEmpty(data || data._id) && !data._id.match(/^[0-9a-fA-F]{24}$/))
+        if(!objIsEmpty(paramsQuery || paramsQuery._id) && !paramsQuery._id.match(/^[0-9a-fA-F]{24}$/))
             return this.errorResponse(`Please provide a valid '_id'`, res);
-        else 
-            return this.find(data)
+        else {
+            let urlQuery = qs.parse(req.query);
+            let query = Object.assign({}, urlQuery, paramsQuery);
+            
+            return this.find(query)
                 .then(doc => doc.length <= 0 ? res.status(404)
                     .json({message: `Could not find entity with ${JSON.stringify(req.params)}`}) : res.json(doc)
                 );
+            }
     }
 }
 
