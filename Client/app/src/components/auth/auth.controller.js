@@ -1,17 +1,34 @@
 class AuthController {
-    constructor() {
+    constructor(AuthService, $ionicPopup, $localStorage) {
         'ngInject';
+        this.AuthService = AuthService;
+        this.$ionicPopup = $ionicPopup;
+        this.$localStorage = $localStorage;
     }
 
     $onInit() {
-        this.newUser = {
+        this.user = {
             username: 'test',
-            password: 'longlonglongpassword'
-        }; 
+            password: ''
+        }
     }
 
     $onChanges(changes) {
-        console.log(changes);
+
+    }
+
+    login() {
+        return this.AuthService.login(this.user)
+            .catch(res => {
+                this.$ionicPopup.alert({
+                    title: 'Something went wrong when logging in',
+                    template: res.data.message
+                });
+            })
+            .then(res => {
+                if(res.status == 200)
+                    this.$localStorage.token = res.data.token;
+            })
     }
 }
 

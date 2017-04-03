@@ -2,11 +2,13 @@
 import AppComponent from './app.components.js';
 import Components from './components';
 import Common from './common';
+import Config from './app.constant';
 
 const app = angular
     .module('app', [
         'ionic',
         'ngCordova',
+        'ngStorage',
         Components,
         Common
     ])
@@ -27,6 +29,7 @@ const app = angular
             }
         });
     }) 
+    .constant('Config', Config) 
     .component('app', AppComponent)
     .name;
 
