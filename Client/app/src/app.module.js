@@ -9,6 +9,7 @@ const app = angular
         'ionic',
         'ngCordova',
         'ngStorage',
+        'ui-leaflet', 
         Components,
         Common
     ])
