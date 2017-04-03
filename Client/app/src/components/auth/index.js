@@ -9,8 +9,7 @@ const auth = angular
         'ngInject';
 
         $stateProvider
-            .state('login', {
-                parent: 'app',
+            .state('app.login', {
                 url: '/login',
                 template: LoginComponent.template,
                 controller: LoginComponent.controller

@@ -7,13 +7,11 @@ const menu = angular
     'ngInject';
 
     $stateProvider
-
-    .state('app', {
-        url: '/',
-        abstract: true,
-        template: MenuComponent.template,
-        controller: MenuComponent.controller
-    })
+      .state('app', {
+          abstract: true,
+          template: MenuComponent.template,
+          controller: MenuComponent.controller
+      })
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
