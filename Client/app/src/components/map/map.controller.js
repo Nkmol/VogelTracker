@@ -1,14 +1,17 @@
 class MapController {
-    constructor(MapService, $ionicPopup, $localStorage, $state) {
+    constructor(MapService, $ionicPopup, $localStorage, $state, $ionicLoading) {
         'ngInject';
         this.MapService = MapService;
         this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
         this.$state = $state;
+        this.$ionicLoading = $ionicLoading;
     }
 
     $onInit() {
         this.markers = {}
+
+        this.$ionicLoading.show();
         this.MapService.getReports()
             .then(res => {
                 res.data.forEach(report => {
@@ -24,7 +27,8 @@ class MapController {
                         `
                     }
                 })
-            });
+            })
+            .then(() => this.$ionicLoading.hide())
     }
 
     $onChanges(changes) {

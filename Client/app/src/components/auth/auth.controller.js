@@ -1,10 +1,11 @@
 class AuthController {
-    constructor(AuthService, $ionicPopup, $localStorage, $state) {
+    constructor(AuthService, $ionicPopup, $localStorage, $state, $ionicLoading) {
         'ngInject';
         this.AuthService = AuthService;
         this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
         this.$state = $state;
+        this.$ionicLoading = $ionicLoading;
     }
 
     $onInit() {
@@ -20,6 +21,7 @@ class AuthController {
     }
 
     login() {
+        this.$ionicLoading.show();
         return this.AuthService.login(this.user)
             .then(res => {
                 if(res.status == 200) {
@@ -33,9 +35,11 @@ class AuthController {
                     template: res.data.message
                 });
             })
+            .then(() => this.$ionicLoading.hide());
     }
 
     register() {
+        this.$ionicLoading.show();
         return this.AuthService.register(this.user)
             .then(res => {
                 console.log(res);
@@ -52,6 +56,7 @@ class AuthController {
                     template: res.data.message
                 });
             })
+            .then(() => this.$ionicLoading.hide());
     }
 }
 

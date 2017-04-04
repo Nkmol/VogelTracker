@@ -1,6 +1,8 @@
 // Define controller
-let AppController = function() {
-    
+class AppController {
+    constructor() {
+        'ngInject'
+    }
 }
 
 // Define template
