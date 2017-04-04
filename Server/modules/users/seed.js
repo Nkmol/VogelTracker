@@ -6,7 +6,7 @@ module.exports = userController.remove({})
     .then(() => roleController.findOne({role: 'admin'}))
     .then(res => userController.create({
             username: 'test',
-            password: 'test',
+            password: '$2a$10$u7yGXr4lf/d81Z2JDo9UbOeGn7iiilgCTkFtqqXBzhi9anGMCCX2u',
             email: "s.mol@avans.nl",
             user_role: res._id
         })

@@ -24,7 +24,7 @@ class AuthController {
             .then(res => {
                 if(res.status == 200) {
                     this.$localStorage.token = res.data.token;
-                    this.$state.go('app.home');
+                    this.$state.go('app.home.map');
                 }
             })
             .catch(res => {

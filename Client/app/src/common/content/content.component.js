@@ -5,7 +5,10 @@ const MenuComponent = {
     controller: class MenuComponent {
         constructor($localStorage) {
             'ngInject';
-            this.token = $localStorage.token;
+        }
+
+        $onInit() {
+
         }
     }
 };

@@ -11,7 +11,6 @@ const auth = angular
     .service('AuthService', AuthService)
     .config($stateProvider => {
         'ngInject';
-        console.log(LoginComponent.controller)
         $stateProvider
             .state('login', {
                 url: '/login',
