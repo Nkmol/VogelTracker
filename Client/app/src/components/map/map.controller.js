@@ -19,8 +19,8 @@ class MapController {
                         lat: report.lat,
                         lng: report.long,
                         message: `
-                            <h3>${report.bird_id.name}</h3>
-                            <b>Submitted by: ${report.user_id.username}</b> 
+                            <h3>${report.bird_id && report.bird_id.name}</h3>
+                            <b>Submitted by: ${report.user_id && report.user_id.username}</b> 
                             <p>${report.description}</p>
                             <hr />
                             <span> ${new Date(report.date).toDateString()}
