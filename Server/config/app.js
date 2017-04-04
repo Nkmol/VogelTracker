@@ -3,7 +3,9 @@ let mongoose = require('../modules/models/mongoose'),
     config = require('./config'),
     express = require('express'),
     util = require('../modules/utilities'),
-    path = require('path');
+    path = require('path'),
+    JwtStrategy = require('passport-jwt').Strategy,
+    passport = require('passport');
 
 module.exports.start = () => {
     // Connect mongoose
@@ -22,7 +24,7 @@ module.exports.start = () => {
             app.use((req, res, next) => {
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-                res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+                res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization');
 
                 next();
             })
@@ -33,19 +35,27 @@ module.exports.start = () => {
             app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
                 extended: true
             })); 
-            
-            let loginController = require('../modules/users/controller'),
-                jwtpassport = new (require('../modules/models/password-jwt'))(loginController.validate.bind(loginController));
 
-            app.use(jwtpassport.initialize())  
+            var unless = (paths, middleware) => 
+                (req, res, next) => 
+                    // Skip Authentication on OPTIONS for angularjs, it is used as preflight
+                    paths.indexOf(req.path) > -1|| req.method === 'OPTIONS'
+                        ? next() 
+                        : middleware(req, res, next);
+      
+            let loginController = require('../modules/users/controller');
+            passport.use(new JwtStrategy(config.jwt.options, loginController.validate.bind(loginController)))
+            app.use(passport.initialize())  
+            app.use(unless(["/login", "/register"], passport.authenticate('jwt', {session: false})));
 
             app.use(express.static('doc')); // Set doc map as default folder to look for index
 
             app.post("/login", loginController.login.bind(loginController));
             app.post("/register", loginController.registrate.bind(loginController));
 
-            app.use('/birds', jwtpassport.authenticate(), require('../modules/birds/router'));
-            app.use('/users', jwtpassport.authenticate(), require('../modules/users/router'));
+            app.use('/birds', require('../modules/birds/router'));
+            app.use('/users', require('../modules/users/router'));
+            app.use('/reports', require('../modules/reports/router'));
 
             app.get('*', (req, res) => res.send('Sorry, this is an invalid URL.'));
 
