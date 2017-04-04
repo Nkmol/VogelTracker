@@ -7,12 +7,13 @@ import Config from './app.constant';
 const app = angular
     .module('app', [
         'ionic',
-        'ngCordova',
         'ngStorage',
+        'ui-leaflet', 
+        'cordova',
         Components,
         Common
     ])
-    .run($ionicPlatform => {
+    .run(($ionicPlatform) => {
         $ionicPlatform.ready(() => {
             if(window.cordova && window.cordova.plugins.Keyboard) {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,6 +31,9 @@ const app = angular
         });
     }) 
     .constant('Config', Config) 
+    .constant('$ionicLoadingConfig', {
+        template: 'Default Loading Template...'
+    })
     .component('app', AppComponent)
     .name;
 

@@ -19,6 +19,10 @@
 
   <link href='https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic' rel='stylesheet' type='text/css'>
 
+  <!-- leaflet -->
+  <script src="assets/leaflet/leaflet.js"></script>
+  <link rel="stylesheet" href="assets/leaflet/leaflet.css">
+
   <!-- compiled css output -->
   <link href="css/ionic.app.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
@@ -29,7 +33,13 @@
   <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" type="text/css" href="https://rawgit.com/delta98/ionic-material-design-lite/master/dist/css/ionic.material-design-lite.min.css">
   <script src="https://rawgit.com/delta98/ionic-material-design-lite/master/dist/js/ionic.material-design-lite.min.js"></script>
+  
+  <!-- angular plugins -->
+  <script src="lib/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
   <script src="lib/ngstorage/ngStorage.min.js"></script>
+  <script src="lib/ui-leaflet/dist/ui-leaflet.min.js"></script>
+  <script src="assets/leaflet/ui-leaflet-layers.min.js"></script>
+  
 
   <!-- cordova script (this will be a 404 during development) -->
   <script src="lib/ngCordova/dist/ng-cordova.js"></script>
@@ -40,6 +50,7 @@
   <app>Loading</app>
 
   <!-- your app's js -->
+  <script src="js/cordova-inject.js"></script>
   <script src="js/index.js"></script>
 </body>
 </html>

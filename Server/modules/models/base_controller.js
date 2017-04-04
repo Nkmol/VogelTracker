@@ -81,7 +81,7 @@ class BaseController {
             return true
     }
 
-    get(req, res, next) {
+    get(req, res, next, populate = {}) {
         let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
 
         let isValidId = this._isValidId(paramsQuery)
@@ -91,6 +91,7 @@ class BaseController {
         let query = Object.assign({}, urlQuery, paramsQuery);
 
         return this.find(query)
+            .populate(populate)
             .then(doc => doc.length <= 0 ? 
                 this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) : res.json(doc)
             );

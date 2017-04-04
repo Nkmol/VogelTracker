@@ -6,7 +6,13 @@ class AuthService {
     }
 
     login(user) {
-        return this.$http.post(`${this.Config.url}/login`, user);
+        return this.$http.post(`${this.Config.url}/login`, user)
+            .then(res => {
+                if(res.status == 200 && res.data.token) 
+                    this.$http.defaults.headers.common['Authorization'] = 'JWT ' + res.data.token;
+
+                return res;
+            });
     }
 
     register(user) {
