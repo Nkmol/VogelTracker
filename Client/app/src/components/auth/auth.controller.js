@@ -5,6 +5,7 @@ class AuthController {
         this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
         this.$state = $state;
+        $state.go('home');
     }
 
     $onInit() {
