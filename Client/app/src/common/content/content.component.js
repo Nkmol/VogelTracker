@@ -19,6 +19,12 @@ const MenuComponent = {
                 }
                 },
                 paris: {
+                    message: `
+                        <h1> Title of the balloon </h1>
+                        <span>Sub title</span>
+                        <a href="/#/register" ui-sref="register"> To register </a>
+                        <img src="https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg" />
+                    `,
                     lat: 48.83,
                     lng: 2.37,
                     icon: {
@@ -30,21 +36,10 @@ const MenuComponent = {
                     }
                 }
             }
-            // this.tiles = {
-            //         name: 'Mapbox Outdoors',
-            //         url: 'https://api.mapbox.com/datasets/v1/nkmol/{datasetId}/features?access_token={apiKey}',
-            //         type: 'xyz',
-            //         options: {
-            //             apiKey: 'sk.eyJ1Ijoibmttb2wiLCJhIjoiY2oxMmxvMm16MDAzajJxbXRoaGt0cmNreiJ9.UTgLBJJXZR9LL5ygA1lNoA',
-            //             datasetId: 'cj125mcvm005y2wpgss87yw96'
-            //         }
-            //     }
         }
 
         $onInit() {
-            this.defaults = {
-                scrollWheelZoom: false
-            }
+
         }
     }
 };

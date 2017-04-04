@@ -8,6 +8,7 @@ const content = angular
 
     $stateProvider
       .state('app.home', {
+        abstract: true,
         template:  `
           <ion-view>
               <ion-nav-buttons side="left">
@@ -21,6 +22,9 @@ const content = angular
           </ion-view>
         `
       })
+
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/map'); 
 })
 .name;
 

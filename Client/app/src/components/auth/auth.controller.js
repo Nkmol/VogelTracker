@@ -1,10 +1,11 @@
 class AuthController {
-    constructor(AuthService, $ionicPopup, $localStorage, $state) {
+    constructor(AuthService, $ionicPopup, $localStorage, $state, $http) {
         'ngInject';
         this.AuthService = AuthService;
         this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
         this.$state = $state;
+        this.$http = $http;
     }
 
     $onInit() {
@@ -24,7 +25,9 @@ class AuthController {
             .then(res => {
                 if(res.status == 200) {
                     this.$localStorage.token = res.data.token;
-                    this.$state.go('app.home');
+                    this.$state.go('app.home.map');
+
+                    this.$http.defaults.headers.common['Authorization'] = 'JWT  ' + token;
                 }
             })
             .catch(res => {
