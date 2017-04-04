@@ -44,11 +44,8 @@ module.exports.start = () => {
             app.post("/login", loginController.login.bind(loginController));
             app.post("/register", loginController.registrate.bind(loginController));
 
-            // Authenticate on all routes
-            app.all('*', jwtpassport.authenticate);
-
-            app.use('/birds', require('../modules/birds/router'));
-            app.use('/users', require('../modules/users/router'));
+            app.use('/birds', jwtpassport.authenticate(), require('../modules/birds/router'));
+            app.use('/users', jwtpassport.authenticate(), require('../modules/users/router'));
 
             app.get('*', (req, res) => res.send('Sorry, this is an invalid URL.'));
 

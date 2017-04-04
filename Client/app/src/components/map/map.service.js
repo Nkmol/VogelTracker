@@ -6,6 +6,7 @@ class MapService {
     }
 
     getMarkers() {
+        console.log(`${this.Config.url}/reports`);
         return this.$http.get(`${this.Config.url}/reports`);
     }
 }

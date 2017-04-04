@@ -14,6 +14,11 @@ class MapController {
     $onChanges(changes) {
 
     }
+
+    getMarkers() {
+        return this.MapService.getMarkers()
+            .then(console.log);
+    }
 }
 
 export default MapController;

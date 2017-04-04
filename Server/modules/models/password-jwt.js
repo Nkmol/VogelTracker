@@ -11,8 +11,7 @@ class Passwordjwt {
         return passport.initialize();
     }
 
-    authenticate(req, res, next) {
-        if(req.path == '/login' || req.path == '/register') return next();
+    authenticate() {
         return passport.authenticate('jwt', {session: false});
     }
 }
