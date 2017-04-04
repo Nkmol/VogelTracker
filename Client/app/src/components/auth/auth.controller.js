@@ -5,8 +5,6 @@ class AuthController {
         this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
         this.$state = $state;
-
-        $state.go('home');
         this.$ionicLoading = $ionicLoading;
     }
 
@@ -28,7 +26,7 @@ class AuthController {
             .then(res => {
                 if(res.status == 200) {
                     this.$localStorage.token = res.data.token;
-                    this.$state.go('app.home.map');
+                    this.$state.go('app.home.picture');
                 }
             })
             .catch(res => {

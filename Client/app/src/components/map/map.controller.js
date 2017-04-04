@@ -1,11 +1,16 @@
 class MapController {
-    constructor(MapService, $ionicPopup, $localStorage, $state, $ionicLoading) {
+    constructor(MapService, $ionicPopup, $localStorage, $state, $ionicLoading, $ionicPlatform) {
         'ngInject';
         this.MapService = MapService;
         this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
         this.$state = $state;
         this.$ionicLoading = $ionicLoading;
+
+        $ionicPlatform.ready(() => {
+                console.log(Camera); //PLOX Save pls
+        })
+        
     }
 
     $onInit() {

@@ -6,6 +6,7 @@ class AuthService {
     }
 
     login(user) {
+        console.log(`${this.Config.url}/login`);
         return this.$http.post(`${this.Config.url}/login`, user)
             .then(res => {
                 if(res.status == 200 && res.data.token) 
