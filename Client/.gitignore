@@ -6,4 +6,5 @@ platforms/
 plugins/
 www/lib/
 www/css/
-www/js/
+www/js/*
+!www/js/cordova-inject.js

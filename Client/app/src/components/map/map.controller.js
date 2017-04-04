@@ -29,6 +29,16 @@ class MapController {
                 })
             })
             .then(() => this.$ionicLoading.hide())
+
+        this.layers = {
+            baselayers: {
+                osm: {
+                    name: 'OpenStreetMap',
+                    url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoibmttb2wiLCJhIjoiY2oxMmwxMW5kMDAyaDJxb2dweDNrYXJwMCJ9.rlrE9klEaYBICaYrk7roMg',
+                    type: 'xyz'
+                }
+            }
+        }
     }
 
     $onChanges(changes) {
