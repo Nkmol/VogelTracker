@@ -11,14 +11,9 @@ const content = angular
         abstract: true,
         template:  `
           <ion-view>
-              <ion-nav-buttons side="left">
-                  <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
-              </ion-nav-buttons>
-
               <ion-content class="padding" data-tap-disabled="true">
                   <content />
               </ion-content>
-
           </ion-view>
         `
       })

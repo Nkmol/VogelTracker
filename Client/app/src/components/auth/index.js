@@ -15,8 +15,8 @@ const auth = angular
             .state('login', {
                 url: '/login',
                 template: `
-                    <ion-view>
-                        <ion-content class="padding">
+                    <ion-view view-title="VogelTracker">
+                        <ion-content class="padding has-header">
                             <login />
                         </ion-content>
                     </ion-view>
@@ -26,7 +26,12 @@ const auth = angular
                 url: '/register',
                 template: `
                     <ion-view>
-                        <ion-content class="padding">
+                        <ion-nav-buttons side="left">
+                            <button class="button back-button buttons button-clear header-item" ng-click="$ctrl.go('login')">
+                                <i class="icon ion-ios-arrow-back"> Login </i> 
+                            </button>
+                        </ion-nav-buttons>
+                        <ion-content class="padding has-header">
                             <register />
                         </ion-content>
                     </ion-view>
