@@ -1,8 +1,6 @@
 const FooterComponent = {
     template: `
-        <ion-footer-bar class="bar-stable">
-            <picture />
-        </ion-footer-bar>
+        <picture />
     `,
     controller: class MenuComponent {
         constructor() {

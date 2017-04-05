@@ -11,7 +11,7 @@ class MapController {
     $onInit() {
         this.markers = {}
 
-        this.$ionicLoading.show();
+        // this.$ionicLoading.show();
         this.MapService.getReports()
             .then(res => {
                 res.data.forEach(report => {
