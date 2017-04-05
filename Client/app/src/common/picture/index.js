@@ -8,10 +8,10 @@ const home = angular
     .config($stateProvider => {
         'ngInject';
         $stateProvider
-            .state('app.home.picture', {
+            .state('app.picture', {
                 url: '/picture',
                 template: `
-                    <picture />
+                    <picture ion-view />
                 `
             })
     })

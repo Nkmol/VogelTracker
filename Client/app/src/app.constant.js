@@ -1,5 +1,5 @@
 let ConstantConfig = {
-    url: "https://vogeltracker.herokuapp.com"
+    url: "http://localhost:3000"
 }
 
 export default ConstantConfig;
