@@ -15,7 +15,7 @@ const content = angular
                   <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
               </ion-nav-buttons>
 
-              <ion-content class="padding" data-tap-disabled="true">
+              <ion-content class="padding has-header" data-tap-disabled="true">
                   <content />
               </ion-content>
 
