@@ -19,6 +19,7 @@ class ReportController {
         this.getDatetime = new Date();
         this.reportPhoto = '';
 
+        console.log("initialiseer newReport");
         this.newReport = {
             bird_id: '58e281512471d642c9778c6e',
             user_id: '58e27bc39cd9c4000493b05c',
@@ -35,22 +36,22 @@ class ReportController {
 
     sendReport() {
 
-        this.posOptions = {timeout: 10000, enableHighAccuracy: false};
-        this.$cordovaGeolocation
-            .getCurrentPosition(this.posOptions)
-            .then(function (position) {
+        var self = this;
+        self.posOptions = {timeout: 10000, enableHighAccuracy: false};
+        self.$cordovaGeolocation
+            .getCurrentPosition(self.posOptions)
+            .then( position => {
                 this.newReport.lat = position.coords.latitude;
                 this.newReport.long = position.coords.longitude;
-                console.log(this.newReport.lat);
-                console.log(this.newReport.long);
-                $ionicLoading.show();
-            })
-            .then(function() {
-                return this.ReportService.createReport(this.newReport)
+                console.log(self.newReport.lat);
+                console.log(self.newReport.long);
+
+                this.$ionicLoading.show();
+                return this.ReportService.createReport(self.newReport)
                 .then(res => {
-                    console.log(res);
-                }).then(() => this.$ionicLoading.hide());
-            });    
+                        console.log(res);
+                    }).then(() => this.$ionicLoading.hide());
+            });
 
     }
 
