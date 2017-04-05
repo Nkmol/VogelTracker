@@ -8,10 +8,22 @@
 
       <div class="item item-divider">Relevante informatie</div>
       <div class="item item-body">
+        <ion-item>
+        <ion-label>Birds</ion-label>
+        <ion-select multiple="true">
+            <ion-option>Bacon</ion-option>
+            <ion-option>Black Olives</ion-option>
+            <ion-option>Extra Cheese</ion-option>
+            <ion-option>Mushrooms</ion-option>
+            <ion-option>Pepperoni</ion-option>
+            <ion-option>Sausage</ion-option>
+        </ion-select>
+        </ion-item>
+      </div>
+      <div class="item item-body">
         <label class="item item-input">
-            <textarea cols="40" rows="5" placeholder="Omschrijving"></textarea>
-            </label>
-
+            <textarea cols="40" rows="5" ng-model="$ctrl.newReport.description" placeholder="Omschrijving"></textarea>
+        </label>
             <label class="item item-input">
             <input type="text" value="{{$ctrl.getDatetime | date:'dd-MM-yyyy'}}">
         </label>

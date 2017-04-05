@@ -5,8 +5,8 @@ import Report from './report';
 const components = angular
     .module('app.components', [
         Auth,
-        Map,
-        Report
+        Report,
+        Map
     ])
     .name;
 
