@@ -9,25 +9,33 @@ const PictureComponent = {
             'ngInject'
             
             this.$cordovaCamera = $cordovaCamera;
-            $ionicPlatform.ready(() => {
-                this.options = {
-                    quality: 50,
-                    destinationType: Camera.DestinationType.DATA_URL,
-                    sourceType: Camera.PictureSourceType.CAMERA,
-                    allowEdit: false,
-                    encodingType: Camera.EncodingType.JPEG,
-                    targetWidth: 100,
-                    targetHeight: 100,
-                    popoverOptions: CameraPopoverOptions,
-                    saveToPhotoAlbum: false,
-                    correctOrientation:true
+            this.$ionicPlatform = $ionicPlatform
+        }
+
+        $onInit() {
+            this.$ionicPlatform.ready(() => {
+                if(typeof Camera !== 'undefined') {
+                    this.options = {
+                        quality: 50,
+                        destinationType: Camera.DestinationType.DATA_URL,
+                        sourceType: Camera.PictureSourceType.CAMERA,
+                        allowEdit: false,
+                        encodingType: Camera.EncodingType.JPEG,
+                        targetWidth: 100,
+                        targetHeight: 100,
+                        popoverOptions: CameraPopoverOptions,
+                        saveToPhotoAlbum: false,
+                        correctOrientation:true
+                    }
                 }
             }, false);
         }
 
         takePicture() {
             this.$cordovaCamera.getPicture(this.options)
-                .then(img => console.log(img));
+                .then(img => {
+                    console.log(img)
+                });
         }
     },
     template: TemplateUrl

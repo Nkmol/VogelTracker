@@ -1,6 +1,6 @@
 const FooterComponent = {
     template: `
-        <picture />
+        <picture></picture>
     `,
     controller: class MenuComponent {
         constructor() {
