@@ -35,35 +35,23 @@ class ReportController {
 
     sendReport() {
 
-        // this.$window.navigator.geolocation.getCurrentPosition(
-        //  function (position) {
-        //      //console.log(position);
-        //      this.newReport.lat = position.coords.latitude;
-        //      this.newReport.long = position.coords.longitude;
-        //     },
-        // function (err) {
-        //     deferred.reject(err);
-        //     });
-
         this.posOptions = {timeout: 10000, enableHighAccuracy: false};
-        $cordovaGeolocation
+        this.$cordovaGeolocation
             .getCurrentPosition(this.posOptions)
             .then(function (position) {
-            this.newReport.lat = position.coords.latitude
-            this.newReport.long = position.coords.longitude
-            }, function(err) {
-            // error
-            });
-        
-        console.log(this.newReport);
+                this.newReport.lat = position.coords.latitude;
+                this.newReport.long = position.coords.longitude;
+                console.log(this.newReport.lat);
+                console.log(this.newReport.long);
+                $ionicLoading.show();
+            })
+            .then(function() {
+                return this.ReportService.createReport(this.newReport)
+                .then(res => {
+                    console.log(res);
+                }).then(() => this.$ionicLoading.hide());
+            });    
 
-        this.$ionicLoading.show();
-        return this.ReportService.createReport(this.newReport)
-        .then(res => {
-            console.log(res);
-        }).then(() => this.$ionicLoading.hide());
-
-        //console.log(this.ReportService.getBirds());
     }
 
 }
