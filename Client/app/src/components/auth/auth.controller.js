@@ -47,7 +47,7 @@ class AuthController {
                     this.$ionicPopup.alert({
                         title: 'Your account has been successfully registered'
                     })
-                    .then(() => this.$state.go('login'));
+                    .then(() => this.$state.go('auth.login'));
                 }
             })
             .catch(res => {

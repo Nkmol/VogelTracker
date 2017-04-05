@@ -21,3 +21,10 @@ footer {
 picture {
     margin: auto;
 }
+
+.loader--style8 {
+    svg path,
+    svg rect{
+        fill: #FF6700;
+    }
+}
