@@ -510,7 +510,7 @@ define({ "api": [
             "type": "ObjectId",
             "optional": false,
             "field": "id",
-            "description": "<p>bird ID <code>match(/^[0-9a-fA-F]{24}$/)</code></p>"
+            "description": "<p>Report ID <code>match(/^[0-9a-fA-F]{24}$/)</code></p>"
           }
         ]
       }
@@ -558,35 +558,42 @@ define({ "api": [
             "type": "Object[]",
             "optional": false,
             "field": "-",
-            "description": "<p>array of Birds</p>"
+            "description": "<p>array of Report properties</p>"
           },
           {
-            "group": "Success 200",
+            "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "-.name",
-            "description": "<p>name of the Bird.</p>"
+            "field": "-.user_id",
+            "description": "<p>user identification</p>"
           },
           {
-            "group": "Success 200",
+            "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "-.latinname",
-            "description": "<p>latin_name of the Bird.</p>"
+            "field": "-.date",
+            "description": "<p>the creation date of the report</p>"
           },
           {
-            "group": "Success 200",
+            "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "-.information",
-            "description": "<p>some information about the bird</p>"
+            "field": "-.description",
+            "description": "<p>detailed explanation</p>"
           },
           {
-            "group": "Success 200",
+            "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "-.trend_and_amount",
-            "description": "<p>trends and history about the bird.</p>"
+            "field": "-.lat",
+            "description": "<p>registered latitude of the user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "-.long",
+            "description": "<p>registered longtitude of the user</p>"
           }
         ]
       }
