@@ -147,7 +147,7 @@ class BaseController {
         // Override given information
         let newObject = Object.assign({}, emptyObj, req.body);
         
-        return this.update({_id: req.params._id}, newObject)
+        return this.update({_id: req.params._id}, newObject, { upsert: true })
             .then(() => res.json(Object.assign(newObject, {_id: req.params._id}) ))
     }
 
@@ -164,6 +164,10 @@ class BaseController {
         // end Validate
 
         return this.findOne({_id: req.params._id})
+            .then(doc => doc === null 
+                ? this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404)
+                : doc
+            )
             .then(doc => Object.assign(doc, req.body))
             .then(newDoc => this.update({_id: req.params._id}, newDoc).then(() => newDoc))
             .then(newDoc => res.json(Object.assign(newDoc, {_id: req.params._id}) ))

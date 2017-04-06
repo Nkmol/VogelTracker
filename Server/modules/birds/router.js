@@ -22,7 +22,7 @@ router.route('/')
      * @apiUse BirdModel
      */
     .get(controller.get.bind(controller))
-
+    .post(controller.create.bind(controller))
 /**
      * @api {get} /birds/:id Request Bird
      * @apiName GetBird
