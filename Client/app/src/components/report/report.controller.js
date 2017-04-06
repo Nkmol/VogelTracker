@@ -14,7 +14,7 @@ class ReportController {
                 res.data.forEach(bird => {
                     this.birds.push({
                         name: bird.name,
-                        id: bird.id
+                        id: bird._id
                     })
                  })
                 })
@@ -38,7 +38,9 @@ class ReportController {
     }
 
     showBird(newValue, oldValue){
+        let found = this.birds.find(x => x.name == newValue);
         this.selectedvalue = newValue;
+        this.newReport.bird_id = found.id;
     }
 
     $onChanges(changes) {
