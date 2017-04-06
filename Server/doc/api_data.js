@@ -97,7 +97,7 @@ define({ "api": [
   },
   {
     "type": "put",
-    "url": "/birds/",
+    "url": "/birds/:id",
     "title": "Update Bird",
     "name": "UpdateBird",
     "group": "Bird",
