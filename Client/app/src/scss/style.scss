@@ -13,6 +13,12 @@
     color: #303030;
 }
 
+.leaflet-popup-content {
+    img {
+        width: 100%;
+    }
+}
+
 footer {
     display: inherit;
     width: 100%;
@@ -38,3 +44,4 @@ picture {
         margin: auto;
     }
 }
+
