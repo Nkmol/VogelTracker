@@ -3,6 +3,25 @@
     height: 400px;
 }
 
+#btn-picture {
+    font-size: 38px;
+    border: 0;
+}
+
+#btn-picture.activated {
+    background: 0 0 ;
+    color: #303030;
+}
+
+footer {
+    display: inherit;
+    width: 100%;
+}
+
+picture {
+    margin: auto;
+}
+
 .loader--style8 {
     svg path,
     svg rect{

@@ -12,29 +12,23 @@ const auth = angular
     .config($stateProvider => {
         'ngInject';
         $stateProvider
-            .state('login', {
-                url: '/login',
+            .state('auth', {
+                abstract: true,
                 template: `
-                    <ion-view view-title="VogelTracker">
-                        <ion-content class="padding has-header">
-                            <login />
-                        </ion-content>
-                    </ion-view>
+                    <ion-nav-bar class="bar-positive"></ion-nav-bar>
+                    <ion-nav-view />
                 `
             })
-            .state('register', {
+            .state('auth.login', {
+                url: '/login',
+                template: `
+                    <login ion-view />
+                `
+            })
+            .state('auth.register', {
                 url: '/register',
                 template: `
-                    <ion-view>
-                        <ion-nav-buttons side="left">
-                            <button class="button back-button buttons button-clear header-item" ng-click="$ctrl.go('login')">
-                                <i class="icon ion-ios-arrow-back"> Login </i> 
-                            </button>
-                        </ion-nav-buttons>
-                        <ion-content class="padding has-header">
-                            <register />
-                        </ion-content>
-                    </ion-view>
+                    <register ion-view />
                 `
             })
     })

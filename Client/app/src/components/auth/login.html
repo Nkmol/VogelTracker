@@ -1,12 +1,17 @@
-<div class="list list-inset">
-    <label class="item item-input item-floating-label">
-        <span class="input-label">Username</span>
-        <input type="text" placeholder="Username" ng-model="$ctrl.user.username">
-    </label>
-    <label class="item item-input item-floating-label">
-        <span class="input-label">Password</span>
-        <input type="password" placeholder="Password" ng-model="$ctrl.user.password">
-    </label>
-</div>
-<a ui-sref="register">No account? Register here </a>
-<button class="button button-block button-calm" ng-click="$ctrl.login()">Login</button> 
+<ion-nav-title>
+    Vogel Tracker - Login
+</ion-nav-title>
+<ion-content  class="has-header padding">
+    <div class="list list-inset">
+        <label class="item item-input item-floating-label">
+            <span class="input-label">Username</span>
+            <input type="text" placeholder="Username" ng-model="$ctrl.user.username">
+        </label>
+        <label class="item item-input item-floating-label">
+            <span class="input-label">Password</span>
+            <input type="password" placeholder="Password" ng-model="$ctrl.user.password">
+        </label>
+    </div>
+    <a ui-sref="auth.register">No account? Register here </a>
+    <button class="button button-block button-calm" ng-click="$ctrl.login()">Login</button> 
+</ion-content>

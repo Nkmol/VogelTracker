@@ -26,7 +26,7 @@ class AuthController {
             .then(res => {
                 if(res.status == 200) {
                     this.$localStorage.token = res.data.token;
-                    this.$state.go('app.home.map');
+                    this.$state.go('app.map');
                 }
             })
             .catch(res => {
@@ -47,7 +47,7 @@ class AuthController {
                     this.$ionicPopup.alert({
                         title: 'Your account has been successfully registered'
                     })
-                    .then(() => this.$state.go('login'));
+                    .then(() => this.$state.go('auth.login'));
                 }
             })
             .catch(res => {

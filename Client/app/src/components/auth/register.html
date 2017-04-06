@@ -1,15 +1,26 @@
-<div class="list list-inset">
-    <label class="item item-input item-floating-label">
+<ion-nav-buttons side="left">
+    <button class="button back-button buttons button-clear header-item" 
+            ng-click="$root.go('auth.login')">
+        <i class="icon ion-ios-arrow-back"> Login </i> 
+    </button>
+</ion-nav-buttons>
+<ion-nav-title>
+    Vogel Tracker - Register
+</ion-nav-title>
+<ion-content class="padding has-header">
+    <div class="list list-inset">
+        <label class="item item-input item-floating-label">
         <span class="input-label">Username</span>
         <input type="text" placeholder="Username" ng-model="$ctrl.user.username">
     </label>
-    <label class="item item-input item-floating-label">
+        <label class="item item-input item-floating-label">
         <span class="input-label">Password</span>
         <input type="password" placeholder="Password" ng-model="$ctrl.user.password">
     </label>
-     <label class="item item-input item-floating-label">
+        <label class="item item-input item-floating-label">
         <span class="input-label">Email</span>
         <input type="email" placeholder="Email" ng-model="$ctrl.user.email">
     </label>
-</div>
-<button class="button button-block button-calm" ng-click="$ctrl.register()">Register</button> 
+    </div>
+    <button class="button button-block button-calm" ng-click="$ctrl.register()">Register</button>
+</ion-content>

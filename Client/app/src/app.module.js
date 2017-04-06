@@ -13,7 +13,10 @@ const app = angular
         Components,
         Common
     ])
-    .run(($ionicPlatform) => {
+    .run(($ionicPlatform, $rootScope, $state) => {
+        // Add functionality across all controllers
+        $rootScope.go = state => $state.go(state);
+        
         $ionicPlatform.ready(() => {
             if(window.cordova && window.cordova.plugins.Keyboard) {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
