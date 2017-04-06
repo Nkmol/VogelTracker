@@ -13,7 +13,11 @@ const report = angular
         $stateProvider
             .state('app.report', {
                 url: '/report',
-                template: `<report ion-view /> `
+                template: `<report ion-view /> `,
+                params: {
+                    img: null
+                }
+
             })
     })
     .name;
