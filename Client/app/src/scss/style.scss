@@ -3,9 +3,45 @@
     height: 400px;
 }
 
+#btn-picture {
+    font-size: 38px;
+    border: 0;
+}
+
+#btn-picture.activated {
+    background: 0 0 ;
+    color: #303030;
+}
+
+.leaflet-popup-content {
+    img {
+        width: 100%;
+    }
+}
+
+footer {
+    display: inherit;
+    width: 100%;
+}
+
+picture {
+    margin: auto;
+}
+
 .loader--style8 {
     svg path,
     svg rect{
         fill: #FF6700;
     }
 }
+
+#pictureFrame {
+    text-align: center;
+    height: 402px;
+
+    img {
+        height: 100%;
+        margin: auto;
+    }
+}
+

@@ -22,6 +22,7 @@ class MapController {
                             <h3>${report.bird_id && report.bird_id.name}</h3>
                             <b>Submitted by: ${report.user_id && report.user_id.username}</b> 
                             <p>${report.description}</p>
+                            <img src="${report.image[0]}" />
                             <hr />
                             <span> ${new Date(report.date).toDateString()}
                         `

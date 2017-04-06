@@ -10,9 +10,9 @@ const map = angular
     .config($stateProvider => {
         'ngInject';
         $stateProvider
-            .state('app.home.map', {
+            .state('app.map', {
                 url: '/map',
-                template: `<map /> `
+                template: `<map ion-view /> `
             })
     })
     .name;

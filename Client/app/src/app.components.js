@@ -6,9 +6,7 @@ class AppController {
 }
 
 // Define template
-let AppTemplate = `
-    <header></header>
-`;
+let AppTemplate = '<section ui-view></section>';
 
 // Define component
 const AppComponent = {
