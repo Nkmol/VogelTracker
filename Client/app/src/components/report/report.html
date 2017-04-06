@@ -1,0 +1,38 @@
+<ion-nav-title>
+    Vogel Tracker - Create Report
+</ion-nav-title>
+<ion-content  class="has-header padding has-footer">
+    <div class="list card">
+      <div class="item item-divider">Gespotte Vogel</div>
+      <div class="item item-body">
+        <div id="pictureFrame" class="center">
+           <img ng-src="{{$ctrl.reportPhoto}}" style="max-width: 100%">
+        </div>  
+      </div>
+      <div class="item item-divider">Relevante informatie</div>
+      <div class="item item-body">
+        <div class="item item-body">
+            <button class="button button-positive" modal-select="" ng-model="$ctrl.selectables2" on-select="$ctrl.showBird(newValue, oldValue)"
+            options="$ctrl.birds" option-property="name" has-search="true" modal-title="Kies een vogel">
+                    Kies een vogel
+                    <div class="option">
+                     {{option.name}}
+                    </div>
+                </button>
+
+              <h2>Gekozen vogel: {{$ctrl.selectedvalue}}</h2>
+        </div>
+      </div>
+      <div class="item item-body">
+        <label class="item item-input">
+            <textarea cols="40" rows="5" ng-model="$ctrl.newReport.description" placeholder="Omschrijving"></textarea>
+        </label>
+            <label class="item item-input">
+            <input type="text" value="{{$ctrl.getDatetime | date:'dd-MM-yyyy'}}">
+        </label>
+      </div>
+        <div class="item item-body">
+            <button class="button button-block button-calm" ng-click="$ctrl.sendReport()">Inzenden</button>
+        </div>
+    </div>
+</ion-content>

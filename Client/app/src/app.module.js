@@ -10,6 +10,7 @@ const app = angular
         'ngStorage',
         'ui-leaflet', 
         'cordova',
+        'ionic-modal-select',
         Components,
         Common
     ])
