@@ -35,6 +35,10 @@ class BaseController {
             });
     }
 
+    update(conditions, doc) {
+        return this._Model.update(conditions, doc);
+    }
+
     remove(conditions) {
         return this._Model.remove(conditions)
             .then(removed => console.log(chalk.blue(`Removed ${removed.result.n} ${this.modelName}(s)`)))
@@ -75,20 +79,17 @@ class BaseController {
     }
 
     _isValidId(input) {
-        if(!objIsEmpty(input || input._id) && !input._id.match(/^[0-9a-fA-F]{24}$/))
-            return this.errorResponse(`Please provide a valid '_id'`, res); 
+        if(input === undefined || !input.match(/^[0-9a-fA-F]{24}$/))
+            return false;
         else
             return true
     }
 
     get(req, res, next, populate = '') {
-        let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
+        if(!objIsEmpty(req.params)) return this.getOne(req,res,next,populate); // reroute
 
-        let isValidId = this._isValidId(paramsQuery)
-        if(!isValidId) return isValidId;
-
-        let urlQuery = qs.parse(req.query);
-        let query = Object.assign({}, urlQuery, paramsQuery);
+        let query = qs.parse(req.query);
+        // let query = Object.assign({}, urlQuery, paramsQuery);
 
         return this.find(query)
             .populate(populate)
@@ -97,11 +98,25 @@ class BaseController {
             );
     }
 
+    getOne(req, res, next, populate = '') {
+        if(objIsEmpty(req.params) || !this._isValidId(req.params._id))
+            return this.errorResponse(`Please provide a valid '_id'`, res);
+
+        let query = Object.assign({}, qs.parse(req.query), req.params);
+
+        return this.findOne(query)
+            .populate(populate)
+            .then(doc => doc === null
+                ? this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) 
+                : res.json(doc)
+            );
+    }
+
     delete(req, res, next) {
         let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
 
-        let isValidId = this._isValidId(paramsQuery)
-        if(!isValidId) return isValidId;
+        lif(!this._isValidId(paramsQuery._id))
+            return this.errorResponse(`Please provide a valid '_id'`, res);
 
         return this.findOne(paramsQuery)
             .then(doc => doc == null ? 
@@ -109,6 +124,53 @@ class BaseController {
             )
             .then(doc => doc.remove())
             .then(() => res.json({message: "ok"}))
+    }
+
+    put(req, res, next) {
+        // start Validate
+        if(objIsEmpty(req.body))
+            return this.errorResponse('Please provide values with your PUT request', res, 204);
+
+        if(objIsEmpty(req.params))
+            return this.errorResponse('Please provide a valid parameter to this PUT request', res);
+
+        if(!this._isValidId(req.params._id))
+            return this.errorResponse(`Please provide a valid '_id'`, res);
+        // end Validate
+
+        // Create default empty object
+        let emptyObj = Object.keys(this._Model.schema.obj)
+            .reduce((acc, val) => 
+                Object.assign({}, acc, {[val]: undefined})
+            , {});
+        
+        // Override given information
+        let newObject = Object.assign({}, emptyObj, req.body);
+        
+        return this.update({_id: req.params._id}, newObject, { upsert: true })
+            .then(() => res.json(Object.assign(newObject, {_id: req.params._id}) ))
+    }
+
+    patch(req, res, next) {
+        // start Validate
+        if(objIsEmpty(req.body))
+            return this.errorResponse('Please provide values with your PUT request', res, 204);
+
+        if(objIsEmpty(req.params))
+            return this.errorResponse('Please provide a valid parameter to this PUT request', res);
+
+        if(!this._isValidId(req.params._id))
+            return this.errorResponse(`Please provide a valid '_id'`, res);
+        // end Validate
+
+        return this.findOne({_id: req.params._id})
+            .then(doc => doc === null 
+                ? this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404)
+                : doc
+            )
+            .then(doc => Object.assign(doc, req.body))
+            .then(newDoc => this.update({_id: req.params._id}, newDoc).then(() => newDoc))
+            .then(newDoc => res.json(Object.assign(newDoc, {_id: req.params._id}) ))
     }
 }
 
