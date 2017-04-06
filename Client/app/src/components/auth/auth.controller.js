@@ -26,6 +26,7 @@ class AuthController {
             .then(res => {
                 if(res.status == 200) {
                     this.$localStorage.token = res.data.token;
+                    this.$localStorage.username = this.user.username;
                     this.$state.go('app.map');
                 }
             })
