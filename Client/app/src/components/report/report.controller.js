@@ -1,10 +1,10 @@
 class ReportController {
 
-    constructor(ReportService, $ionicLoading, $state, $localStorage, $ionicPlatform, $cordovaGeolocation){
+    constructor(ReportService, $ionicLoading, $state, $localStorage, $cordovaFileTransfer, $ionicPlatform, $cordovaGeolocation){
     'ngInject';
         this.ReportService = ReportService;
         this.$ionicLoading = $ionicLoading;
-        this.$window = $window;
+        this.$ionicPlatform = $ionicPlatform;
         this.$cordovaGeolocation = $cordovaGeolocation;
         this.birds = [];
         this.selectedvalue = null;
@@ -18,11 +18,11 @@ class ReportController {
                         id: bird._id
                     })
                  })
-                })
+                });
 
-       if($localStorage.get('image') != 'undefined'){
-           this.reportPhoto = "data:image/jpeg;base64," + $localStorage.get('image');
-       }
+       this.$ionicPlatform.ready(() => {
+              this.$cordovaFileTransfer = $cordovaFileTransfer;
+       });         
     }
 
     $onInit() {
@@ -49,7 +49,27 @@ class ReportController {
 
     }
 
+
+    upload(){
+        
+         this.$ionicPlatform.ready(() =>{
+            var uploadOptions = {
+            params : { 'upload_preset': 'd0tmj15t'}
+            };
+
+            this.$cordovaFileTransfer.upload("https://api.cloudinary.com/v1_1/dady313cq", "henk.jpg", uploadOptions).then( result => {
+                console.log("SUCCESS: " + JSON.stringify(result.response));
+            }, function(err) {
+                console.log("ERROR: " + JSON.stringify(err));
+            }, function (progress) {
+                // constant progress updates
+            });
+         });
+    }
+
     sendReport() {
+        this.upload();
+
         var self = this;
         self.posOptions = {timeout: 10000, enableHighAccuracy: false};
         self.$cordovaGeolocation
@@ -65,6 +85,8 @@ class ReportController {
                     }).then(() => this.$ionicLoading.hide());
             });
     }
+
+    
 
 }
 
