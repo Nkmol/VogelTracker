@@ -1,7 +1,11 @@
 class ReportController {
 
-    constructor(ReportService, $ionicLoading, $state, $window, $ionicPlatform, $cordovaGeolocation){
-    'ngInject';
+    constructor(ReportService, $ionicLoading, $state, $window, $ionicPlatform, $cordovaGeolocation
+        , $stateParams)
+    {
+        'ngInject';
+
+        this.$stateParams = $stateParams;
         this.ReportService = ReportService;
         this.$ionicLoading = $ionicLoading;
         this.$window = $window;
@@ -9,6 +13,7 @@ class ReportController {
         this.birds = [];
         this.selectedvalue = null;
         this.selectables2 = null;
+        
         ReportService.getBirds()
             .then(res => {
                 res.data.forEach(bird => {
@@ -21,8 +26,7 @@ class ReportController {
     }
 
     $onInit() {
-        this.getDatetime = new Date();
-        this.reportPhoto = '';
+        this.reportPhoto = "data:image/jpeg;base64," + this.$stateParams.img;
 
         this.newReport = {
             bird_id: '58d4e0e6d41c6761f4564163',
