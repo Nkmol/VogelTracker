@@ -3,14 +3,6 @@
     height: 400px;
 }
 
-#pictureFrame {
-    width: 100%;
-    text-align: center;
-    height: 402px;
-    border: 1px solid black;
-    margin-bottom: 20px;
-}
-
 #btn-picture {
     font-size: 38px;
     border: 0;
@@ -34,5 +26,15 @@ picture {
     svg path,
     svg rect{
         fill: #FF6700;
+    }
+}
+
+#pictureFrame {
+    text-align: center;
+    height: 402px;
+
+    img {
+        height: 100%;
+        margin: auto;
     }
 }
