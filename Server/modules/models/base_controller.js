@@ -81,7 +81,7 @@ class BaseController {
             return true
     }
 
-    get(req, res, next, populate = {}) {
+    get(req, res, next, populate = '') {
         let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
 
         let isValidId = this._isValidId(paramsQuery)

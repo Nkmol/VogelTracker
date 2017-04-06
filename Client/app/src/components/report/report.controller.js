@@ -18,15 +18,12 @@ class ReportController {
                     })
                  })
                 })
-        console.log(this.birds);
     }
 
     $onInit() {
-        console.log("on init laad");
         this.getDatetime = new Date();
         this.reportPhoto = '';
 
-        console.log("initialiseer newReport");
         this.newReport = {
             bird_id: '58d4e0e6d41c6761f4564163',
             user_id: '58e27bc39cd9c4000493b05c',
