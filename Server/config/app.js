@@ -19,6 +19,12 @@ module.exports.start = () => {
             console.log(chalk.green('Setup routers...'));
             // Setup listening
             let app = express();
+            let unless = (paths, middleware) => 
+                (req, res, next) => 
+                    // Skip Authentication on OPTIONS for angularjs, it is used as preflight
+                    paths.indexOf(req.path) > -1|| req.method === 'OPTIONS'
+                        ? next() 
+                        : middleware(req, res, next);
 
             // Add headers
             app.use((req, res, next) => {
@@ -35,20 +41,19 @@ module.exports.start = () => {
             app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
                 extended: true
             })); 
-
-            var unless = (paths, middleware) => 
-                (req, res, next) => 
-                    // Skip Authentication on OPTIONS for angularjs, it is used as preflight
-                    paths.indexOf(req.path) > -1|| req.method === 'OPTIONS'
-                        ? next() 
-                        : middleware(req, res, next);
       
+            app.use(express.static('doc')); // Set doc map as default folder to look for index
+
+            // Setup Authentication
             let loginController = require('../modules/users/controller');
             passport.use(new JwtStrategy(config.jwt.options, loginController.validate.bind(loginController)))
             app.use(passport.initialize())  
-            app.use(unless(["/login", "/register"], passport.authenticate('jwt', {session: false})));
+            // Skip authentication of certain routes
+            app.use(unless([
+                "/login", 
+                "/register"
+            ], passport.authenticate('jwt', {session: false})));
 
-            app.use(express.static('doc')); // Set doc map as default folder to look for index
 
             app.post("/login", loginController.login.bind(loginController));
             app.post("/register", loginController.registrate.bind(loginController));
