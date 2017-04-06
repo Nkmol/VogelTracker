@@ -86,18 +86,29 @@ class BaseController {
     }
 
     get(req, res, next, populate = '') {
-        let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
+        if(!objIsEmpty(req.params)) return this.getOne(req,res,next,populate); // reroute
 
-        if(!this._isValidId(paramsQuery._id))
-            return this.errorResponse(`Please provide a valid '_id'`, res);
-
-        let urlQuery = qs.parse(req.query);
-        let query = Object.assign({}, urlQuery, paramsQuery);
+        let query = qs.parse(req.query);
+        // let query = Object.assign({}, urlQuery, paramsQuery);
 
         return this.find(query)
             .populate(populate)
             .then(doc => doc.length <= 0 ? 
                 this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) : res.json(doc)
+            );
+    }
+
+    getOne(req, res, next, populate = '') {
+        if(objIsEmpty(req.params) || !this._isValidId(req.params._id))
+            return this.errorResponse(`Please provide a valid '_id'`, res);
+
+        let query = Object.assign({}, qs.parse(req.query), req.params);
+
+        return this.findOne(query)
+            .populate(populate)
+            .then(doc => doc === null
+                ? this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) 
+                : res.json(doc)
             );
     }
 

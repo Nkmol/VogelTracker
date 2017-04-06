@@ -54,7 +54,6 @@ module.exports.start = () => {
                 "/register"
             ], passport.authenticate('jwt', {session: false})));
 
-
             app.post("/login", loginController.login.bind(loginController));
             app.post("/register", loginController.registrate.bind(loginController));
 
