@@ -5,9 +5,10 @@ const PictureComponent = {
 
     },
     controller: class PictureController {
-        constructor($cordovaCamera, $ionicPlatform, $state) {
+        constructor($cordovaCamera, $ionicPlatform, $state, $rootScope) {
             'ngInject'
             
+            this.$rootScope = $rootScope;
             this.$cordovaCamera = $cordovaCamera;
             this.$ionicPlatform = $ionicPlatform
             this.$state = $state;
@@ -35,7 +36,11 @@ const PictureComponent = {
         takePicture() {
             this.$cordovaCamera.getPicture(this.options)
                 .then(img => {
-                    this.$state.go('app.report', {img: img});
+                    if(!this.$state.includes('report'))
+                        this.$state.go('app.report') 
+                            .then(() => this.$rootScope.$broadcast('photo-taken', {img : img}))
+                    else 
+                        this.$rootScope.$broadcast('photo-taken', {img : img});
                 });
         }
     },

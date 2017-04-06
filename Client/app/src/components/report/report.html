@@ -1,15 +1,15 @@
 <ion-nav-title>
-    Vogel Tracker - Create Report
+    Vogel melden
 </ion-nav-title>
 <ion-content  class="has-header padding has-footer">
     <div class="list card">
-      <div class="item item-divider">Gespotte Vogel</div>
+      <div class="item item-divider">Gespotte vogel foto</div>
       <div class="item item-body">
         <div id="pictureFrame" class="center">
            <img ng-src="{{$ctrl.reportPhoto}}" style="max-width: 100%">
         </div>  
       </div>
-      <div class="item item-divider">Relevante informatie</div>
+      <div class="item item-divider">Melding informatie</div>
       <div class="item item-body">
         <div class="item item-body">
             <button class="button button-positive" modal-select="" ng-model="$ctrl.selectables2" on-select="$ctrl.showBird(newValue, oldValue)"
@@ -20,7 +20,7 @@
                     </div>
                 </button>
 
-              <h2>Gekozen vogel: {{$ctrl.selectedvalue}}</h2>
+              <h2>Gespotte vogel naam: {{$ctrl.selectedvalue}}</h2>
         </div>
       </div>
       <div class="item item-body">

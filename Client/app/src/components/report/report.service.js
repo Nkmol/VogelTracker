@@ -6,13 +6,7 @@ class ReportService {
     }
 
     createReport(report) {
-
-        console.log(report);
-
-        return this.$http.post(`${this.Config.url}/reports`, report)
-            .then(res => {
-                console.log(res);
-            });
+        return this.$http.post(`${this.Config.url}/reports/`, report);
     }
 
     getBirds() {

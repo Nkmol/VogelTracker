@@ -1,8 +1,11 @@
 class ReportController {
 
+    constructor(ReportService, $ionicLoading, $state, $window, $ionicPlatform, $cordovaGeolocation
+        , $stateParams, $rootScope, $cordovaFileTransfer) {
+        'ngInject';
 
-    constructor(ReportService, $ionicLoading, $state, $cordovaFileTransfer, $ionicPlatform, $stateParams,$cordovaGeolocation){
-    'ngInject';
+        this.$rootScope = $rootScope;
+        this.$stateParams = $stateParams;
         this.ReportService = ReportService;
         this.$ionicLoading = $ionicLoading;
         this.$ionicPlatform = $ionicPlatform;
@@ -13,23 +16,22 @@ class ReportController {
         this.selectables2 = null;
 
         ReportService.getBirds()
-            .then(res => {
-                res.data.forEach(bird => {
+            .then(res => 
+                res.data.forEach(bird => 
                     this.birds.push({
                         name: bird.name,
                         id: bird._id
                     })
-                 })
-            });
+                 )
+            );
 
-       this.$ionicPlatform.ready(() => {
-              this.$cordovaFileTransfer = $cordovaFileTransfer;
-       });         
+        this.$cordovaFileTransfer = $cordovaFileTransfer;      
     }
 
     $onInit() {
         this.getDatetime = new Date();
-        this.reportPhoto = "data:image/jpeg;base64," + this.$stateParams.img;
+        this.reportPhoto = "/assets/img/bird-silhouette.png"
+        this.$rootScope.$on('photo-taken', this.pictureTaken.bind(this));
 
         this.newReport = {
             bird_id: '58d4e0e6d41c6761f4564163',
@@ -42,7 +44,8 @@ class ReportController {
         }
     }
 
-    showBird(newValue, oldValue){
+
+    showBird(newValue, oldValue) {
         let found = this.birds.find(x => x.name == newValue);
         this.selectedvalue = newValue;
         this.newReport.bird_id = found.id;
@@ -52,17 +55,15 @@ class ReportController {
 
     }
 
-
-    upload(){
-        console.log('upload');
+    upload() {
         let uploadOptions = {
             params : { 'upload_preset': 'd0tmj15t'}
         };
 
-        return this.$cordovaFileTransfer.upload("https://api.cloudinary.com/v1_1/dady313cq/image/upload", "data:image/jpeg;base64," + this.$stateParams.img, uploadOptions)
+        return this.$cordovaFileTransfer.upload("https://api.cloudinary.com/v1_1/dady313cq/image/upload"
+                ,this.reportPhoto, uploadOptions)
             .then( result => {
                 this.newReport.image.push(JSON.parse(result.response).url);
-                console.log('Uploaded', this.newReport);
             }, err => {
                 console.log("ERROR: " + JSON.stringify(err));
             }, progress => {
@@ -87,9 +88,11 @@ class ReportController {
                 
             })
             .then(() => this.$ionicLoading.hide());
+    }
 
-        }
-
+    pictureTaken(event, args) {
+        this.reportPhoto = "data:image/jpeg;base64," + args.img;
+    }
 }
 
 export default ReportController;
