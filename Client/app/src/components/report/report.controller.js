@@ -38,7 +38,7 @@ class ReportController {
             description: '',
             lat: 4.4,
             long: 4.3,
-            image: ''
+            image: []
         }
     }
 
@@ -54,47 +54,39 @@ class ReportController {
 
 
     upload(){
-         this.$ionicPlatform.ready(() =>{
-            var uploadOptions = {
+        console.log('upload');
+        let uploadOptions = {
             params : { 'upload_preset': 'd0tmj15t'}
-            };
+        };
 
-           return this.$cordovaFileTransfer.upload("https://api.cloudinary.com/v1_1/dady313cq/image/upload", "data:image/jpeg;base64," + this.$stateParams.img, uploadOptions).then( result => {
-                //console.log("SUCCESS: " + JSON.stringify(result.response));
-                console.log(result.response);
-                this.newReport.image = result.response.url;
+        return this.$cordovaFileTransfer.upload("https://api.cloudinary.com/v1_1/dady313cq/image/upload", "data:image/jpeg;base64," + this.$stateParams.img, uploadOptions)
+            .then( result => {
+                this.newReport.image.push(JSON.parse(result.response).url);
+                console.log('Uploaded', this.newReport);
             }, err => {
                 console.log("ERROR: " + JSON.stringify(err));
             }, progress => {
                 // constant progress updates
             });
-
-         });
-
-        
     }
 
     sendReport() {
-        console.log("loading begint");
         this.$ionicLoading.show();
-        var self = this;
-        self.posOptions = {timeout: 10000, enableHighAccuracy: false};
-        self.$cordovaGeolocation
-            .getCurrentPosition(self.posOptions)
-            .then( position => {
-                console.log("initialiseer coordinaten");
+        let posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy:true};
+        console.log('start');
+        this.$cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(position => {
                 this.newReport.lat = position.coords.latitude;
                 this.newReport.long = position.coords.longitude;
-                console.log("start upload");
-                var promise = this.upload();
-                promise.then( () => {
-                        console.log("maak rapport");
-                        return this.ReportService.createReport(self.newReport)
-                        .then(res => {
-                                console.log(res);
-                            }).then(() => this.$ionicLoading.hide());
-                    });
-                })
+            })
+            .catch(err => console.log(err))
+            .then(() => this.upload())
+            .then(() => this.ReportService.createReport(this.newReport))
+            .then(res => {
+                
+            })
+            .then(() => this.$ionicLoading.hide());
 
         }
 

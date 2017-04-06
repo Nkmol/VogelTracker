@@ -9,7 +9,7 @@ class ReportService {
 
         console.log(report);
 
-        return this.$http.post(`${this.Config.url}/reports/`, report)
+        return this.$http.post(`${this.Config.url}/reports`, report)
             .then(res => {
                 console.log(res);
             });
