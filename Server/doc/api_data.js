@@ -341,12 +341,115 @@ define({ "api": [
             "optional": false,
             "field": "-.token",
             "description": "<p>JWT token</p>"
-          }
+          },
         ]
       }
     },
     "version": "0.0.0",
     "filename": "modules/users/router.js",
     "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/reports/",
+    "title": "Create a Report",
+    "name": "Register",
+    "group": "Report",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/x-www-form-urlencoded</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "bird_id",
+            "description": "<p>bird identification</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>user identification</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "date",
+            "description": "<p>the creation date of the report</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>detailed explanation</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "lat",
+            "description": "<p>registered latitude of the user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "long",
+            "description": "<p>registered longtitude of the user</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "text",
+            "optional": false,
+            "field": "400/BadRequest",
+            "description": "<p>Please provide 'proper report info</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "JSON",
+            "optional": false,
+            "field": "-",
+            "description": "<p>JSON wrapper</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "text",
+            "optional": false,
+            "field": "-.message",
+            "description": "<p>&quot;ok&quot;</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "modules/users/router.js",
+    "groupTitle": "Report"
   }
 ] });
