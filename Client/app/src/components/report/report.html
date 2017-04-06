@@ -1,3 +1,7 @@
+<ion-nav-title>
+    Vogel Tracker - Create Report
+</ion-nav-title>
+<!--<ion-content  class="has-header padding">-->
 <div class="list card">
       <div class="item item-divider">Gespotte Vogel</div>
       <div class="item item-body">
@@ -5,20 +9,19 @@
            <img ng-src="{{reportPhoto}}" style="max-width: 100%">
         </div>  
       </div>
-
       <div class="item item-divider">Relevante informatie</div>
       <div class="item item-body">
-        <ion-item>
-        <ion-label>Birds</ion-label>
-        <ion-select multiple="true">
-            <ion-option>Bacon</ion-option>
-            <ion-option>Black Olives</ion-option>
-            <ion-option>Extra Cheese</ion-option>
-            <ion-option>Mushrooms</ion-option>
-            <ion-option>Pepperoni</ion-option>
-            <ion-option>Sausage</ion-option>
-        </ion-select>
-        </ion-item>
+        <div class="item item-body">
+            <button class="button button-positive" modal-select="" ng-model="$ctrl.selectables2" on-select="$ctrl.showBird(newValue, oldValue)"
+            options="$ctrl.birds" option-property="name" has-search="true" modal-title="Kies een vogel">
+                    Kies een vogel
+                    <div class="option">
+                     {{option.name}}
+                    </div>
+                </button>
+
+              <h2>Gekozen vogel: {{$ctrl.selectedvalue}}</h2>
+        </div>
       </div>
       <div class="item item-body">
         <label class="item item-input">
@@ -32,3 +35,4 @@
             <button class="button button-block button-calm" ng-click="$ctrl.sendReport()">Inzenden</button>
         </div>
     </div>
+<!--</ion-content>-->

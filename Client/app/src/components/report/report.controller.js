@@ -5,14 +5,21 @@ class ReportController {
         this.ReportService = ReportService;
         this.$ionicLoading = $ionicLoading;
         this.$window = $window;
-
-        console.log("platform ready");
         this.$cordovaGeolocation = $cordovaGeolocation;
-
-        console.log("constructor laad");
-        //console.log($window);
+        this.birds = [];
+        this.selectedvalue = null;
+        this.selectables2 = null;
+        ReportService.getBirds()
+            .then(res => {
+                res.data.forEach(bird => {
+                    this.birds.push({
+                        name: bird.name,
+                        id: bird.id
+                    })
+                 })
+                })
+        console.log(this.birds);
     }
-
 
     $onInit() {
         console.log("on init laad");
@@ -21,7 +28,7 @@ class ReportController {
 
         console.log("initialiseer newReport");
         this.newReport = {
-            bird_id: '58e281512471d642c9778c6e',
+            bird_id: '58d4e0e6d41c6761f4564163',
             user_id: '58e27bc39cd9c4000493b05c',
             date: this.getDatetime,
             description: '',
@@ -30,12 +37,15 @@ class ReportController {
         }
     }
 
+    showBird(newValue, oldValue){
+        this.selectedvalue = newValue;
+    }
+
     $onChanges(changes) {
 
     }
 
     sendReport() {
-
         var self = this;
         self.posOptions = {timeout: 10000, enableHighAccuracy: false};
         self.$cordovaGeolocation
@@ -43,16 +53,13 @@ class ReportController {
             .then( position => {
                 this.newReport.lat = position.coords.latitude;
                 this.newReport.long = position.coords.longitude;
-                console.log(self.newReport.lat);
-                console.log(self.newReport.long);
-
+                
                 this.$ionicLoading.show();
                 return this.ReportService.createReport(self.newReport)
                 .then(res => {
                         console.log(res);
                     }).then(() => this.$ionicLoading.hide());
             });
-
     }
 
 }
