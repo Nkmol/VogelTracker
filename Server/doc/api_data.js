@@ -118,12 +118,21 @@ define({ "api": [
     },
     "error": {
       "fields": {
+        "Error 204": [
+          {
+            "group": "Error 204",
+            "type": "text",
+            "optional": false,
+            "field": "204/NoContent",
+            "description": "<p>Please provide values with your PUT request'</p>"
+          }
+        ],
         "Error 4xx": [
           {
             "group": "Error 400",
             "type": "text",
             "optional": false,
-            "field": "401/BadRequest",
+            "field": "400/BadRequest",
             "description": "<p>Please provide a valid '_id'</p>"
           },
           {
@@ -486,6 +495,61 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "modules/users/router.js",
     "groupTitle": "User"
+  },
+  {
+    "type": "delete",
+    "url": "/reports/",
+    "title": "Delete Report",
+    "name": "DeleteReport",
+    "group": "Report",
+    "version": "0.0.0",
+    "filename": "modules/reports/router.js",
+    "groupTitle": "Report",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The JWT-token header: &quot;JWT {{ TOKEN }}&quot;.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 400",
+            "type": "text",
+            "optional": false,
+            "field": "401/BadRequest",
+            "description": "<p>Please provide a valid '_id'</p>"
+          },
+          {
+            "group": "Error 401",
+            "type": "text",
+            "optional": false,
+            "field": "401/Unauthorized",
+            "description": "<p>You have not provided your Token credentials as header request</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Body": [
+          {
+            "group": "Success 200",
+            "type": "ObjectId",
+            "optional": false,
+            "field": "id",
+            "description": "<p>report ID <code>match(/^[0-9a-fA-F]{24}$/)</code></p>"
+          }
+        ]
+      }
+    }
   },
   {
     "type": "post",
