@@ -40,5 +40,6 @@ router.route('/:_id')
         .get(controller.get.bind(controller))
         .delete(controller.delete.bind(controller))
         .put(controller.put.bind(controller))
+        .patch(controller.patch.bind(controller))
 
 module.exports = router;

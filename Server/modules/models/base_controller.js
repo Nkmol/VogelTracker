@@ -136,8 +136,26 @@ class BaseController {
         // Override given information
         let newObject = Object.assign({}, emptyObj, req.body);
         
-        return this._Model.update({_id: req.params._id}, newObject)
+        return this.update({_id: req.params._id}, newObject)
             .then(() => res.json(Object.assign(newObject, {_id: req.params._id}) ))
+    }
+
+    patch(req, res, next) {
+        // start Validate
+        if(objIsEmpty(req.body))
+            return this.errorResponse('Please provide values with your PUT request', res, 204);
+
+        if(objIsEmpty(req.params))
+            return this.errorResponse('Please provide a valid parameter to this PUT request', res);
+
+        if(!this._isValidId(req.params._id))
+            return this.errorResponse(`Please provide a valid '_id'`, res);
+        // end Validate
+
+        return this.findOne({_id: req.params._id})
+            .then(doc => Object.assign(doc, req.body))
+            .then(newDoc => this.update({_id: req.params._id}, newDoc).then(() => newDoc))
+            .then(newDoc => res.json(Object.assign(newDoc, {_id: req.params._id}) ))
     }
 }
 
