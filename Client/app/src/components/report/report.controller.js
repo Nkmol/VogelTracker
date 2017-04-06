@@ -1,9 +1,11 @@
 class ReportController {
 
     constructor(ReportService, $ionicLoading, $state, $window, $ionicPlatform, $cordovaGeolocation
-        , $stateParams, $rootScope, $cordovaFileTransfer, $localStorage) {
+        , $stateParams, $rootScope, $cordovaFileTransfer, $localStorage, $ionicPopup) {
         'ngInject';
 
+        this.$state = $state;
+        this.$ionicPopup = $ionicPopup;
         this.$localStorage = $localStorage;
         this.$rootScope = $rootScope;
         this.$stateParams = $stateParams;
@@ -86,8 +88,11 @@ class ReportController {
             .then(() => this.upload())
             .then(() => this.ReportService.createReport(this.newReport))
             .then(res => {
-                
+                return this.$ionicPopup.alert({
+                    title: 'Your report has been succesfully send.'
+                })
             })
+            .then(() => this.$state.go('app.map'))
             .then(() => this.$ionicLoading.hide());
     }
 

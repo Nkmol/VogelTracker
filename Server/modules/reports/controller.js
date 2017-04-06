@@ -19,7 +19,8 @@ class ReportController extends BaseController {
             .then(super.create(req.body))
             .then(reportDoc => this.populate(doc, {path: "bird_id"}))
             .then(reportDoc => this.populate(doc, {path: "user_id"}))
-            .then(reportDoc => res.json({message: "ok", data: doc}));
+            .then(reportDoc => res.json({message: "ok", data: doc}))
+            .catch(err => res.status(400).json({message: err}));
     }
 
     get(req, res, next) {
