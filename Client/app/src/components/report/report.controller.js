@@ -1,6 +1,6 @@
 class ReportController {
 
-    constructor(ReportService, $ionicLoading, $state, $window, $ionicPlatform, $cordovaGeolocation){
+    constructor(ReportService, $ionicLoading, $state, $localStorage, $ionicPlatform, $cordovaGeolocation){
     'ngInject';
         this.ReportService = ReportService;
         this.$ionicLoading = $ionicLoading;
@@ -9,6 +9,7 @@ class ReportController {
         this.birds = [];
         this.selectedvalue = null;
         this.selectables2 = null;
+        this.$localStorage = $localStorage;
         ReportService.getBirds()
             .then(res => {
                 res.data.forEach(bird => {
@@ -18,6 +19,10 @@ class ReportController {
                     })
                  })
                 })
+
+       if($localStorage.get('image') != 'undefined'){
+           this.reportPhoto = "data:image/jpeg;base64," + $localStorage.get('image');
+       }
     }
 
     $onInit() {

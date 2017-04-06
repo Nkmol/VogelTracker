@@ -5,11 +5,15 @@ const PictureComponent = {
 
     },
     controller: class PictureController {
-        constructor($cordovaCamera, $ionicPlatform) {
+        constructor($cordovaCamera, $ionicPlatform, $state, $localStorage) {
             'ngInject'
             
             this.$cordovaCamera = $cordovaCamera;
             this.$ionicPlatform = $ionicPlatform
+            this.$state = $state;
+            console.log('voor de init');
+            this.$localStorage = $localStorage;
+            console.log("na de init");
         }
 
         $onInit() {
@@ -35,6 +39,9 @@ const PictureComponent = {
             this.$cordovaCamera.getPicture(this.options)
                 .then(img => {
                     console.log(img)
+                    this.$localStorage.setItem('image', img);
+                    console.log("ga naar report");
+                    $state.go('app.report');
                 });
         }
     },
