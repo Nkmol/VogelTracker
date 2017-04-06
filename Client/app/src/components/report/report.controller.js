@@ -1,9 +1,10 @@
 class ReportController {
 
     constructor(ReportService, $ionicLoading, $state, $window, $ionicPlatform, $cordovaGeolocation
-        , $stateParams, $rootScope, $cordovaFileTransfer) {
+        , $stateParams, $rootScope, $cordovaFileTransfer, $localStorage) {
         'ngInject';
 
+        this.$localStorage = $localStorage;
         this.$rootScope = $rootScope;
         this.$stateParams = $stateParams;
         this.ReportService = ReportService;
@@ -35,7 +36,7 @@ class ReportController {
 
         this.newReport = {
             bird_id: '58d4e0e6d41c6761f4564163',
-            user_id: '58e27bc39cd9c4000493b05c',
+            user_id: this.$localStorage.username,
             date: this.getDatetime,
             description: '',
             lat: 4.4,
@@ -48,6 +49,7 @@ class ReportController {
     showBird(newValue, oldValue) {
         let found = this.birds.find(x => x.name == newValue);
         this.selectedvalue = newValue;
+
         this.newReport.bird_id = found.id;
     }
 
@@ -74,7 +76,6 @@ class ReportController {
     sendReport() {
         this.$ionicLoading.show();
         let posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy:true};
-        console.log('start');
         this.$cordovaGeolocation
             .getCurrentPosition(posOptions)
             .then(position => {

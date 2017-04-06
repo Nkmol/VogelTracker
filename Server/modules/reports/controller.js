@@ -14,10 +14,12 @@ class ReportController extends BaseController {
         if(!(req.body.bird_id && req.body.description && req.body.lat && req.body.long && req.body.user_id && req.body.date))
             return res.status(400).json({message: "Please provide the right info"});
 
-        return super.create(req.body)
-            .then(doc => this.populate(doc, {path: "bird_id"}))
-            .then(doc => this.populate(doc, {path: "user_id"}))
-            .then(doc => res.json({message: "ok", data: doc}));
+        mongoose.model('User').find({username: req.body.user_id})
+            .then(userDoc => req.body.user_id = doc._id)
+            .then(super.create(req.body))
+            .then(reportDoc => this.populate(doc, {path: "bird_id"}))
+            .then(reportDoc => this.populate(doc, {path: "user_id"}))
+            .then(reportDoc => res.json({message: "ok", data: doc}));
     }
 
     get(req, res, next) {
