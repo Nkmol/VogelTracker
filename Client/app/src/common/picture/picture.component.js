@@ -18,7 +18,7 @@ const PictureComponent = {
             this.$ionicPlatform.ready(() => {
                 if(typeof Camera !== 'undefined') {
                     this.options = {
-                        quality: 50,
+                        quality: 100,
                         destinationType: Camera.DestinationType.DATA_URL,
                         sourceType: Camera.PictureSourceType.CAMERA,
                         allowEdit: false,
