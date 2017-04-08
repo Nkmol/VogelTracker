@@ -1,8 +1,6 @@
 package com.example.jamamwitwit.birdencylopedia.Fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

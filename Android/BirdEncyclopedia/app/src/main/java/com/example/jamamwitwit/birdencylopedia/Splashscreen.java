@@ -3,10 +3,6 @@ package com.example.jamamwitwit.birdencylopedia;
 /**
  * Created by jamamwitwit on 20/03/2017.
  */
-
-
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -17,11 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
-import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
-
 public class Splashscreen extends Activity {
-
 
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -49,6 +41,7 @@ public class Splashscreen extends Activity {
         iv.clearAnimation();
         iv.startAnimation(anim);
 
+
         splashTread = new Thread() {
             @Override
             public void run() {
@@ -60,21 +53,9 @@ public class Splashscreen extends Activity {
                         waited += 100;
                     }
 
-
-                    Account[] accounts = AccountManager
-                            .get(getBaseContext())
-                            .getAccountsByType(AccountGeneral.ACCOUNT_TYPE);
-
-                    if(accounts.length >= 1){
-                        Intent newIntent = new Intent(getBaseContext(), OverviewActivity.class);
-                        newIntent.putExtra("account", accounts[0]);
-                        startActivity(newIntent);
-                    } else {
-                        Intent intent = new Intent(Splashscreen.this,
-                                LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(Splashscreen.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
 
                     Splashscreen.this.finish();
                 } catch (InterruptedException e) {
