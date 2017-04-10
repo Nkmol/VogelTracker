@@ -26,14 +26,23 @@ public class AuthService : NSObject {
     }
     
     
-    func registerNewUser (newUser : Dictionary<String,String> ){
+    func registerNewUser (newUser : Dictionary<String,String>, completion: @escaping (_ message: String ) -> Void ) {
         
         let manager : ApiManager = ApiManager()
+        var message : String = ""
         
         manager.register(user: newUser) { (result: Dictionary<String, Any>?, error: Error?) in
-            print(result)
+            //print("resultaat")
+            //print(result!["message"])
+            
+            message = (result!["message"] as? String)!
+            
+            if(message == "ok") {
+               completion("Registratie is voltooid")
+            }
         }
         
+
     }
     
     func login (_ : Dictionary<String, String>) {

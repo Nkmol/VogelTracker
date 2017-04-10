@@ -33,11 +33,8 @@ class RegisterViewController: UIViewController {
             return;
         }
         
-        //let newUser : User = User()
-        //newUser.username = username!
-        //newUser.email = email!
-        //newUser.password = password!
-        
+
+        // create user
         let user = [
             "username": username,
             "password": password,
@@ -45,18 +42,15 @@ class RegisterViewController: UIViewController {
         ]
         
         let service : AuthService = AuthService()
-        service.registerNewUser(newUser: user as! Dictionary<String, String>)
-        //service.registerNewUser(user: user)
+        service.registerNewUser(newUser: user as! Dictionary<String, String>) {(message: String) in
+            self.displayAlertMessage(message: message)
+        }
         
-        //AuthService.registerNewUser(newUser)
-        // store data
-        
-        // Display confirmation
     }
     
-    
+    // Show alert dialog that takes input message
     func displayAlertMessage(message: String) {
-        let registerAlert = UIAlertController(title: "Waarschuwing", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let registerAlert = UIAlertController(title: "Notificatie", message: message, preferredStyle: UIAlertControllerStyle.alert)
         
         let registerAction = UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil)
         
