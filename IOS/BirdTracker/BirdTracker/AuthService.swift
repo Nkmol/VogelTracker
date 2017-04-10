@@ -23,7 +23,7 @@ public class AuthService : NSObject {
         init(token: String){
            self.token = token
            UserDefaults.standard.set(self.token, forKey: "token")
-            
+           UserDefaults.standard.set(true, forKey: "isLoggedIn")
         }
     }
     
@@ -56,7 +56,7 @@ public class AuthService : NSObject {
                 
                 var token : String = (result!["token"] as? String)!
                 
-               OAuthInfo.init(token: token)
+                OAuthInfo.init(token: token)
             }
             
 
