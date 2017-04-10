@@ -23,6 +23,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func login(_ sender: Any) {
+        
         var username = usernameTextField.text
         var password = passwordTextField.text
         
@@ -37,7 +38,11 @@ class LoginViewController: UIViewController {
         ]
         
         let service : AuthService = AuthService()
-        service.login(existingUser: user as! Dictionary<String, String>)
+        service.login(existingUser: user as! Dictionary<String, String>) { (message : String) in
+            if(message == "success") {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
         
     }
 

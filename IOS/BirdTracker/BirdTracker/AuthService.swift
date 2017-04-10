@@ -10,11 +10,9 @@ import Foundation
 import UIKit
 
 
-public class AuthService : NSObject {
+public class AuthService : ParentService {
     
     private var tokenInfo:OAuthInfo!
-    let manager : ApiManager = ApiManager()
-    var message : String = ""
     
     // We create a struct to hold users OAuth information
     struct OAuthInfo {
@@ -30,11 +28,8 @@ public class AuthService : NSObject {
     
     func registerNewUser (newUser : Dictionary<String,String>, completion: @escaping (_ message: String ) -> Void ) {
 
-        
         manager.register(user: newUser) { (result: Dictionary<String, Any>?, error: Error?) in
-            //print("resultaat")
-            //print(result!["message"])
-            
+
             self.message = (result!["message"] as? String)!
             
             if(self.message == "ok") {
@@ -45,21 +40,19 @@ public class AuthService : NSObject {
 
     }
     
-    func login (existingUser : Dictionary<String, String>) {
+    func login (existingUser : Dictionary<String, String>,  completion: @escaping (_ message: String ) -> Void ) {
         
         manager.login(user: existingUser){ (result: Dictionary<String, Any>?, error: Error?) in
-            print(result)
             
             self.message = (result!["message"] as? String)!
             
             if(self.message == "ok") {
                 
-                var token : String = (result!["token"] as? String)!
-                
+                let token : String = (result!["token"] as? String)!
                 OAuthInfo.init(token: token)
+                completion("success")
             }
             
-
         }
         
     }

@@ -52,7 +52,31 @@ class ApiManager : NSObject {
         }
     }
     
-    func getBirds() {
+    func getBirds(token : String) {
+        
+        guard let endpoint = URL(string: baseUrl + "birds") else {
+            print("not a valid url")
+            return
+        }
+        
+        let headers : HTTPHeaders = [
+            "Authorization" : "JWT " + token,
+            "Accept": "application/json"
+        ]
+        
+        Alamofire.request(endpoint, headers: headers)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                switch response.result {
+                case .success:
+                    print("Validation Successful")
+                    print(response)
+                case .failure(let error):
+                    print(error)
+                }
+        }
+        
         
     }
     
