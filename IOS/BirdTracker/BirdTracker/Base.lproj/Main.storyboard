@@ -132,10 +132,10 @@
             </objects>
             <point key="canvasLocation" x="-162.40000000000001" y="122.78860569715144"/>
         </scene>
-        <!--View Controller-->
+        <!--Register View Controller-->
         <scene sceneID="kzO-An-05r">
             <objects>
-                <viewController id="sn3-lQ-Hz1" sceneMemberID="viewController">
+                <viewController id="sn3-lQ-Hz1" customClass="RegisterViewController" customModule="BirdTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kRM-4i-xe3"/>
                         <viewControllerLayoutGuide type="bottom" id="0Q4-Y7-P4h"/>
@@ -190,6 +190,9 @@
                                 <state key="normal" title="Register">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="registerUser:" destination="sn3-lQ-Hz1" eventType="touchUpInside" id="gGi-42-zRk"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ep-HY-igk">
                                 <rect key="frame" x="38" y="404" width="299" height="30"/>
@@ -223,6 +226,11 @@
                             <constraint firstAttribute="trailingMargin" secondItem="xZl-5F-7Q1" secondAttribute="trailing" constant="22" id="zrQ-5d-e8f"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="vgb-2q-jq3" id="Cya-Vr-JfQ"/>
+                        <outlet property="passwordTextField" destination="QTg-vU-9jZ" id="9Gt-Sd-obA"/>
+                        <outlet property="usernameTextField" destination="xZl-5F-7Q1" id="4qb-OY-lNJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rmf-TK-g1X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

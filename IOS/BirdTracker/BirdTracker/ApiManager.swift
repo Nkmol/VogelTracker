@@ -1,0 +1,60 @@
+//
+//  ApiManager.swift
+//  BirdTracker
+//
+//  Created by Jamam Witwit on 10/04/2017.
+//  Copyright © 2017 Witwit. All rights reserved.
+//
+
+import Foundation
+import SwiftyJSON
+import Alamofire
+
+
+class ApiManager : NSObject {
+    
+    static let sharedInstance = ApiManager()
+    
+    let baseUrl = "https://vogeltracker.herokuapp.com/"
+    
+    func register (user : Dictionary<String, String>, completion: @escaping (_ result: Dictionary<String, Any>?, _ error: Error?) -> Void) {
+        
+        guard let endpoint = URL(string: baseUrl + "register") else {
+                    print("Not a valid url")
+                    return
+        }
+        
+        Alamofire.request(endpoint, method: .post, parameters: user).responseJSON { response in
+            
+            switch response.result {
+            case .success(let value):
+                completion(value as? Dictionary, response.error)
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func login (user: Dictionary<String, String>, completion: @escaping (_ result: Dictionary<String, Any>?, _ error: Error?) -> Void) {
+        
+        guard let endpoint = URL(string: baseUrl + "login") else {
+            print("not a valid url")
+            return
+        }
+        
+        Alamofire.request(endpoint, method: .post, parameters: user).responseJSON { response in
+            switch response.result {
+                case .success(let value) :
+                    completion(value as? Dictionary, response.error)
+                case .failure(let error):
+                    completion (nil, error)
+            }
+        }
+    }
+    
+    func getBirds() {
+        
+    }
+    
+    
+}

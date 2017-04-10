@@ -26,5 +26,22 @@ public class AuthService : NSObject {
     }
     
     
+    func registerNewUser (newUser : Dictionary<String,String> ){
+        
+        let manager : ApiManager = ApiManager()
+        
+        manager.register(user: newUser) { (result: Dictionary<String, Any>?, error: Error?) in
+            print(result)
+        }
+        
+    }
+    
+    func login (_ : Dictionary<String, String>) {
+        
+        
+        
+    }
+    
+    
 
 }

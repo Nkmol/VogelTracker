@@ -14,6 +14,11 @@
 		145309381E99AF550024521F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145309361E99AF550024521F /* LaunchScreen.storyboard */; };
 		145E18901E9A8E14009460F2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145E188F1E9A8E14009460F2 /* LoginViewController.swift */; };
 		145E18931E9AADAB009460F2 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145E18921E9AADAB009460F2 /* AuthService.swift */; };
+		145E18951E9AE111009460F2 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145E18941E9AE111009460F2 /* RegisterViewController.swift */; };
+		145E189A1E9AEBF3009460F2 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145E18991E9AEBF3009460F2 /* ApiManager.swift */; };
+		145E189D1E9AF0AD009460F2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145E189C1E9AF0AD009460F2 /* User.swift */; };
+		14E703C01E9B07FB00823A48 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E703BF1E9B07FB00823A48 /* Response.swift */; };
+		5D068854BB68485285D59460 /* Pods_BirdTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E5FD1B7911C108C12A15B1 /* Pods_BirdTracker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,13 @@
 		145309391E99AF550024521F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		145E188F1E9A8E14009460F2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		145E18921E9AADAB009460F2 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		145E18941E9AE111009460F2 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		145E18991E9AEBF3009460F2 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		145E189C1E9AF0AD009460F2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		14E703BF1E9B07FB00823A48 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		381F685588D1FA36FFA33F78 /* Pods-BirdTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BirdTracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BirdTracker/Pods-BirdTracker.debug.xcconfig"; sourceTree = "<group>"; };
+		3A958D0D1C522A465E66A2EF /* Pods-BirdTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BirdTracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-BirdTracker/Pods-BirdTracker.release.xcconfig"; sourceTree = "<group>"; };
+		B1E5FD1B7911C108C12A15B1 /* Pods_BirdTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BirdTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D068854BB68485285D59460 /* Pods_BirdTracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +57,8 @@
 			children = (
 				1453092C1E99AF550024521F /* BirdTracker */,
 				1453092B1E99AF550024521F /* Products */,
+				97E6E08248F9859FFD93258D /* Pods */,
+				F31148BD685F0EC50C5FFC73 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,10 +73,13 @@
 		1453092C1E99AF550024521F /* BirdTracker */ = {
 			isa = PBXGroup;
 			children = (
+				145E189B1E9AF05B009460F2 /* Models */,
+				145E18961E9AEB34009460F2 /* API */,
 				145E18911E9AAD82009460F2 /* Services */,
 				1453092D1E99AF550024521F /* AppDelegate.swift */,
 				1453092F1E99AF550024521F /* ViewController.swift */,
 				145E188F1E9A8E14009460F2 /* LoginViewController.swift */,
+				145E18941E9AE111009460F2 /* RegisterViewController.swift */,
 				145309311E99AF550024521F /* Main.storyboard */,
 				145309341E99AF550024521F /* Assets.xcassets */,
 				145309361E99AF550024521F /* LaunchScreen.storyboard */,
@@ -78,6 +96,40 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		145E18961E9AEB34009460F2 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				145E18991E9AEBF3009460F2 /* ApiManager.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		145E189B1E9AF05B009460F2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				145E189C1E9AF0AD009460F2 /* User.swift */,
+				14E703BF1E9B07FB00823A48 /* Response.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		97E6E08248F9859FFD93258D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				381F685588D1FA36FFA33F78 /* Pods-BirdTracker.debug.xcconfig */,
+				3A958D0D1C522A465E66A2EF /* Pods-BirdTracker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F31148BD685F0EC50C5FFC73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B1E5FD1B7911C108C12A15B1 /* Pods_BirdTracker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -85,9 +137,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1453093C1E99AF550024521F /* Build configuration list for PBXNativeTarget "BirdTracker" */;
 			buildPhases = (
+				375DB6C95E9A2CC3179B2C5C /* [CP] Check Pods Manifest.lock */,
 				145309261E99AF550024521F /* Sources */,
 				145309271E99AF550024521F /* Frameworks */,
 				145309281E99AF550024521F /* Resources */,
+				24E0E1FEDBEECD8B9F493C60 /* [CP] Embed Pods Frameworks */,
+				F896D8796DF129BD4B7E5261 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -145,15 +200,67 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		24E0E1FEDBEECD8B9F493C60 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BirdTracker/Pods-BirdTracker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		375DB6C95E9A2CC3179B2C5C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F896D8796DF129BD4B7E5261 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BirdTracker/Pods-BirdTracker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		145309261E99AF550024521F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14E703C01E9B07FB00823A48 /* Response.swift in Sources */,
 				145E18901E9A8E14009460F2 /* LoginViewController.swift in Sources */,
+				145E18951E9AE111009460F2 /* RegisterViewController.swift in Sources */,
 				145309301E99AF550024521F /* ViewController.swift in Sources */,
 				1453092E1E99AF550024521F /* AppDelegate.swift in Sources */,
+				145E189A1E9AEBF3009460F2 /* ApiManager.swift in Sources */,
 				145E18931E9AADAB009460F2 /* AuthService.swift in Sources */,
+				145E189D1E9AF0AD009460F2 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +383,7 @@
 		};
 		1453093D1E99AF550024521F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 381F685588D1FA36FFA33F78 /* Pods-BirdTracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BirdTracker/Info.plist;
@@ -288,6 +396,7 @@
 		};
 		1453093E1E99AF550024521F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A958D0D1C522A465E66A2EF /* Pods-BirdTracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BirdTracker/Info.plist;
