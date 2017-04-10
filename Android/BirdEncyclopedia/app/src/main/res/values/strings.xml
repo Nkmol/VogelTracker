@@ -7,6 +7,7 @@
     <string name="search_title">Typ vogel</string>
     <string name="register_success">Uw account is aangemaakt!</string>
     <string name="go_to_login">Ga naar het loginscherm</string>
+    <string name="why_account_permission">U heeft nog geen toestemming gegeven voor de app om toegang te verschaffen tot de account op uw mobiel. Hiermee hoeft u niet telkens in te loggen. </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

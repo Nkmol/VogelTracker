@@ -1,11 +1,10 @@
 package com.example.jamamwitwit.birdencylopedia.Fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.jamamwitwit.birdencylopedia.Adapters.BirdAdapter;
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
@@ -43,10 +43,8 @@ public class OverviewFragment extends Fragment {
     IndexFastScrollRecyclerView mRecyclerView;
     public EditText search;
     View view;
-
+    SwipeRefreshLayout mSwipeRefreshLayout;
     onDataCallListener mOnDataCallListener;
-
-
 
     @Nullable
     @Override
@@ -55,8 +53,15 @@ public class OverviewFragment extends Fragment {
         search = (EditText) view.findViewById(R.id.search);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Zoeklijst");
         Bundle data = this.getArguments();
-        String token = data.getString("authToken");
+        final String token = data.getString("authToken");
         getBirds(token);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getBirds(token);
+            }
+        });
         addTextListener();
 
         return view;
@@ -78,6 +83,9 @@ public class OverviewFragment extends Fragment {
         mAdapter = new BirdAdapter(birds, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
+        mRecyclerView.setVisibility(View.VISIBLE);
+        //view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+        setProgressBar(View.GONE);
     }
 
     private void getBirds(String authtoken) {
@@ -90,12 +98,6 @@ public class OverviewFragment extends Fragment {
             return;
         }
 
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
-                R.style.Theme_AppCompat_DayNight_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
 
         final HerokuService service = ServiceGenerator.createService(HerokuService.class);
 
@@ -103,15 +105,20 @@ public class OverviewFragment extends Fragment {
         req.enqueue(new Callback<List<Bird>>() {
             @Override
             public void onResponse(Call<List<Bird>> call, Response<List<Bird>> response) {
-                progressDialog.dismiss();
+
                 Birds = response.body();
 
                 mOnDataCallListener.onDataReceived(response.body());
+                mSwipeRefreshLayout.setRefreshing(false);
                 init(Birds);
             }
             @Override
             public void onFailure(Call<List<Bird>> call, Throwable t) {
 
+                setProgressBar(View.GONE);
+                    Toast.makeText(getActivity(),
+                            "Er heeft een timeout plaatsgevonden. Controleer uw internetverbinding of alles nog klopt.", Toast.LENGTH_LONG).show();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -127,29 +134,36 @@ public class OverviewFragment extends Fragment {
 
             public void onTextChanged(CharSequence query, int start, int before, int count) {
 
-                query = query.toString().toLowerCase();
+                if(Birds != null){
+                    query = query.toString().toLowerCase();
 
-                final List<Bird> filteredList = new ArrayList<>();
+                    final List<Bird> filteredList = new ArrayList<>();
 
-                for (int i = 0; i < Birds.size(); i++) {
+                    for (int i = 0; i < Birds.size(); i++) {
 
-                    final String text = Birds.get(i).name.toLowerCase();
-                    if (text.contains(query)) {
+                        final String text = Birds.get(i).name.toLowerCase();
+                        if (text.contains(query)) {
 
-                        filteredList.add(Birds.get(i));
+                            filteredList.add(Birds.get(i));
+                        }
                     }
+
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    mAdapter = new BirdAdapter(filteredList, getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();  // data set changed
                 }
 
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                mAdapter = new BirdAdapter(filteredList, getActivity());
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();  // data set changed
             }
         });
     }
 
+    public void setProgressBar(int status){
+        view.findViewById(R.id.progress_bar).setVisibility(status);
+    }
 
     public interface onDataCallListener {
         public void onDataReceived(List<Bird> birds);
     }
+
 }
