@@ -45,7 +45,6 @@ class RegisterViewController: UIViewController {
         service.registerNewUser(newUser: user as! Dictionary<String, String>) {(message: String) in
             self.displayAlertMessage(message: message)
         }
-        
     }
     
     // Show alert dialog that takes input message
@@ -58,6 +57,10 @@ class RegisterViewController: UIViewController {
         
         present(registerAlert, animated: true, completion: nil)
         
+    }
+    
+    @IBAction func goToLogin(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }

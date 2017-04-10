@@ -13,6 +13,8 @@ import UIKit
 public class AuthService : NSObject {
     
     private var tokenInfo:OAuthInfo!
+    let manager : ApiManager = ApiManager()
+    var message : String = ""
     
     // We create a struct to hold users OAuth information
     struct OAuthInfo {
@@ -27,17 +29,15 @@ public class AuthService : NSObject {
     
     
     func registerNewUser (newUser : Dictionary<String,String>, completion: @escaping (_ message: String ) -> Void ) {
-        
-        let manager : ApiManager = ApiManager()
-        var message : String = ""
+
         
         manager.register(user: newUser) { (result: Dictionary<String, Any>?, error: Error?) in
             //print("resultaat")
             //print(result!["message"])
             
-            message = (result!["message"] as? String)!
+            self.message = (result!["message"] as? String)!
             
-            if(message == "ok") {
+            if(self.message == "ok") {
                completion("Registratie is voltooid")
             }
         }
@@ -45,9 +45,22 @@ public class AuthService : NSObject {
 
     }
     
-    func login (_ : Dictionary<String, String>) {
+    func login (existingUser : Dictionary<String, String>) {
         
-        
+        manager.login(user: existingUser){ (result: Dictionary<String, Any>?, error: Error?) in
+            print(result)
+            
+            self.message = (result!["message"] as? String)!
+            
+            if(self.message == "ok") {
+                
+                var token : String = (result!["token"] as? String)!
+                
+               OAuthInfo.init(token: token)
+            }
+            
+
+        }
         
     }
     

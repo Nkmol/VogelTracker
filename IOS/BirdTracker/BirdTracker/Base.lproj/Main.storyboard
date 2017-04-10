@@ -60,6 +60,9 @@
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VMH-5q-9uK"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Gebruikersnaam" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XH7-ht-uaV">
                                 <rect key="frame" x="48" y="182" width="280" height="30"/>
@@ -201,6 +204,9 @@
                                     <constraint firstAttribute="width" constant="299" id="y7N-yw-MBL"/>
                                 </constraints>
                                 <state key="normal" title="Ik heb al een account..."/>
+                                <connections>
+                                    <action selector="goToLogin:" destination="sn3-lQ-Hz1" eventType="touchUpInside" id="eVl-Bz-4Gc"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
