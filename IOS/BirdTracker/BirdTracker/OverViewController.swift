@@ -20,6 +20,8 @@ class OverViewController : UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Overzicht"
+        
         if(!UserDefaults.standard.bool(forKey: "isLoggedIn")){
             self.performSegue(withIdentifier: "LoginView", sender: self)
         } else{
