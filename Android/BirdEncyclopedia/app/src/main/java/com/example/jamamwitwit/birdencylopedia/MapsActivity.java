@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,11 +28,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     String token;
+    String selectedBirdName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         token = getIntent().getStringExtra(DetailFragment.PARAM_TOKEN);
+        selectedBirdName = getIntent().getStringExtra(DetailFragment.PARAM_BIRD);
 
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -76,11 +80,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void createMarkers(List<Report> data) {
         for(Report report : data) {
-            // create the marker
-            LatLng loc = new LatLng(report.lat, report.lng);
-            mMap.addMarker(new MarkerOptions().position(loc).title(report.description));
+            if(report.bird_id != null && report.bird_id.name.equals(selectedBirdName)) {
+                // create the marker
+                LatLng loc = new LatLng(report.lat, report.lng);
+                mMap.addMarker(new MarkerOptions().position(loc).title(report.description));
+            }
         }
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(52, 4)));
+
+
     }
 }
