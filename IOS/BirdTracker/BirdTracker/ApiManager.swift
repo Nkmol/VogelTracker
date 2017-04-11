@@ -79,9 +79,36 @@ class ApiManager : NSObject {
                     print(error)
                 }
         }
-        
-        
     }
     
-    
+    func getReports( completion: @escaping (_ result: JSON, _ error: Error?) -> Void) {
+        
+        var token = UserDefaults.standard.string(forKey: "token")!
+        
+        guard let endpoint = URL(string: baseUrl + "reports") else {
+            print("not a valid url")
+            return
+        }
+        
+        let headers : HTTPHeaders = [
+            "Authorization" : "JWT " + token,
+            "Accept": "application/json"
+        ]
+
+        Alamofire.request(endpoint, headers: headers)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .responseJSON { response in
+                switch response.result {
+                case .success:
+                    print("Validation Successful")
+                    //print(response.value)
+                    let json = JSON(response.value)
+                    completion (json, response.error)
+                    //print(json)
+                    case .failure(let error):
+                        print(error)
+                    }
+        }
+    }
 }

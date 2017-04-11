@@ -27,10 +27,6 @@ class OverViewController : UITableViewController {
         }
     }
     
-//    @IBAction func unwindFromLogin(seque: UIStoryboardSegue){
-//        fetchData()
-//    }
-    
     func fetchData(){
         let dataservice : DataService = DataService()
         dataservice.retreiveBirds(token: UserDefaults.standard.string(forKey: "token")!) {(result: JSON) in
@@ -76,8 +72,6 @@ class OverViewController : UITableViewController {
         }
 
     }
-    
-
     
     func refresh()
     {

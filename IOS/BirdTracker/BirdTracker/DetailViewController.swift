@@ -37,12 +37,19 @@ class DetailViewController: UIViewController {
         if let bird = bird {
             
             //print(bird["name"])
-            titleLabel.text = bird["name"].stringValue
+            self.title = bird["name"].stringValue
+            //titleLabel.text = bird["name"].stringValue
             descriptionTextField.text = bird["information"].stringValue
             subtitleLabel.text =
                 bird["latin_name"].stringValue
             birdImageView.imageFromServerURL(urlString: bird["img"].stringValue)
             
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? MapViewController{
+            destinationVC.bird = bird
         }
     }
 
