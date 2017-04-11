@@ -129,9 +129,11 @@
                         <outlet property="passwordTextField" destination="Dh0-Xc-xjt" id="Fn0-Dn-Bfm"/>
                         <outlet property="usernameTextField" destination="Mob-2t-YnL" id="MlO-dP-W8z"/>
                         <segue destination="qvy-u8-sbM" kind="presentation" identifier="LoggedIn" id="r6D-vz-0Qj"/>
+                        <segue destination="Pwp-PY-ItP" kind="unwind" identifier="backToHomeSegue" unwindAction="unwindFromLoginWithSeque:" id="uG9-yN-Fkd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="Pwp-PY-ItP" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2655.1999999999998" y="122.78860569715144"/>
         </scene>

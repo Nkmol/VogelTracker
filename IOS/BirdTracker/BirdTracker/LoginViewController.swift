@@ -40,13 +40,12 @@ class LoginViewController: UIViewController {
         let service : AuthService = AuthService()
         service.login(existingUser: user as! Dictionary<String, String>) { (message : String) in
             if(message == "success") {
-                self.dismiss(animated: true, completion: nil)
+                //self.dismiss(animated: true, completion: nil)
+                self.performSegue(withIdentifier: "backToHomeSegue", sender: self)
             }
         }
         
     }
-
-    
     
     // Show alert dialog that takes input message
     func displayAlertMessage(message: String) {
@@ -57,8 +56,9 @@ class LoginViewController: UIViewController {
         registerAlert.addAction(registerAction)
         
         present(registerAlert, animated: true, completion: nil)
-        
     }
+    
+    
     
     
 }
