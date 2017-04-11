@@ -74,7 +74,7 @@ class ApiManager : NSObject {
                     //print(response.value)
                     let json = JSON(response.value)
                     completion (json, response.error)
-                    print(json)
+                    //print(json)
                 case .failure(let error):
                     print(error)
                 }

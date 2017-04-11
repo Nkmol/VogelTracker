@@ -13,13 +13,16 @@ import SwiftyJSON
 public class DataService : ParentService {
     
     
-    func retreiveBirds(token : String) {
+    func retreiveBirds(token : String, completion: @escaping (_ result: JSON) -> Void)  {
 
     // give the manager the token in order to fetch the data
         
         manager.getBirds(token: token) { (result: JSON, error: Error?) in
-            
+            if (error == nil){
+                completion(result)
+            }
         }
+        
     }
 
 }
