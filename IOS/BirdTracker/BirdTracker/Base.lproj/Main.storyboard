@@ -267,6 +267,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Smh-W8-IGG"/>
                     <connections>
+                        <outlet property="tableView" destination="wmr-dN-1XY" id="L92-Ty-Nho"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="LoginView" id="9Wz-MZ-HCZ"/>
                     </connections>
                 </tableViewController>

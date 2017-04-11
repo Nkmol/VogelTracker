@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 
 public class DataService : ParentService {
@@ -16,7 +17,9 @@ public class DataService : ParentService {
 
     // give the manager the token in order to fetch the data
         
-        manager.getBirds(token: token);
+        manager.getBirds(token: token) { (result: JSON, error: Error?) in
+            
+        }
     }
 
 }

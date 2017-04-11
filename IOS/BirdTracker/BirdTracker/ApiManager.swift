@@ -52,7 +52,7 @@ class ApiManager : NSObject {
         }
     }
     
-    func getBirds(token : String) {
+    func getBirds(token : String, completion: @escaping (_ result: JSON, _ error: Error?) -> Void)  {
         
         guard let endpoint = URL(string: baseUrl + "birds") else {
             print("not a valid url")
@@ -71,7 +71,10 @@ class ApiManager : NSObject {
                 switch response.result {
                 case .success:
                     print("Validation Successful")
-                    print(response)
+                    //print(response.value)
+                    let json = JSON(response.value)
+                    completion (json, response.error)
+                    print(json)
                 case .failure(let error):
                     print(error)
                 }

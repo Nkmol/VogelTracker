@@ -13,6 +13,8 @@ import UIKit
 
 class OverViewController : UITableViewController {
     
+    @IBOutlet var tableView: UITableView!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
