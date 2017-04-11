@@ -54,7 +54,8 @@ public class Splashscreen extends Activity {
                     }
 
                     Intent intent = new Intent(Splashscreen.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
 
                     Splashscreen.this.finish();
