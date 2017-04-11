@@ -45,6 +45,7 @@ public class OverviewFragment extends Fragment {
     View view;
     SwipeRefreshLayout mSwipeRefreshLayout;
     onDataCallListener mOnDataCallListener;
+    String token;
 
     @Nullable
     @Override
@@ -53,7 +54,7 @@ public class OverviewFragment extends Fragment {
         search = (EditText) view.findViewById(R.id.search);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Zoeklijst");
         Bundle data = this.getArguments();
-        final String token = data.getString("authToken");
+        token = data.getString("authToken");
         getBirds(token);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

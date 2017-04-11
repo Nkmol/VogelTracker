@@ -32,6 +32,9 @@ public class DetailFragment extends Fragment {
 
 
     public static final String PARAM_BIRD = "bird";
+    public static final String PARAM_TOKEN = "token";
+
+    private String token;
 
     @Nullable
     @Override
@@ -51,6 +54,9 @@ public class DetailFragment extends Fragment {
         Picasso.with(getActivity()).load(selectedBird.img).into(bird_image);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(selectedBird.name);
+
+
+        token = this.getArguments().getString("authToken");
 
         Button b = (Button)view.findViewById(R.id.show_map_button);
         // TODO: Can be improved with Java 8 lambda (Need gradle implementation)
@@ -95,6 +101,7 @@ public class DetailFragment extends Fragment {
         if(checkPlayServices()) {
             Intent mapIntent = new Intent(getActivity(), MapsActivity.class);
             mapIntent.putExtra(PARAM_BIRD, selectedBird.name);
+            mapIntent.putExtra(PARAM_TOKEN, token);
             startActivity(mapIntent);
         }
     }

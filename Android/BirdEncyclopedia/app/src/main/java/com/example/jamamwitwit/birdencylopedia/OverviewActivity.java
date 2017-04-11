@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
@@ -23,7 +24,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     
     public AccountManager am;
     private List<Bird> mBirds = new ArrayList<>();
-
+    String mAuthToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
         Account mAccount = (Account) intent.getExtras().get("account");
 
         am = AccountManager.get(getBaseContext());
-        String mAuthToken = am.peekAuthToken(mAccount, AccountGeneral.ACCOUNT_TYPE);
+        mAuthToken = am.peekAuthToken(mAccount, AccountGeneral.ACCOUNT_TYPE);
 
 
         if (findViewById(R.id.fragment_container) != null) {
@@ -64,7 +65,11 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     }
 
     public void loadDetail(Bird bird){
+
         DetailFragment fragment = DetailFragment.newInstance(bird);
+        Bundle bundle = fragment.getArguments();
+        bundle.putString("authToken", mAuthToken);
+        fragment.setArguments(bundle);
 
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

@@ -7,6 +7,7 @@ package com.example.jamamwitwit.birdencylopedia.Services;
 
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
 import com.example.jamamwitwit.birdencylopedia.Entities.DataResponse;
+import com.example.jamamwitwit.birdencylopedia.Entities.Report;
 import com.example.jamamwitwit.birdencylopedia.Entities.User;
 import java.util.List;
 import retrofit2.Call;
@@ -28,5 +29,8 @@ public interface HerokuService {
 
       @POST("/register")
       Call<DataResponse> createUser(@Body User user);
+
+      @GET("/reports")
+      Call<List<Report>> fetchReports(@Header("authorization") String token);
 
 }
