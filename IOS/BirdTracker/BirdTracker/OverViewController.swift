@@ -15,7 +15,7 @@ import SwiftyJSON
 class OverViewController : UITableViewController {
     
     @IBOutlet var birdsTableView: UITableView!
-    var birds : Array<String> = Array<String>()
+    var birds : JSON = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,22 +34,9 @@ class OverViewController : UITableViewController {
     func fetchData(){
         let dataservice : DataService = DataService()
         dataservice.retreiveBirds(token: UserDefaults.standard.string(forKey: "token")!) {(result: JSON) in
-            //print(result)
-            self.extract_json(result: result)
+            self.birds = result
+            DispatchQueue.main.async(execute: {self.refresh()})
         }
-    }
-    
-    func extract_json(result : JSON){
-        
-        if let items = result.array {
-            for item in items {
-                if let title = item["name"].string {
-                    birds.append(title)
-                }
-            }
-        }
-
-        DispatchQueue.main.async(execute: {self.refresh()})
     }
     
     override func didReceiveMemoryWarning() {
@@ -65,9 +52,22 @@ class OverViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! UITableViewCell
-        cell.textLabel?.text = birds[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) 
+        cell.textLabel?.text = birds[indexPath.row]["name"].string
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showDetail", sender: indexPath)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let rowSelected = (sender as! IndexPath).row
+        
+        if let destinationVC = segue.destination as? DetailViewController{
+            destinationVC.bird = birds[rowSelected]
+        }
     }
     
     func refresh()

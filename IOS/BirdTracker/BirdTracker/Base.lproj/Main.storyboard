@@ -10,24 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="iVy-Jq-y3M">
-            <objects>
-                <viewController storyboardIdentifier="Welcome" id="qvy-u8-sbM" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BH2-w7-Z7x"/>
-                        <viewControllerLayoutGuide type="bottom" id="odP-Th-QYm"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="1PT-cA-VkN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h3e-0X-KjJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3461.5999999999999" y="122.78860569715144"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -128,7 +110,6 @@
                         <outlet property="loginButton" destination="d5L-I0-lqj" id="tb7-p7-nTS"/>
                         <outlet property="passwordTextField" destination="Dh0-Xc-xjt" id="Fn0-Dn-Bfm"/>
                         <outlet property="usernameTextField" destination="Mob-2t-YnL" id="MlO-dP-W8z"/>
-                        <segue destination="qvy-u8-sbM" kind="presentation" identifier="LoggedIn" id="r6D-vz-0Qj"/>
                         <segue destination="Pwp-PY-ItP" kind="unwind" identifier="backToHomeSegue" unwindAction="unwindFromLoginWithSeque:" id="uG9-yN-Fkd"/>
                     </connections>
                 </viewController>
@@ -136,6 +117,59 @@
                 <exit id="Pwp-PY-ItP" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2655.1999999999998" y="122.78860569715144"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="veC-52-uwX">
+            <objects>
+                <viewController id="qwk-mJ-I6c" customClass="DetailViewController" customModule="BirdTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3xx-72-qp1"/>
+                        <viewControllerLayoutGuide type="bottom" id="6ql-Et-9p5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xDg-OB-bqM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="53x-QR-PIN">
+                                <rect key="frame" x="16" y="376" width="343" height="239"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="239" id="01p-zO-j7S"/>
+                                    <constraint firstAttribute="width" constant="343" id="r6K-E7-xqf"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bird" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDY-Q7-eXz">
+                                <rect key="frame" x="99" y="90" width="176" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="176" id="Kq5-pT-c2O"/>
+                                    <constraint firstAttribute="height" constant="56" id="x8e-cV-uKu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.79149125649999996" green="0.039330008120000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6ql-Et-9p5" firstAttribute="top" secondItem="53x-QR-PIN" secondAttribute="bottom" constant="52" id="YR6-ad-xLV"/>
+                            <constraint firstItem="53x-QR-PIN" firstAttribute="centerX" secondItem="xDg-OB-bqM" secondAttribute="centerX" id="ccP-6p-BUy"/>
+                            <constraint firstItem="53x-QR-PIN" firstAttribute="leading" secondItem="xDg-OB-bqM" secondAttribute="leadingMargin" id="nZc-lj-Iww"/>
+                            <constraint firstItem="fDY-Q7-eXz" firstAttribute="centerX" secondItem="xDg-OB-bqM" secondAttribute="centerX" id="pOb-0O-iDe"/>
+                            <constraint firstItem="fDY-Q7-eXz" firstAttribute="top" secondItem="3xx-72-qp1" secondAttribute="bottom" constant="26" id="tQY-lY-O6z"/>
+                            <constraint firstItem="53x-QR-PIN" firstAttribute="trailing" secondItem="xDg-OB-bqM" secondAttribute="trailingMargin" id="tUb-zl-CfI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionTextField" destination="53x-QR-PIN" id="b6g-HW-2D6"/>
+                        <outlet property="titleLabel" destination="fDY-Q7-eXz" id="24k-Gj-OqN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HTG-Zj-7iM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1732" y="862.21889055472275"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="kzO-An-05r">
@@ -242,7 +276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rmf-TK-g1X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="888"/>
+            <point key="canvasLocation" x="2655" y="864"/>
         </scene>
         <!--Over View Controller-->
         <scene sceneID="Hxj-8N-hdf">
@@ -272,6 +306,7 @@
                         <outlet property="birdsTableView" destination="wmr-dN-1XY" id="5eR-h3-nGI"/>
                         <outlet property="tableView" destination="wmr-dN-1XY" id="L92-Ty-Nho"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="LoginView" id="9Wz-MZ-HCZ"/>
+                        <segue destination="qwk-mJ-I6c" kind="show" identifier="showDetail" id="xzY-i6-Wu9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9lz-rG-x2R" userLabel="First Responder" sceneMemberID="firstResponder"/>
