@@ -19,6 +19,8 @@ import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
 import com.example.jamamwitwit.birdencylopedia.Fragments.LoginFragment;
 import com.example.jamamwitwit.birdencylopedia.Fragments.ResultFragment;
 import com.example.jamamwitwit.birdencylopedia.Fragments.SignUpFragment;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import static android.Manifest.permission.GET_ACCOUNTS;
 

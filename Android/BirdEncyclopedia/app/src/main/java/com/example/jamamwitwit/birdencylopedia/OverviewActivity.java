@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.jamamwitwit.birdencylopedia.Authentication.AccountGeneral;
 import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
