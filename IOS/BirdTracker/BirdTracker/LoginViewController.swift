@@ -17,6 +17,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
 
     @IBOutlet weak var loginButton: UIButton!
+
+    var loginCompletion: (( ) -> Void )?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +42,8 @@ class LoginViewController: UIViewController {
         let service : AuthService = AuthService()
         service.login(existingUser: user as! Dictionary<String, String>) { (message : String) in
             if(message == "success") {
-                //self.dismiss(animated: true, completion: nil)
-                self.performSegue(withIdentifier: "backToHomeSegue", sender: self)
+                self.loginCompletion?()
+                self.dismiss(animated: true, completion: nil)
             }
         }
         

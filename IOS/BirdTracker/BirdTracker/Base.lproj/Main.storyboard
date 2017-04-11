@@ -110,11 +110,9 @@
                         <outlet property="loginButton" destination="d5L-I0-lqj" id="tb7-p7-nTS"/>
                         <outlet property="passwordTextField" destination="Dh0-Xc-xjt" id="Fn0-Dn-Bfm"/>
                         <outlet property="usernameTextField" destination="Mob-2t-YnL" id="MlO-dP-W8z"/>
-                        <segue destination="Pwp-PY-ItP" kind="unwind" identifier="backToHomeSegue" unwindAction="unwindFromLoginWithSeque:" id="uG9-yN-Fkd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <exit id="Pwp-PY-ItP" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2655.1999999999998" y="122.78860569715144"/>
         </scene>
@@ -131,13 +129,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="53x-QR-PIN">
-                                <rect key="frame" x="16" y="376" width="343" height="239"/>
+                                <rect key="frame" x="16" y="439" width="343" height="176"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="239" id="01p-zO-j7S"/>
+                                    <constraint firstAttribute="height" constant="176" id="01p-zO-j7S"/>
                                     <constraint firstAttribute="width" constant="343" id="r6K-E7-xqf"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -148,22 +145,46 @@
                                     <constraint firstAttribute="height" constant="56" id="x8e-cV-uKu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subnames" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="km7-DC-xeB">
+                                <rect key="frame" x="54" y="145" width="252" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="252" id="6ls-CU-Cge"/>
+                                    <constraint firstAttribute="height" constant="21" id="pzl-VR-L1O"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4s0-bi-vaZ">
+                                <rect key="frame" x="54" y="174" width="267" height="151"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="151" id="Nu1-kb-ZCQ"/>
+                                    <constraint firstAttribute="width" constant="267" id="bdW-93-pDx"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.79149125649999996" green="0.039330008120000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="4s0-bi-vaZ" firstAttribute="centerX" secondItem="xDg-OB-bqM" secondAttribute="centerX" id="6ni-B0-VoM"/>
+                            <constraint firstItem="4s0-bi-vaZ" firstAttribute="top" secondItem="km7-DC-xeB" secondAttribute="bottom" constant="8" symbolic="YES" id="IAf-i3-1QK"/>
+                            <constraint firstItem="km7-DC-xeB" firstAttribute="centerX" secondItem="xDg-OB-bqM" secondAttribute="centerX" constant="1.5" id="SVO-nF-Ks8"/>
                             <constraint firstItem="6ql-Et-9p5" firstAttribute="top" secondItem="53x-QR-PIN" secondAttribute="bottom" constant="52" id="YR6-ad-xLV"/>
                             <constraint firstItem="53x-QR-PIN" firstAttribute="centerX" secondItem="xDg-OB-bqM" secondAttribute="centerX" id="ccP-6p-BUy"/>
                             <constraint firstItem="53x-QR-PIN" firstAttribute="leading" secondItem="xDg-OB-bqM" secondAttribute="leadingMargin" id="nZc-lj-Iww"/>
+                            <constraint firstItem="km7-DC-xeB" firstAttribute="top" secondItem="3xx-72-qp1" secondAttribute="bottom" constant="81" id="p3m-J8-eJm"/>
                             <constraint firstItem="fDY-Q7-eXz" firstAttribute="centerX" secondItem="xDg-OB-bqM" secondAttribute="centerX" id="pOb-0O-iDe"/>
                             <constraint firstItem="fDY-Q7-eXz" firstAttribute="top" secondItem="3xx-72-qp1" secondAttribute="bottom" constant="26" id="tQY-lY-O6z"/>
                             <constraint firstItem="53x-QR-PIN" firstAttribute="trailing" secondItem="xDg-OB-bqM" secondAttribute="trailingMargin" id="tUb-zl-CfI"/>
+                            <constraint firstItem="4s0-bi-vaZ" firstAttribute="leading" secondItem="km7-DC-xeB" secondAttribute="leading" id="xGl-tY-783"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="birdImageView" destination="4s0-bi-vaZ" id="MTd-JU-4Ee"/>
                         <outlet property="descriptionTextField" destination="53x-QR-PIN" id="b6g-HW-2D6"/>
+                        <outlet property="subtitleLabel" destination="km7-DC-xeB" id="cHS-79-bkU"/>
                         <outlet property="titleLabel" destination="fDY-Q7-eXz" id="24k-Gj-OqN"/>
                     </connections>
                 </viewController>

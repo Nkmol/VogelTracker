@@ -11,11 +11,11 @@ import UIKit
 import SwiftyJSON
 
 
-
 class OverViewController : UITableViewController {
     
     @IBOutlet var birdsTableView: UITableView!
     var birds : JSON = []
+    var imageCache = [String:UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +27,9 @@ class OverViewController : UITableViewController {
         }
     }
     
-    @IBAction func unwindFromLogin(seque: UIStoryboardSegue){
-        fetchData()
-    }
+//    @IBAction func unwindFromLogin(seque: UIStoryboardSegue){
+//        fetchData()
+//    }
     
     func fetchData(){
         let dataservice : DataService = DataService()
@@ -53,7 +53,7 @@ class OverViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) 
-        cell.textLabel?.text = birds[indexPath.row]["name"].string
+        cell.textLabel?.text = birds[indexPath.row]["name"].string        
         return cell
     }
     
@@ -63,12 +63,21 @@ class OverViewController : UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        let rowSelected = (sender as! IndexPath).row
-        
-        if let destinationVC = segue.destination as? DetailViewController{
-            destinationVC.bird = birds[rowSelected]
+        if let rowSelected = (sender as? IndexPath)?.row {
+            if let destinationVC = segue.destination as? DetailViewController{
+                destinationVC.bird = birds[rowSelected]
+            }
         }
+        
+        if let loginVC = segue.destination as? LoginViewController {
+            loginVC.loginCompletion = {
+                self.fetchData()
+            }
+        }
+
     }
+    
+
     
     func refresh()
     {

@@ -11,6 +11,7 @@
 		142AF8771E9C3576008A48F5 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AF8761E9C3576008A48F5 /* DataService.swift */; };
 		142AF8791E9C37A6008A48F5 /* ParentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142AF8781E9C37A6008A48F5 /* ParentService.swift */; };
 		1434E0301E9D1CD000FB397B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1434E02F1E9D1CD000FB397B /* DetailViewController.swift */; };
+		1434E0331E9D482800FB397B /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1434E0321E9D482800FB397B /* ImageHelper.swift */; };
 		1453092E1E99AF550024521F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1453092D1E99AF550024521F /* AppDelegate.swift */; };
 		145309301E99AF550024521F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1453092F1E99AF550024521F /* ViewController.swift */; };
 		145309331E99AF550024521F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145309311E99AF550024521F /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		142AF8761E9C3576008A48F5 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		142AF8781E9C37A6008A48F5 /* ParentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentService.swift; sourceTree = "<group>"; };
 		1434E02F1E9D1CD000FB397B /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		1434E0321E9D482800FB397B /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		1453092A1E99AF550024521F /* BirdTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BirdTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1453092D1E99AF550024521F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1453092F1E99AF550024521F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1434E0311E9D480C00FB397B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1434E0321E9D482800FB397B /* ImageHelper.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		145309211E99AF550024521F = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +91,7 @@
 		1453092C1E99AF550024521F /* BirdTracker */ = {
 			isa = PBXGroup;
 			children = (
+				1434E0311E9D480C00FB397B /* Extensions */,
 				145E189B1E9AF05B009460F2 /* Models */,
 				145E18961E9AEB34009460F2 /* API */,
 				145E18911E9AAD82009460F2 /* Services */,
@@ -273,6 +284,7 @@
 				145E18951E9AE111009460F2 /* RegisterViewController.swift in Sources */,
 				145309301E99AF550024521F /* ViewController.swift in Sources */,
 				1453092E1E99AF550024521F /* AppDelegate.swift in Sources */,
+				1434E0331E9D482800FB397B /* ImageHelper.swift in Sources */,
 				145E189A1E9AEBF3009460F2 /* ApiManager.swift in Sources */,
 				145E18931E9AADAB009460F2 /* AuthService.swift in Sources */,
 				145E189D1E9AF0AD009460F2 /* User.swift in Sources */,

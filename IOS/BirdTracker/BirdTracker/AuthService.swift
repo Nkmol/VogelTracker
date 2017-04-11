@@ -12,13 +12,13 @@ import UIKit
 
 public class AuthService : ParentService {
     
-    private var tokenInfo:OAuthInfo!
+    private var tokenInfo:Credentials!
     
     // We create a struct to hold users OAuth information
-    struct OAuthInfo {
+    struct Credentials {
         let token : String
     
-        init(token: String){
+        @discardableResult init(token: String){
            self.token = token
            UserDefaults.standard.set(self.token, forKey: "token")
            UserDefaults.standard.set(true, forKey: "isLoggedIn")
@@ -36,8 +36,6 @@ public class AuthService : ParentService {
                completion("Registratie is voltooid")
             }
         }
-        
-
     }
     
     func login (existingUser : Dictionary<String, String>,  completion: @escaping (_ message: String ) -> Void ) {
@@ -49,7 +47,7 @@ public class AuthService : ParentService {
             if(self.message == "ok") {
                 
                 let token : String = (result!["token"] as? String)!
-                OAuthInfo.init(token: token)
+                Credentials(token: token)
                 completion("success")
             }
             

@@ -16,7 +16,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var descriptionTextField: UITextView!
+    @IBOutlet weak var birdImageView: UIImageView!
 
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     var bird : JSON?
 
@@ -37,6 +39,10 @@ class DetailViewController: UIViewController {
             //print(bird["name"])
             titleLabel.text = bird["name"].stringValue
             descriptionTextField.text = bird["information"].stringValue
+            subtitleLabel.text =
+                bird["latin_name"].stringValue
+            birdImageView.imageFromServerURL(urlString: bird["img"].stringValue)
+            
         }
     }
 
