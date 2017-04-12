@@ -14,7 +14,6 @@
 		1434E0331E9D482800FB397B /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1434E0321E9D482800FB397B /* ImageHelper.swift */; };
 		144E69411E9D7929007CE108 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E69401E9D7929007CE108 /* MapViewController.swift */; };
 		1453092E1E99AF550024521F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1453092D1E99AF550024521F /* AppDelegate.swift */; };
-		145309301E99AF550024521F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1453092F1E99AF550024521F /* ViewController.swift */; };
 		145309331E99AF550024521F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145309311E99AF550024521F /* Main.storyboard */; };
 		145309351E99AF550024521F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145309341E99AF550024521F /* Assets.xcassets */; };
 		145309381E99AF550024521F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145309361E99AF550024521F /* LaunchScreen.storyboard */; };
@@ -36,7 +35,6 @@
 		144E69401E9D7929007CE108 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1453092A1E99AF550024521F /* BirdTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BirdTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1453092D1E99AF550024521F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1453092F1E99AF550024521F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		145309321E99AF550024521F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		145309341E99AF550024521F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		145309371E99AF550024521F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 				145E18961E9AEB34009460F2 /* API */,
 				145E18911E9AAD82009460F2 /* Services */,
 				1453092D1E99AF550024521F /* AppDelegate.swift */,
-				1453092F1E99AF550024521F /* ViewController.swift */,
 				145E188F1E9A8E14009460F2 /* LoginViewController.swift */,
 				142AF8741E9C18D5008A48F5 /* OverViewController.swift */,
 				145E18941E9AE111009460F2 /* RegisterViewController.swift */,
@@ -285,7 +282,6 @@
 				1434E0301E9D1CD000FB397B /* DetailViewController.swift in Sources */,
 				145E18901E9A8E14009460F2 /* LoginViewController.swift in Sources */,
 				145E18951E9AE111009460F2 /* RegisterViewController.swift in Sources */,
-				145309301E99AF550024521F /* ViewController.swift in Sources */,
 				1453092E1E99AF550024521F /* AppDelegate.swift in Sources */,
 				1434E0331E9D482800FB397B /* ImageHelper.swift in Sources */,
 				145E189A1E9AEBF3009460F2 /* ApiManager.swift in Sources */,
