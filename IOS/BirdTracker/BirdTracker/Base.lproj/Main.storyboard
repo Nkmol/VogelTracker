@@ -346,12 +346,21 @@
                     <navigationItem key="navigationItem" id="Smh-W8-IGG"/>
                     <connections>
                         <outlet property="birdsTableView" destination="wmr-dN-1XY" id="5eR-h3-nGI"/>
+                        <outlet property="searchDisplayController" destination="c48-7q-bhd" id="DNQ-OG-XOU"/>
                         <outlet property="tableView" destination="wmr-dN-1XY" id="L92-Ty-Nho"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="LoginView" id="9Wz-MZ-HCZ"/>
                         <segue destination="qwk-mJ-I6c" kind="show" identifier="showDetail" id="xzY-i6-Wu9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9lz-rG-x2R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="c48-7q-bhd">
+                    <connections>
+                        <outlet property="delegate" destination="CGB-1k-9ZD" id="o4W-dK-Cdk"/>
+                        <outlet property="searchContentsController" destination="CGB-1k-9ZD" id="Azw-tB-2vL"/>
+                        <outlet property="searchResultsDataSource" destination="CGB-1k-9ZD" id="JUw-h8-lrQ"/>
+                        <outlet property="searchResultsDelegate" destination="CGB-1k-9ZD" id="y2y-XK-VO9"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1732" y="122.78860569715144"/>
         </scene>
@@ -360,7 +369,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hwP-RX-Xen" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="uq2-dQ-e9d">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uq2-dQ-e9d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
