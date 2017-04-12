@@ -19,6 +19,8 @@ public class DataService : ParentService {
         manager.getBirds(token: token) { (result: JSON, error: Error?) in
             if (error == nil){
                 completion(result)
+            } else {
+                completion(JSON.null)
             }
         }
         
