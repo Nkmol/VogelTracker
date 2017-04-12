@@ -34,15 +34,30 @@ class OverViewController : UITableViewController {
         dataservice.retreiveBirds(token: UserDefaults.standard.string(forKey: "token")!) {(result: JSON) in
             if(result != JSON.null){
                 self.birds = result
+                
+                if let birdsToCache = result.rawString() {
+                    UserDefaults.standard.set(birdsToCache, forKey: "birdscollection")
+                }
+                
                 DispatchQueue.main.async(execute: {self.refresh()})
             } else{
-                let overviewAlert = UIAlertController(title: "Notificatie", message: "Lijst kon niet worden gedownload, heeft u internet?", preferredStyle: UIAlertControllerStyle.alert)
+                var collection = UserDefaults.standard.string(forKey: "birdscollection") as! String
+
+                if (!collection.isEmpty){
+                    self.birds = JSON.parse(collection)
+                    DispatchQueue.main.async(execute: {self.refresh()})
+                    
+                } else {
+                    let overviewAlert = UIAlertController(title: "Notificatie", message: "Lijst kon niet worden gedownload, heeft u internet?", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let overviewAction = UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil)
+                    
+                    overviewAlert.addAction(overviewAction)
+                    
+                    self.present(overviewAlert, animated: true, completion: nil)
+                }
                 
-                let overviewAction = UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil)
-                
-                overviewAlert.addAction(overviewAction)
-                
-                self.present(overviewAlert, animated: true, completion: nil)
+
             }
         }
     }

@@ -53,7 +53,7 @@ class ApiManager : NSObject {
     }
     
     func getBirds(token : String, completion: @escaping (_ result: JSON, _ error: Error?) -> Void)  {
-        
+       
         guard let endpoint = URL(string: baseUrl + "birds") else {
             print("not a valid url")
             return
