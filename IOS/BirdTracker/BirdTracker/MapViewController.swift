@@ -41,8 +41,8 @@ class MapViewController : UIViewController {
                             
                             if bird_id == bird["_id"].stringValue {
                                 
-                                var lat = report["lat"].stringValue
-                                var long = report["long"].stringValue
+                                let lat = report["lat"].stringValue
+                                let long = report["long"].stringValue
                                 
                                 // Creates a marker in the center of the map.
                                 let marker = GMSMarker()

@@ -30,10 +30,14 @@ public class AuthService : ParentService {
 
         manager.register(user: newUser) { (result: Dictionary<String, Any>?, error: Error?) in
 
-            self.message = (result!["message"] as? String)!
+            if(result != nil){
+                self.message = (result!["message"] as? String)!
             
-            if(self.message == "ok") {
-               completion("Registratie is voltooid")
+                if(self.message == "ok") {
+                 completion("Registratie is voltooid")
+              }
+            } else {
+                completion("Deze actie kan niet worden voltooid. Heeft u internet?")
             }
         }
     }

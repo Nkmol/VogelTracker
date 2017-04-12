@@ -26,8 +26,8 @@ class LoginViewController: UIViewController {
     
     @IBAction func login(_ sender: Any) {
         
-        var username = usernameTextField.text
-        var password = passwordTextField.text
+        let username = usernameTextField.text
+        let password = passwordTextField.text
         
         if((username?.isEmpty)! || (password?.isEmpty)!){
             displayAlertMessage(message: "Niet alle velden zijn gevuld")
