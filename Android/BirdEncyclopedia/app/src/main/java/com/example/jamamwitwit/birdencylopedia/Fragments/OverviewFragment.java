@@ -2,6 +2,7 @@ package com.example.jamamwitwit.birdencylopedia.Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,6 +24,9 @@ import com.example.jamamwitwit.birdencylopedia.R;
 import com.example.jamamwitwit.birdencylopedia.Services.HerokuService;
 import com.example.jamamwitwit.birdencylopedia.Services.ServiceGenerator;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +50,9 @@ public class OverviewFragment extends Fragment {
     SwipeRefreshLayout mSwipeRefreshLayout;
     onDataCallListener mOnDataCallListener;
     String token;
+    boolean isSwiped = false;
+
+    static final String CACHE_FILE_NAME = "birds";
 
     @Nullable
     @Override
@@ -60,7 +67,9 @@ public class OverviewFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isSwiped = true;
                 getBirds(token);
+                isSwiped = false;
             }
         });
         addTextListener();
@@ -90,38 +99,54 @@ public class OverviewFragment extends Fragment {
     }
 
     private void getBirds(String authtoken) {
+        if(!isInternetAvailable()) {
 
-        List<Bird> parent_data = ((OverviewActivity)this.getActivity()).getBirds();
-
-        if(parent_data != null && parent_data.size() > 0){
-            Birds = parent_data;
-            init(Birds);
-            return;
         }
+        else if(!isSwiped) {
+            List<Bird> parent_data = ((OverviewActivity) this.getActivity()).getBirds();
 
-
-        final HerokuService service = ServiceGenerator.createService(HerokuService.class);
-
-        Call<List<Bird>> req = service.fetchBirds("JWT " + authtoken);
-        req.enqueue(new Callback<List<Bird>>() {
-            @Override
-            public void onResponse(Call<List<Bird>> call, Response<List<Bird>> response) {
-
-                Birds = response.body();
-
-                mOnDataCallListener.onDataReceived(response.body());
-                mSwipeRefreshLayout.setRefreshing(false);
+            if (parent_data != null && parent_data.size() > 0) {
+                Birds = parent_data;
                 init(Birds);
-            }
-            @Override
-            public void onFailure(Call<List<Bird>> call, Throwable t) {
-
-                setProgressBar(View.GONE);
-                    Toast.makeText(getActivity(),
-                            "Er heeft een timeout plaatsgevonden. Controleer uw internetverbinding of alles nog klopt.", Toast.LENGTH_LONG).show();
                 mSwipeRefreshLayout.setRefreshing(false);
+                return;
             }
-        });
+        } else {
+            final HerokuService service = ServiceGenerator.createService(HerokuService.class);
+
+            Call<List<Bird>> req = service.fetchBirds("JWT " + authtoken);
+            req.enqueue(new Callback<List<Bird>>() {
+                @Override
+                public void onResponse(Call<List<Bird>> call, Response<List<Bird>> response) {
+
+                    Birds = response.body();
+
+                    mOnDataCallListener.onDataReceived(response.body());
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    init(Birds);
+
+                    ((OverviewActivity)getActivity()).setCacheBirds(Birds);
+                }
+                @Override
+                public void onFailure(Call<List<Bird>> call, Throwable t) {
+
+                    setProgressBar(View.GONE);
+                        Toast.makeText(getActivity(),
+                                "Er heeft een timeout plaatsgevonden. Controleer uw internetverbinding of alles nog klopt.", Toast.LENGTH_LONG).show();
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        }
+    }
+
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
+        }
 
     }
 

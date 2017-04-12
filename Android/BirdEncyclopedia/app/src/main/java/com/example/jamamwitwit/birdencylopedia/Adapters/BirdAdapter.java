@@ -110,6 +110,4 @@ public class BirdAdapter extends RecyclerView.Adapter<BirdAdapter.ViewHolder> im
     public int getItemCount() {
         return mDataset.size();
     }
-
-
 }
