@@ -3,6 +3,7 @@ package com.example.jamamwitwit.birdencylopedia.Fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -62,7 +63,6 @@ public class OverviewFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Zoeklijst");
         Bundle data = this.getArguments();
         token = data.getString("authToken");
-        getBirds(token);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -72,6 +72,8 @@ public class OverviewFragment extends Fragment {
                 isSwiped = false;
             }
         });
+
+        getBirds(token);
         addTextListener();
 
         return view;
@@ -100,9 +102,12 @@ public class OverviewFragment extends Fragment {
 
     private void getBirds(String authtoken) {
         if(!isInternetAvailable()) {
-
+            Birds = ((OverviewActivity)getActivity()).getCacheBirds();
+            init(Birds);
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
         }
-        else if(!isSwiped) {
+        else if(!isSwiped) { // Navigation fix // FIXME: 12-4-2017
             List<Bird> parent_data = ((OverviewActivity) this.getActivity()).getBirds();
 
             if (parent_data != null && parent_data.size() > 0) {
@@ -111,44 +116,49 @@ public class OverviewFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(false);
                 return;
             }
-        } else {
-            final HerokuService service = ServiceGenerator.createService(HerokuService.class);
 
-            Call<List<Bird>> req = service.fetchBirds("JWT " + authtoken);
-            req.enqueue(new Callback<List<Bird>>() {
-                @Override
-                public void onResponse(Call<List<Bird>> call, Response<List<Bird>> response) {
-
-                    Birds = response.body();
-
-                    mOnDataCallListener.onDataReceived(response.body());
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    init(Birds);
-
-                    ((OverviewActivity)getActivity()).setCacheBirds(Birds);
-                }
-                @Override
-                public void onFailure(Call<List<Bird>> call, Throwable t) {
-
-                    setProgressBar(View.GONE);
-                        Toast.makeText(getActivity(),
-                                "Er heeft een timeout plaatsgevonden. Controleer uw internetverbinding of alles nog klopt.", Toast.LENGTH_LONG).show();
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-            });
+            fetchBirdsFromInternet();
         }
+        else {
+            fetchBirdsFromInternet();
+        }
+    }
+
+    private void fetchBirdsFromInternet() {
+        final HerokuService service = ServiceGenerator.createService(HerokuService.class);
+
+        Call<List<Bird>> req = service.fetchBirds("JWT " + token);
+        req.enqueue(new Callback<List<Bird>>() {
+            @Override
+            public void onResponse(Call<List<Bird>> call, Response<List<Bird>> response) {
+
+                Birds = response.body();
+
+                mOnDataCallListener.onDataReceived(response.body());
+                mSwipeRefreshLayout.setRefreshing(false);
+                init(Birds);
+
+                ((OverviewActivity) getActivity()).setCacheBirds(Birds);
+            }
+
+            @Override
+            public void onFailure(Call<List<Bird>> call, Throwable t) {
+
+                setProgressBar(View.GONE);
+                Toast.makeText(getActivity(),
+                        "Er heeft een timeout plaatsgevonden. Controleer uw internetverbinding of alles nog klopt.", Toast.LENGTH_LONG).show();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
-            return !ipAddr.equals("");
+        ConnectivityManager cm = (ConnectivityManager) this.getContext().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        } catch (Exception e) {
-            return false;
-        }
-
+        return cm.getActiveNetworkInfo() != null;
     }
+
+
 
     public void addTextListener(){
 

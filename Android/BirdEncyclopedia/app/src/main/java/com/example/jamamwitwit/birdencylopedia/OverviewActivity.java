@@ -18,7 +18,12 @@ import com.example.jamamwitwit.birdencylopedia.Entities.Bird;
 import com.example.jamamwitwit.birdencylopedia.Fragments.DetailFragment;
 import com.example.jamamwitwit.birdencylopedia.Fragments.OverviewFragment;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,11 +99,18 @@ public class OverviewActivity extends AppCompatActivity implements OverviewFragm
     }
 
     public void setCacheBirds(List<Bird> data) {
-        editor.putString(new Gson().toJson(data), PREFS_NAME);
+        editor.clear();
+        String stringifiedData = new Gson().toJson(data).toString();
+        editor.putString(PREFS_NAME, stringifiedData);
+        editor.commit();
     }
 
     public List<Bird> getCacheBirds() {
-        List<Bird> data = new Gson().fromJson(settings.getString(PREFS_NAME, "[]"), this.mBirds.getClass());
+        String cacheData = settings.getString(PREFS_NAME, "[]");
+
+        JsonArray jsonArray = new JsonParser().parse(cacheData).getAsJsonArray();
+        Type listType = new TypeToken<List<Bird>>(){}.getType();
+        List<Bird> data = new Gson().fromJson(jsonArray, listType);
         return data;
     }
 }
