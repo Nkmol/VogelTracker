@@ -15,7 +15,26 @@ class OverViewController : UITableViewController {
     
     @IBOutlet var birdsTableView: UITableView!
     var birds : JSON = []
+    var filteredBirds : [JSON] = []
     var imageCache = [String:UIImage]()
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        
+        filteredBirds = []
+        
+        if let items = birds.array {
+            for item in items {
+                if (item["name"].string?.contains(searchText))! {
+                    filteredBirds.append(item)
+                }
+            }
+        }
+        
+        tableView.reloadData()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +46,12 @@ class OverViewController : UITableViewController {
         } else{
             fetchData()
         }
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+        
     }
     
     func fetchData(){
@@ -71,12 +96,24 @@ class OverViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredBirds.count
+        }
+        
         return birds.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) 
-        cell.textLabel?.text = birds[indexPath.row]["name"].string        
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            cell.textLabel?.text = filteredBirds[indexPath.row]["name"].string
+        } else {
+            cell.textLabel?.text = birds[indexPath.row]["name"].string
+        }
+        
         return cell
     }
     
@@ -88,7 +125,13 @@ class OverViewController : UITableViewController {
         
         if let rowSelected = (sender as? IndexPath)?.row {
             if let destinationVC = segue.destination as? DetailViewController{
-                destinationVC.bird = birds[rowSelected]
+               
+                if searchController.isActive && searchController.searchBar.text != "" {
+                    destinationVC.bird = filteredBirds[rowSelected]
+                } else {
+                    destinationVC.bird = birds[rowSelected]
+                }
+  
             }
         }
         
@@ -105,4 +148,11 @@ class OverViewController : UITableViewController {
         self.tableView.reloadData()
     }
     
+}
+
+
+extension OverViewController : UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchText: searchController.searchBar.text!)
+    }
 }
