@@ -44,6 +44,8 @@ class LoginViewController: UIViewController {
             if(message == "success") {
                 self.loginCompletion?()
                 self.dismiss(animated: true, completion: nil)
+            } else{
+                self.displayAlertMessage(message: message)
             }
         }
         

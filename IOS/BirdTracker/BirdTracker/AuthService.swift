@@ -30,12 +30,14 @@ public class AuthService : ParentService {
 
         manager.register(user: newUser) { (result: Dictionary<String, Any>?, error: Error?) in
 
-            if(result != nil){
-                self.message = (result!["message"] as? String)!
+            if (result != nil){
+               self.message = (result!["message"] as? String)!
             
-                if(self.message == "ok") {
-                 completion("Registratie is voltooid")
-              }
+               if(self.message == "ok") {
+                   completion("Registratie is voltooid")
+               } else {
+                   completion(self.message)
+                }
             } else {
                 completion("Deze actie kan niet worden voltooid. Heeft u internet?")
             }
@@ -46,13 +48,19 @@ public class AuthService : ParentService {
         
         manager.login(user: existingUser){ (result: Dictionary<String, Any>?, error: Error?) in
             
+            if (result != nil){
             self.message = (result!["message"] as? String)!
             
-            if(self.message == "ok") {
+                if(self.message == "ok") {
                 
-                let token : String = (result!["token"] as? String)!
-                Credentials(token: token)
-                completion("success")
+                    let token : String = (result!["token"] as? String)!
+                    Credentials(token: token)
+                    completion("success")
+                } else {
+                    completion(self.message)
+                }
+            } else {
+                completion("Deze actie kan niet worden voltooid. Heeft u internet?")
             }
             
         }
