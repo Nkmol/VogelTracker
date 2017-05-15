@@ -5,7 +5,8 @@ let mongoose = require('../modules/models/mongoose'),
     util = require('../modules/utilities'),
     path = require('path'),
     JwtStrategy = require('passport-jwt').Strategy,
-    passport = require('passport');
+    passport = require('passport'),
+    entries = require('object.entries');
 
 module.exports.start = () => {
     // Connect mongoose
@@ -43,6 +44,64 @@ module.exports.start = () => {
             })); 
       
             app.use(express.static('doc')); // Set doc map as default folder to look for index
+
+            app.use((req, res, next) => {
+                let query = req.query;
+                let mongoFilter = {};
+                
+                // Parse properties of query
+                entries(query).forEach(([key, value]) => {
+                    key = key.toLowerCase();
+
+                    // Minimal
+                    req.sort = {};
+                    req.filter = {};
+                    
+
+                    // Case Sort 
+                    if(key === 'sort') {
+                        sort = req.sort;
+
+                        for(let orderBy of value.split(',')) {
+                            orderBy = orderBy.trim();
+                            let order = '1';
+
+                            if(orderBy.startsWith('-')) {
+                                orderBy = orderBy.replace(/^-/, '')
+
+                                order = '-1';
+                            }
+
+                            // console.log(orderBy)
+                            sort[orderBy] = order;
+                        }
+                        
+                    }
+                    // Case Page
+                    else if(key === 'page') {
+
+                    }
+                    else {
+                        // -- Query variable selector --
+                        // If none of the cases, variable selector
+                        
+                        if(key.endsWith('!')) { // Is Not [!=]
+                            let prop = key.replace(/\!$/, ''); // remove char
+
+                            mongoFilter[prop] = {
+                                $ne: value
+                            }
+                        }
+                        else { // Equals [==]
+                            mongoFilter[key] = value;
+                        }
+                    }
+                });
+
+                req.filter = mongoFilter;
+
+                next();
+            })
 
             // Setup Authentication
             let loginController = require('../modules/users/controller');

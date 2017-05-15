@@ -28,6 +28,7 @@
     "mocha": "^3.2.0",
     "mongo-querystring": "^4.1.0",
     "mongoose": "^4.9.0",
+    "object.entries": "^1.0.4",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "rfr": "^1.2.3",

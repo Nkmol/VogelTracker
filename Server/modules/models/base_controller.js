@@ -88,11 +88,15 @@ class BaseController {
     get(req, res, next, populate = '') {
         if(!objIsEmpty(req.params)) return this.getOne(req,res,next,populate); // reroute
 
-        let query = qs.parse(req.query);
+        // let query = qs.parse(req.query);
         // let query = Object.assign({}, urlQuery, paramsQuery);
 
-        return this.find(query)
+        console.log(req.filter);
+        console.log(req.sort);
+
+        return this.find(req.filter)
             .populate(populate)
+            .sort(req.sort)
             .then(doc => doc.length <= 0 ? 
                 this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) : res.json(doc)
             );
@@ -115,7 +119,7 @@ class BaseController {
     delete(req, res, next) {
         let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
 
-        lif(!this._isValidId(paramsQuery._id))
+        if(!this._isValidId(paramsQuery._id))
             return this.errorResponse(`Please provide a valid '_id'`, res);
 
         return this.findOne(paramsQuery)
