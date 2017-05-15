@@ -47,21 +47,23 @@ module.exports.start = () => {
 
             app.use((req, res, next) => {
                 let query = req.query;
-                let mongoFilter = {};
                 
+                // Minimal
+                req.sort = {};
+                req.filter = {};
+                req.page = {
+                    limit: 0,
+                    value: 1
+                }
+
                 // Parse properties of query
                 entries(query).forEach(([key, value]) => {
                     key = key.toLowerCase();
 
-                    // Minimal
-                    req.sort = {};
-                    req.filter = {};
                     
 
                     // Case Sort 
                     if(key === 'sort') {
-                        sort = req.sort;
-
                         for(let orderBy of value.split(',')) {
                             orderBy = orderBy.trim();
                             let order = '1';
@@ -73,13 +75,16 @@ module.exports.start = () => {
                             }
 
                             // console.log(orderBy)
-                            sort[orderBy] = order;
+                            req.sort[orderBy] = order;
                         }
                         
                     }
                     // Case Page
                     else if(key === 'page') {
+                        let amountPerPage = 30;
 
+                        req.page.limit = 30;
+                        req.page.value = parseInt(value);
                     }
                     else {
                         // -- Query variable selector --
@@ -88,17 +93,15 @@ module.exports.start = () => {
                         if(key.endsWith('!')) { // Is Not [!=]
                             let prop = key.replace(/\!$/, ''); // remove char
 
-                            mongoFilter[prop] = {
+                            req.filter[prop] = {
                                 $ne: value
                             }
                         }
                         else { // Equals [==]
-                            mongoFilter[key] = value;
+                            req.filter[key] = value;
                         }
                     }
                 });
-
-                req.filter = mongoFilter;
 
                 next();
             })

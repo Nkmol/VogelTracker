@@ -93,13 +93,21 @@ class BaseController {
 
         console.log(req.filter);
         console.log(req.sort);
+        console.log(req.page)
 
         return this.find(req.filter)
-            .populate(populate)
             .sort(req.sort)
-            .then(doc => doc.length <= 0 ? 
-                this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) : res.json(doc)
-            );
+            .populate(populate)
+            .skip(req.page.value > 0 ? ((req.page.value-1)*req.page.limit) : 0)
+            .limit(req.page.limit)
+            .then(doc => {
+                if(doc.length <= 0) {
+                    return this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404);
+                }
+                else {
+                    return res.json(doc)
+                }
+            });
     }
 
     getOne(req, res, next, populate = '') {
