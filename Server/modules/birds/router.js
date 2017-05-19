@@ -22,7 +22,7 @@ router.route('/')
      * @apiUse BirdModel
      */
     .get(controller.get.bind(controller))
-
+    .post(controller.create.bind(controller))
 /**
      * @api {get} /birds/:id Request Bird
      * @apiName GetBird
@@ -39,5 +39,7 @@ router.route('/')
 router.route('/:_id')
         .get(controller.get.bind(controller))
         .delete(controller.delete.bind(controller))
+        .put(controller.put.bind(controller))
+        .patch(controller.patch.bind(controller))
 
 module.exports = router;

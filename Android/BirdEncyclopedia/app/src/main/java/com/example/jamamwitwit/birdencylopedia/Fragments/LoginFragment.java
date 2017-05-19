@@ -1,12 +1,18 @@
 package com.example.jamamwitwit.birdencylopedia.Fragments;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.Manifest.permission.GET_ACCOUNTS;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -68,6 +75,7 @@ public class LoginFragment extends android.app.Fragment {
     private String mAuthTokenType;
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,14 +98,6 @@ public class LoginFragment extends android.app.Fragment {
 
         mRequestNewAccount = user.username == null;
         mConfirmCredentials = intent.getBooleanExtra(PARAM_CONFIRM_CREDENTIALS, false);
-
-        Account[] accounts = mAccountManager.getAccountsByType(mAuthTokenType);
-
-        if(accounts.length >= 1){
-            Intent newIntent = new Intent(getActivity(), OverviewActivity.class);
-            newIntent.putExtra("account", accounts[0]);
-            startActivity(newIntent);
-        }
 
         return view;
     }
@@ -141,6 +141,7 @@ public class LoginFragment extends android.app.Fragment {
      * @param v
      */
     public void login (View v) {
+
         // Show a dialog that indicates that the authentication process is happening
         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                 R.style.Theme_AppCompat_DayNight_Dialog);

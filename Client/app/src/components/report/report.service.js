@@ -12,6 +12,7 @@ class ReportService {
     getBirds() {
         return this.$http.get(`${this.Config.url}/birds`);
     }
+
 }
 
 export default ReportService;

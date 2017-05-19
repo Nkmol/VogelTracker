@@ -5,7 +5,7 @@ let reportController = require('./controller'),
 // Export the promise so we can catch it with the require()
 module.exports = reportController.remove({})
     .then(() => Promise.all([
-            userController.findOne({username: 'nkmol'}),
+            userController.findOne({username: 'test'}),
             birdController.findOne({name: 'Alk'}) 
         ]
     ))

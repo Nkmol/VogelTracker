@@ -17,6 +17,7 @@ const report = angular
                 params: {
                     img: null
                 }
+
             })
     })
     .name;

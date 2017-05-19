@@ -11,13 +11,19 @@ class ReportController extends BaseController {
     }
 
     create(req, res, next) {
+        // Quickfix non HTTP request
+        if(req.body == null) return super.create(req);
+
         if(!(req.body.bird_id && req.body.description && req.body.lat && req.body.long && req.body.user_id && req.body.date))
             return res.status(400).json({message: "Please provide the right info"});
 
-        return super.create(req.body)
-            .then(doc => this.populate(doc, {path: "bird_id"}))
-            .then(doc => this.populate(doc, {path: "user_id"}))
-            .then(doc => res.json({message: "ok"}));
+        mongoose.model('User').findOne({username: req.body.user_id})
+            .then(userDoc => req.body.user_id = userDoc._id.toString())
+            .then(() => super.create(req.body))
+            .then(reportDoc => this.populate(reportDoc, {path: "bird_id"}))
+            .then(reportDoc => this.populate(reportDoc, {path: "user_id"}))
+            .catch(err => res.status(400).json({message: err}))
+            .then(reportDoc => res.json({message: "ok", data: reportDoc}))
     }
 
     get(req, res, next) {

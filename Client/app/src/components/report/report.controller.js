@@ -1,14 +1,18 @@
 class ReportController {
 
     constructor(ReportService, $ionicLoading, $state, $window, $ionicPlatform, $cordovaGeolocation
-        , $stateParams, $rootScope) {
+        , $stateParams, $rootScope, $cordovaFileTransfer, $localStorage, $ionicPopup) {
         'ngInject';
 
+        this.$state = $state;
+        this.$ionicPopup = $ionicPopup;
+        this.$localStorage = $localStorage;
         this.$rootScope = $rootScope;
         this.$stateParams = $stateParams;
         this.ReportService = ReportService;
         this.$ionicLoading = $ionicLoading;
-        this.$window = $window;
+        this.$ionicPlatform = $ionicPlatform;
+        this.$stateParams = $stateParams;
         this.$cordovaGeolocation = $cordovaGeolocation;
         this.birds = [];
         this.selectedvalue = null;
@@ -21,21 +25,25 @@ class ReportController {
                         name: bird.name,
                         id: bird._id
                     })
-                )
+                 )
             );
+
+        this.$cordovaFileTransfer = $cordovaFileTransfer;      
     }
 
     $onInit() {
+        this.getDatetime = new Date();
         this.reportPhoto = "/assets/img/bird-silhouette.png"
         this.$rootScope.$on('photo-taken', this.pictureTaken.bind(this));
 
         this.newReport = {
             bird_id: '58d4e0e6d41c6761f4564163',
-            user_id: '58e27bc39cd9c4000493b05c',
+            user_id: this.$localStorage.username,
             date: this.getDatetime,
             description: '',
             lat: 4.4,
             long: 4.3,
+            image: []
         }
     }
 
@@ -43,6 +51,7 @@ class ReportController {
     showBird(newValue, oldValue) {
         let found = this.birds.find(x => x.name == newValue);
         this.selectedvalue = newValue;
+
         this.newReport.bird_id = found.id;
     }
 
@@ -50,28 +59,46 @@ class ReportController {
 
     }
 
-    pictureTaken(event, args) {
-        this.reportPhoto = "data:image/jpeg;base64," + args.img;
-    }
+    upload() {
+        let uploadOptions = {
+            params : { 'upload_preset': 'd0tmj15t'}
+        };
 
-    sendReport() {
-        var self = this;
-        self.posOptions = { timeout: 10000, enableHighAccuracy: false };
-        self.$cordovaGeolocation
-            .getCurrentPosition(self.posOptions)
-            .then(position => {
-                this.newReport.lat = position.coords.latitude;
-                this.newReport.long = position.coords.longitude;
-
-                this.$ionicLoading.show();
-                return this.ReportService.createReport(self.newReport)
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .then(() => this.$ionicLoading.hide());
+        return this.$cordovaFileTransfer.upload("https://api.cloudinary.com/v1_1/dady313cq/image/upload"
+                ,this.reportPhoto, uploadOptions)
+            .then( result => {
+                this.newReport.image.push(JSON.parse(result.response).url);
+            }, err => {
+                console.log("ERROR: " + JSON.stringify(err));
+            }, progress => {
+                // constant progress updates
             });
     }
 
+    sendReport() {
+        this.$ionicLoading.show();
+        let posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy:true};
+        this.$cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(position => {
+                this.newReport.lat = position.coords.latitude;
+                this.newReport.long = position.coords.longitude;
+            })
+            .catch(err => console.log(err))
+            .then(() => this.upload())
+            .then(() => this.ReportService.createReport(this.newReport))
+            .then(res => {
+                return this.$ionicPopup.alert({
+                    title: 'Your report has been succesfully send.'
+                })
+            })
+            .then(() => this.$state.go('app.map'))
+            .then(() => this.$ionicLoading.hide());
+    }
+
+    pictureTaken(event, args) {
+        this.reportPhoto = "data:image/jpeg;base64," + args.img;
+    }
 }
 
 export default ReportController;
