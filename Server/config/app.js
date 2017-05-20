@@ -5,6 +5,7 @@ let mongoose = require('../modules/models/mongoose'),
     util = require('../modules/utilities'),
     path = require('path'),
     JwtStrategy = require('passport-jwt').Strategy,
+    GitHubStrategy = require('passport-github').Strategy,
     passport = require('passport');
 
 module.exports.start = () => {
@@ -47,11 +48,34 @@ module.exports.start = () => {
             // Setup Authentication
             let loginController = require('../modules/users/controller');
             passport.use(new JwtStrategy(config.jwt.options, loginController.validate.bind(loginController)))
+                     
+            passport.use(new GitHubStrategy(config.github.options,
+            function(accessToken, refreshToken, profile, cb) {
+                User.findOrCreate({ githubId: profile.id }, function (err, user) {
+                return cb(err, user);
+                });
+            }
+            ));
+
+            passport.serializeUser(function(user, done) {
+            // placeholder for custom user serialization
+            // null is for errors
+            done(null, user);
+            });
+
+            passport.deserializeUser(function(user, done) {
+            // placeholder for custom user deserialization.
+            // maybe you are going to get the user from mongo by id?
+            // null is for errors
+            done(null, user);
+            });
+            
             app.use(passport.initialize())  
             // Skip authentication of certain routes
             app.use(unless([
                 "/login", 
-                "/register"
+                "/register",
+                "/auth/github"
             ], passport.authenticate('jwt', {session: false})));
 
             app.post("/login", loginController.login.bind(loginController));
@@ -60,6 +84,17 @@ module.exports.start = () => {
             app.use('/birds', require('../modules/birds/router'));
             app.use('/users', require('../modules/users/router'));
             app.use('/reports', require('../modules/reports/router'));
+
+            app.get('/auth/github', passport.authenticate('github'),
+            function(req, res){});
+
+            app.get('/auth/github/callback', 
+            passport.authenticate('github', { failureRedirect: '/' }),
+            function(req, res) {
+                // Successful authentication, redirect home.
+                console.log("success");
+                res.redirect('/');
+            });
 
             app.get('*', (req, res) => res.send('Sorry, this is an invalid URL.'));
 

@@ -28,7 +28,9 @@
     "mocha": "^3.2.0",
     "mongo-querystring": "^4.1.0",
     "mongoose": "^4.9.0",
+    "mongoose-bcrypt": "^1.4.2",
     "passport": "^0.3.2",
+    "passport-github": "^1.1.0",
     "passport-jwt": "^2.2.1",
     "rfr": "^1.2.3",
     "supertest": "^3.0.0"
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "cross-env": "^3.2.4",
+    "grunt": "^1.0.1",
     "grunt-apidoc": "^0.11.0"
   }
 }
