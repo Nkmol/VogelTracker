@@ -51,7 +51,6 @@ class ReportController {
     showBird(newValue, oldValue) {
         let found = this.birds.find(x => x.name == newValue);
         this.selectedvalue = newValue;
-
         this.newReport.bird_id = found.id;
     }
 
