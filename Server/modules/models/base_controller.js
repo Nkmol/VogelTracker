@@ -140,7 +140,13 @@ class BaseController {
                     return this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404);
                 }
                 else {
-                    return res.json(doc)
+                    let type = req.headers['content-type'];
+                    if(type === 'application/json') {
+                        res.json(doc)
+                    }
+                    else if(type === 'txt/html') {
+                        res.send(JSON.stringify(doc));
+                    }
                 }
             });
     }
