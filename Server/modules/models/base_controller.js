@@ -107,8 +107,7 @@ class BaseController {
             .limit(req.page.limit)
             .populate(populate)
             .then(docs => {
-                
-                if(deepFilters[0] != null){
+                if(deepFilters) {
                     deepFilters.forEach(filter => {
                                 let key = Object.keys(filter)[0];
                                 let props = key.split('.');         
@@ -141,7 +140,8 @@ class BaseController {
                     return this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404);
                 }
                 else {
-                    let type = req.headers['content-type'];
+                    // console.log(req.headers);
+                    let type = req.headers['accept'];
                     if(type === 'application/json') {
                         res.json(doc)
                     }
