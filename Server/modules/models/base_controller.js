@@ -142,11 +142,12 @@ class BaseController {
                 else {
                     // console.log(req.headers);
                     let type = req.headers['accept'];
-                    if(type === 'application/json') {
-                        res.json(doc)
-                    }
-                    else if(type === 'txt/html') {
+
+                    if(type === 'txt/html') {
                         res.send(JSON.stringify(doc));
+                    }
+                    else {
+                         res.json(doc)
                     }
                 }
             });
