@@ -107,32 +107,33 @@ class BaseController {
             .limit(req.page.limit)
             .populate(populate)
             .then(docs => {
-                deepFilters.forEach(filter => {
-                    let key = Object.keys(filter)[0];
-                    let props = key.split('.');
+                
+                if(deepFilters[0] != null){
+                    deepFilters.forEach(filter => {
+                                let key = Object.keys(filter)[0];
+                                let props = key.split('.');         
+                                docs = docs.filter(doc => {
+                                    let entitie = doc;
+                                    for(var i = 0; i < props.length-1; i++) {
+                                        entitie = entitie[props[i]];
+                                        
+                                        if(entitie == null) {
+                                            return false;
+                                        }
+                                    }
 
-
-                    docs = docs.filter(doc => {
-                        let entitie = doc;
-                        for(var i = 0; i < props.length-1; i++) {
-                            entitie = entitie[props[i]];
-                            
-                            if(entitie == null) {
-                                return false;
-                            }
-                        }
-
-                        // console.log(i, props[i], entitie[props[i]], filter[key]);
-                        // console.log(filter[key].$ne, entitie[props[i]] != filter[key].$ne)
-                        if(filter[key].$ne) {
-                            return entitie[props[i]] != filter[key].$ne;
-                        }
-                        else {
-                            return entitie[props[i]] == filter[key];
-                        }
-                     })
-                });
-
+                                    // console.log(i, props[i], entitie[props[i]], filter[key]);
+                                    // console.log(filter[key].$ne, entitie[props[i]] != filter[key].$ne)
+                                    if(filter[key].$ne) {
+                                        return entitie[props[i]] != filter[key].$ne;
+                                    }
+                                    else {
+                                        return entitie[props[i]] == filter[key];
+                                    }
+                                })
+                            });
+                }
+      
                 return docs;
             })
             .then(doc => {
