@@ -107,7 +107,7 @@ class BaseController {
             .limit(req.page.limit)
             .populate(populate)
             .then(docs => {
-                if(deepFilters) {
+                if(deepFilters && deepFilters[0] != null) {
                     deepFilters.forEach(filter => {
                                 let key = Object.keys(filter)[0];
                                 let props = key.split('.');         
@@ -150,7 +150,8 @@ class BaseController {
                          res.json(doc)
                     }
                 }
-            });
+            })
+            .catch(console.log);
     }
 
     getOne(req, res, next, populate = '') {
