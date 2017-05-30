@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node index.js",
     "debug": "cross-env NODE_ENV=development node --debug-brk=5858 index.js",
-    "test": "cross-env NODE_ENV=development mocha modules/**/tests/*.js",
+ 
+    "test": "mocha",
     "seed": "cross-env NODE_ENV=development node modules/post_deploy.js",
     "seed-debug": "cross-env NODE_ENV=development node --nolazy --debug-brk=5858 modules/post_deploy.js",
     "seed-prod": "cross-env NODE_ENV=production node modules/post_deploy.js",
@@ -25,7 +26,7 @@
     "glob": "^7.1.1",
     "glob-promise": "^3.1.0",
     "jsonwebtoken": "^7.3.0",
-    "mocha": "^3.2.0",
+    "mocha": "^3.4.2",
     "mongo-querystring": "^4.1.0",
     "mongoose": "^4.9.0",
     "object.entries": "^1.0.4",
@@ -38,7 +39,10 @@
     "node": "7.5.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "cross-env": "^3.2.4",
-    "grunt-apidoc": "^0.11.0"
+    "grunt-apidoc": "^0.11.0",
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0"
   }
 }
