@@ -14,6 +14,14 @@ config.jwt.options = {
     jwtFromRequest: require('passport-jwt').ExtractJwt.fromAuthHeader()
 };
 
+// -- password-github
+config.github = {};
+config.github.options = {
+    clientID: '665c1f28bf25d911d9df',
+    clientSecret: 'd1c5046cae49f5aca6ef63982fe89d9aa54a8d0f',
+    callbackURL: 'http://localhost:3000/auth/github/callback'
+}
+
 // -- BCrypt --
 config.bcrypt = {};
 config.bcrypt.saltRounds = 10;

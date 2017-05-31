@@ -14,7 +14,8 @@ let userSchema = new Schema ({
     }, 
     password: {
         type: String,
-        required: true
+        required: true,
+        bcrypt: true
     },
     email: {
         type: String,
@@ -25,6 +26,8 @@ let userSchema = new Schema ({
         default: null
     }
 });
+
+userSchema.plugin(require('mongoose-bcrypt'));
 
 // Used to load user role as the default role
 userSchema.pre('save', function(next) {

@@ -30,9 +30,9 @@ class UserController extends BaseController {
             return this.errorResponse(msg, res, 409, exists)
         })
         // Async hasing
-        .then(() => bcrypt.hash(req.body.password))
+        //.then(() => bcrypt.hash(req.body.password))
         .then(result => { 
-            req.body.password = result;
+            //req.body.password = result;
 
             // Populate "user_role" to translate _id to actual object
             return this.create(req.body).then(doc => this.populate(doc, {path: "user_role"}))
