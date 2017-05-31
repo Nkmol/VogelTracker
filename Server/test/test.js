@@ -46,28 +46,56 @@ describe("User",function(){
 describe("Birds", function(){
 
     it('fetching birds should return a 200 response', function(done){
-        server.get('/birds')
+        server.get('/birds/')
         .set('Authorization', authorization)
         .expect(200, done);
     })
 
     it('fetching birds should return a 401 response if unauthorized', function(done){
-        server.get('/birds')
+        server.get('/birds/')
         .set('Authorization', "")
         .expect(401, done);
+    })
+
+    it('fetch a single bird should return a 200 response', function(done){
+        server.get('/birds/')
+        .send({id : "5917775dffd6a211d345e556" })
+        .set('Authorization', authorization)
+        .expect(200, done);
+    })
+
+    it('fetch a single bird without valid "_id" should return a 400 response', function(done){
+        server.get('/birds/')
+        .send({id : "" })
+        .set('Authorization', authorization)
+        .expect(200, done);
+    })
+
+    it('fetching a single bird should return a 401 response if unauthorized', function(done){
+        server.get('/birds/')
+        .send({_id : "5917775dffd6a211d345e556" })
+        .set('Authorization', "")
+        .expect(401, done);
+    })
+
+    it('Delete a single bird should return a 200 respone', function(done){
+        server.delete('/birds/')
+        .send({id : "58e763a17cd0d10004957c8f" })
+        .set('Authorization', authorization)
+        .expect(200, done);
     })
 })
 
 describe("Reports", function(){
     
     it('fetching reports should return a 200 response', function(done){
-        server.get('/reports')
+        server.get('/reports/')
         .set('Authorization', authorization)
         .expect(200, done);
     })
 
     it('fetching reports should return a 401 response if unauthorized', function(done){
-        server.get('/birds')
+        server.get('/reports/')
         .set('Authorization', "")
         .expect(401, done);
     })
@@ -77,6 +105,20 @@ describe("Reports", function(){
         .send({_id : "58e763a17cd0d10004957c8f" })
         .set('Authorization', authorization)
         .expect(200, done);
+    })
+
+    it('fetch a single report without valid "_id" should return a 400 response', function(done){
+        server.get('/reports/')
+        .send({_id : "" })
+        .set('Authorization', authorization)
+        .expect(400, done);
+    })
+
+    it('fetching a single report should return a 401 response if unauthorized', function(done){
+        server.get('/reports/')
+        .send({_id : "58e763a17cd0d10004957c8f" })
+        .set('Authorization', "")
+        .expect(401, done);
     })
 
     it('create a single report should return a 200 response', function(done){
@@ -94,5 +136,11 @@ describe("Reports", function(){
         .expect(200, done);
     })
 
+    it('delete a single report should return a 200 respone', function(done){
+        server.delete('/reports/')
+        .send({id : "58e763a17cd0d10004957c8f" })
+        .set('Authorization', authorization)
+        .expect(200, done);
+    })
 
 })
