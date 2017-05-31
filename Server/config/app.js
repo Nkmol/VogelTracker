@@ -1,6 +1,7 @@
 let mongoose = require('../modules/models/mongoose'),
     chalk = require('chalk'),
     config = require('./config'),
+    request = require('supertest');
     express = require('express'),
     util = require('../modules/utilities'),
     path = require('path'),

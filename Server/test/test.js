@@ -50,6 +50,12 @@ describe("Birds", function(){
         .set('Authorization', authorization)
         .expect(200, done);
     })
+
+    it('fetching birds should return a 401 response if unauthorized', function(done){
+        server.get('/birds')
+        .set('Authorization', "")
+        .expect(401, done);
+    })
 })
 
 describe("Reports", function(){
@@ -59,4 +65,34 @@ describe("Reports", function(){
         .set('Authorization', authorization)
         .expect(200, done);
     })
+
+    it('fetching reports should return a 401 response if unauthorized', function(done){
+        server.get('/birds')
+        .set('Authorization', "")
+        .expect(401, done);
+    })
+
+    it('fetch a single report should return a 200 response', function(done){
+        server.get('/reports/')
+        .send({_id : "58e763a17cd0d10004957c8f" })
+        .set('Authorization', authorization)
+        .expect(200, done);
+    })
+
+    it('create a single report should return a 200 response', function(done){
+        server.post('/reports/create/')
+        .send({
+            description : "ik zag een kraai",
+            lat: 22.22222222,
+            long: 33.33333333,
+            bird_id: "58e281512471d642c9778c6e",
+            date: 2017-04-2,
+            user_id: "5917775dffd6a211d345e555"
+
+        })
+        .set('Authorization', authorization)
+        .expect(200, done);
+    })
+
+
 })
