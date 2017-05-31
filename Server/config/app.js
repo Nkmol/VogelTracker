@@ -6,7 +6,8 @@ let mongoose = require('../modules/models/mongoose'),
     path = require('path'),
     JwtStrategy = require('passport-jwt').Strategy,
     GitHubStrategy = require('passport-github').Strategy,
-    passport = require('passport');
+    passport = require('passport'),
+    entries = require('object.entries');
 
 module.exports.start = () => {
     // Connect mongoose
@@ -44,6 +45,67 @@ module.exports.start = () => {
             })); 
       
             app.use(express.static('doc')); // Set doc map as default folder to look for index
+
+            app.use((req, res, next) => {
+                let query = req.query;
+                
+                // Minimal
+                req.sort = {};
+                req.filter = {};
+                req.page = {
+                    limit: 0,
+                    value: 1
+                }
+
+                // Parse properties of query
+                entries(query).forEach(([key, value]) => {
+                    key = key.toLowerCase();
+
+                    
+
+                    // Case Sort 
+                    if(key === 'sort') {
+                        for(let orderBy of value.split(',')) {
+                            orderBy = orderBy.trim();
+                            let order = '1';
+
+                            if(orderBy.startsWith('-')) {
+                                orderBy = orderBy.replace(/^-/, '')
+
+                                order = '-1';
+                            }
+
+                            // console.log(orderBy)
+                            req.sort[orderBy] = order;
+                        }
+                        
+                    }
+                    // Case Page
+                    else if(key === 'page') {
+                        let amountPerPage = 30;
+
+                        req.page.limit = 30;
+                        req.page.value = parseInt(value);
+                    }
+                    else {
+                        // -- Query variable selector --
+                        // If none of the cases, variable selector
+                        
+                        if(key.endsWith('!')) { // Is Not [!=]
+                            let prop = key.replace(/\!$/, ''); // remove char
+
+                            req.filter[prop] = {
+                                $ne: value
+                            }
+                        }
+                        else { // Equals [==]
+                            req.filter[key] = value;
+                        }
+                    }
+                });
+
+                next();
+            })
 
             // Setup Authentication
             let loginController = require('../modules/users/controller');

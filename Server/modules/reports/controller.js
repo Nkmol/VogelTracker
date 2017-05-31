@@ -11,6 +11,9 @@ class ReportController extends BaseController {
     }
 
     create(req, res, next) {
+        // Quickfix non HTTP request
+        if(req.body == null) return super.create(req);
+
         if(!(req.body.bird_id && req.body.description && req.body.lat && req.body.long && req.body.user_id && req.body.date))
             return res.status(400).json({message: "Please provide the right info"});
 

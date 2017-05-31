@@ -88,14 +88,70 @@ class BaseController {
     get(req, res, next, populate = '') {
         if(!objIsEmpty(req.params)) return this.getOne(req,res,next,populate); // reroute
 
-        let query = qs.parse(req.query);
-        // let query = Object.assign({}, urlQuery, paramsQuery);
+        // Remove deep filters from normal filter
+        let deepFilters = Object.keys(req.filter).map(f => {
+            if(f.indexOf('.') > 0) {
+                let response = {};
+                response[f] = req.filter[f];
 
-        return this.find(query)
+                // Remove from default filter
+                delete req.filter[f];
+
+                return response;
+            }
+        });
+
+        return this.find(req.filter)
+            .sort(req.sort)
+            .skip(req.page.value > 0 ? ((req.page.value-1)*req.page.limit) : 0)
+            .limit(req.page.limit)
             .populate(populate)
-            .then(doc => doc.length <= 0 ? 
-                this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404) : res.json(doc)
-            );
+            .then(docs => {
+                if(deepFilters && deepFilters[0] != null) {
+                    deepFilters.forEach(filter => {
+                                let key = Object.keys(filter)[0];
+                                let props = key.split('.');         
+                                docs = docs.filter(doc => {
+                                    let entitie = doc;
+                                    for(var i = 0; i < props.length-1; i++) {
+                                        entitie = entitie[props[i]];
+                                        
+                                        if(entitie == null) {
+                                            return false;
+                                        }
+                                    }
+
+                                    // console.log(i, props[i], entitie[props[i]], filter[key]);
+                                    // console.log(filter[key].$ne, entitie[props[i]] != filter[key].$ne)
+                                    if(filter[key].$ne) {
+                                        return entitie[props[i]] != filter[key].$ne;
+                                    }
+                                    else {
+                                        return entitie[props[i]] == filter[key];
+                                    }
+                                })
+                            });
+                }
+      
+                return docs;
+            })
+            .then(doc => {
+                if(doc.length <= 0) {
+                    return this.errorResponse(`Could not find entity with ${JSON.stringify(req.params)}`, res, 404);
+                }
+                else {
+                    // console.log(req.headers);
+                    let type = req.headers['accept'];
+
+                    if(type === 'txt/html') {
+                        res.send(JSON.stringify(doc));
+                    }
+                    else {
+                         res.json(doc)
+                    }
+                }
+            })
+            .catch(console.log);
     }
 
     getOne(req, res, next, populate = '') {
