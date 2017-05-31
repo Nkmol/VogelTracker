@@ -115,7 +115,7 @@ class BaseController {
     delete(req, res, next) {
         let paramsQuery = objIsEmpty(req.params) ? {} : req.params;
 
-        lif(!this._isValidId(paramsQuery._id))
+        if(!this._isValidId(paramsQuery._id))
             return this.errorResponse(`Please provide a valid '_id'`, res);
 
         return this.findOne(paramsQuery)

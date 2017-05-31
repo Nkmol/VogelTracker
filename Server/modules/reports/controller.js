@@ -15,12 +15,12 @@ class ReportController extends BaseController {
             return res.status(400).json({message: "Please provide the right info"});
 
         mongoose.model('User').findOne({username: req.body.user_id})
-            .then(userDoc => req.body.user_id = userDoc._id.toString())
+            // .then(userDoc => req.body.user_id = userDoc._id.toString())
             .then(() => super.create(req.body))
             .then(reportDoc => this.populate(reportDoc, {path: "bird_id"}))
             .then(reportDoc => this.populate(reportDoc, {path: "user_id"}))
-            .catch(err => res.status(400).json({message: err}))
             .then(reportDoc => res.json({message: "ok", data: reportDoc}))
+            .catch(err => res.status(400).json({message: err}))
     }
 
     get(req, res, next) {
